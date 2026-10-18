@@ -1,8 +1,11 @@
+process.env.NODE_ENV = 'test';
 import http from 'http';
-import app from '../index.js';
 import mongoose from 'mongoose';
+import { connectDB } from '../config/db.js';
 
 async function runTests() {
+  const { default: app } = await import('../index.js');
+  await connectDB();
   console.log('\n🧪 ========================================================');
   console.log('🧪 Starting BhojanSetu End-to-End API Smoke Test Suite');
   console.log('🧪 ========================================================\n');
