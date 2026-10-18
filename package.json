@@ -1,0 +1,23 @@
+{
+  "name": "bhojansetu",
+  "version": "1.0.0",
+  "description": "BhojanSetu — Event-based surplus-food recovery and redistribution platform in India",
+  "private": true,
+  "scripts": {
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build:server": "npm --prefix server run build",
+    "build:client": "npm --prefix client run build",
+    "build": "npm run build:server && npm run build:client",
+    "seed": "npm --prefix server run seed",
+    "test": "npm --prefix server run test"
+  },
+  "keywords": [
+    "food-recovery",
+    "surplus-food",
+    "hackathon",
+    "bhojansetu"
+  ],
+  "author": "BhojanSetu Team",
+  "license": "MIT"
+}
