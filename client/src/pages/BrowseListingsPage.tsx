@@ -9,16 +9,12 @@ import { EmptyState } from '../components/EmptyState.js';
 import { ErrorAlert } from '../components/ErrorAlert.js';
 import {
   Search,
-  Filter,
   MapPin,
   Clock,
   Flame,
   ArrowRight,
   X,
   SlidersHorizontal,
-  ChevronDown,
-  UtensilsCrossed,
-  PackageOpen,
 } from 'lucide-react';
 
 export const BrowseListingsPage: React.FC = () => {
@@ -70,7 +66,7 @@ export const BrowseListingsPage: React.FC = () => {
     setSearchQuery('');
   };
 
-  // Client-side text filter and sorting for instant responsiveness
+  // Instant client-side filtering and sorting
   const filteredListings = useMemo(() => {
     let result = [...listings];
 
@@ -98,34 +94,47 @@ export const BrowseListingsPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6 animate-fade-in">
-      {/* A. SIMPLE, STREAMLINED HEADER */}
-      <div className="space-y-1">
-        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D] tracking-tight">
-          Find food to rescue
-        </h1>
-        <p className="text-xs sm:text-sm text-[#66756B]">
-          Discover available surplus food and coordinate a safe pickup.
-        </p>
+      {/* 1. LIGHT, SPACIOUS PAGE HEADER */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+        <div className="space-y-1">
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] tracking-tight">
+            Find food to rescue
+          </h1>
+          <p className="text-xs sm:text-sm text-[#667067]">
+            Discover available surplus food and coordinate a verified recovery pickup.
+          </p>
+        </div>
+        <div className="text-xs sm:text-sm font-semibold text-[#202820]">
+          {loading ? (
+            <span className="text-[#667067]">Searching...</span>
+          ) : (
+            <>
+              <span className="text-[#287653] font-bold">{filteredListings.length}</span>{' '}
+              {filteredListings.length === 1 ? 'listing' : 'listings'} available
+            </>
+          )}
+        </div>
       </div>
 
-      {/* B. ONE CLEAR SEARCH AREA */}
-      <div className="card-light p-4 sm:p-5 space-y-4">
-        {/* Main Search Bar */}
+      {/* 2 & 3. PROMINENT SEARCH FIELD & COMPACT FILTER ROW */}
+      <div className="card-light p-4 sm:p-5 space-y-3.5 bg-white border border-[#E7E8E1] shadow-2xs">
+        {/* Prominent Search Bar */}
         <form onSubmit={handleSearchSubmit} className="flex gap-2">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-[#66756B] absolute left-3.5 top-3" />
+            <Search className="w-4 h-4 text-[#667067] absolute left-3.5 top-3" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by food, event, or locality..."
-              className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm border border-[#E3E8E0] rounded-xl bg-[#F8F7F2] text-[#18372D] placeholder:text-[#66756B] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#2D8061] focus:border-transparent transition-all"
+              placeholder="Search food, event or location…"
+              className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm border border-[#E7E8E1] rounded-xl bg-[#FAF9F6] text-[#202820] placeholder:text-[#667067] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#287653] focus:border-transparent transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-2.5 text-[#66756B] hover:text-[#18372D]"
+                className="absolute right-3 top-2.5 text-[#667067] hover:text-[#202820]"
+                aria-label="Clear search"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -145,95 +154,81 @@ export const BrowseListingsPage: React.FC = () => {
             className="sm:hidden btn-outline px-3 py-2 text-xs flex items-center gap-1.5"
             aria-label="Toggle filters"
           >
-            <SlidersHorizontal className="w-3.5 h-3.5 text-[#2D8061]" />
+            <SlidersHorizontal className="w-3.5 h-3.5 text-[#287653]" />
           </button>
         </form>
 
-        {/* Compact Filter Row (Desktop & Tablet) */}
-        <div className={`${mobileFiltersOpen ? 'flex' : 'hidden'} sm:flex flex-wrap items-center gap-2 pt-2 border-t border-[#E3E8E0] text-xs`}>
-          {/* Category Filter */}
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="px-3 py-1.5 border border-[#E3E8E0] rounded-xl bg-white text-[#18372D] text-xs focus:ring-1 focus:ring-[#2D8061] focus:outline-hidden"
-          >
-            <option value="all">All Food Types</option>
-            <option value="cooked_meals">Cooked Meals</option>
-            <option value="packaged_ration">Packaged Rations</option>
-            <option value="bakery">Bakery &amp; Bread</option>
-            <option value="desserts">Desserts / Sweets</option>
-            <option value="fruits_vegetables">Fruits &amp; Vegetables</option>
-          </select>
+        {/* Compact Filter Row */}
+        <div className={`${mobileFiltersOpen ? 'flex' : 'hidden'} sm:flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#E7E8E1] text-xs`}>
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Category */}
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="px-3 py-1.5 border border-[#E7E8E1] rounded-xl bg-white text-[#202820] text-xs focus:ring-1 focus:ring-[#287653] focus:outline-hidden"
+            >
+              <option value="all">All Food Types</option>
+              <option value="cooked_meals">Cooked Meals</option>
+              <option value="packaged_ration">Packaged Rations</option>
+              <option value="bakery">Bakery &amp; Bread</option>
+              <option value="desserts">Desserts / Sweets</option>
+              <option value="fruits_vegetables">Fruits &amp; Vegetables</option>
+            </select>
 
-          {/* Status Filter */}
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className="px-3 py-1.5 border border-[#E3E8E0] rounded-xl bg-white text-[#18372D] text-xs focus:ring-1 focus:ring-[#2D8061] focus:outline-hidden"
-          >
-            <option value="all">All Availability</option>
-            <option value="open">Open Only</option>
-            <option value="assigned">Assigned / In Transit</option>
-          </select>
+            {/* Availability */}
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="px-3 py-1.5 border border-[#E7E8E1] rounded-xl bg-white text-[#202820] text-xs focus:ring-1 focus:ring-[#287653] focus:outline-hidden"
+            >
+              <option value="all">All Availability</option>
+              <option value="open">Open Only</option>
+              <option value="assigned">Assigned / In Transit</option>
+            </select>
 
-          {/* Urgent Toggle Chip */}
-          <button
-            type="button"
-            onClick={() => setUrgentOnly(!urgentOnly)}
-            className={`px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all ${
-              urgentOnly
-                ? 'bg-[#FEF3C7] border-[#E9B76A] text-[#92400E]'
-                : 'border-[#E3E8E0] bg-white text-[#66756B] hover:bg-[#EEF4ED]'
-            }`}
-          >
-            <Flame className={`w-3.5 h-3.5 ${urgentOnly ? 'text-[#D97706]' : 'text-[#66756B]'}`} />
-            Urgent (&lt;4h window)
-          </button>
+            {/* Urgent only */}
+            <button
+              type="button"
+              onClick={() => setUrgentOnly(!urgentOnly)}
+              className={`px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                urgentOnly
+                  ? 'bg-[#FEF3C7] border-[#E9AE62] text-[#92400E]'
+                  : 'border-[#E7E8E1] bg-white text-[#667067] hover:bg-[#F0F4EE]'
+              }`}
+            >
+              <Flame className={`w-3.5 h-3.5 ${urgentOnly ? 'text-[#D97706]' : 'text-[#667067]'}`} />
+              Urgent (&lt;4h window)
+            </button>
 
-          {/* Active Filter Chips & Clear Action */}
-          {hasActiveFilters && (
-            <div className="flex items-center gap-1.5 ml-auto">
+            {hasActiveFilters && (
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="text-xs font-bold text-[#174C3C] hover:text-[#2D8061] hover:underline px-2 py-1"
+                className="text-xs font-bold text-[#287653] hover:underline px-2 py-1"
               >
                 Clear all filters
               </button>
-            </div>
-          )}
-        </div>
-      </div>
+            )}
+          </div>
 
-      {/* C. COMPACT RESULT SUMMARY & SORTING */}
-      <div className="flex items-center justify-between text-xs sm:text-sm text-[#66756B]">
-        <div className="font-semibold text-[#18372D]">
-          {loading ? (
-            'Searching listings...'
-          ) : (
-            <>
-              <span className="text-[#174C3C] font-bold">{filteredListings.length}</span>{' '}
-              {filteredListings.length === 1 ? 'food listing' : 'food listings'} available
-            </>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-[#66756B] hidden sm:inline">Sort:</span>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-2.5 py-1 border border-[#E3E8E0] rounded-xl bg-white text-[#18372D] text-xs focus:ring-1 focus:ring-[#2D8061] focus:outline-hidden"
-          >
-            <option value="deadline">Nearest deadline first</option>
-            <option value="quantity">Highest quantity first</option>
-          </select>
+          {/* 4. SIMPLE SORT CONTROL */}
+          <div className="flex items-center gap-2 ml-auto">
+            <span className="text-xs text-[#667067]">Sort:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="px-2.5 py-1.5 border border-[#E7E8E1] rounded-xl bg-white text-[#202820] text-xs focus:ring-1 focus:ring-[#287653] focus:outline-hidden"
+            >
+              <option value="deadline">Nearest deadline first</option>
+              <option value="quantity">Largest quantity first</option>
+            </select>
+          </div>
         </div>
       </div>
 
       {error && <ErrorAlert message={error} onRetry={fetchListings} />}
 
-      {/* D. BEAUTIFUL, SIMPLIFIED FOOD LISTING CARDS */}
+      {/* 5. CLEAN LISTING CARDS ARRANGED IN RESPONSIVE GRID */}
       {loading ? (
         <LoadingSpinner message="Loading surplus opportunities..." size="lg" />
       ) : filteredListings.length === 0 ? (
@@ -248,55 +243,55 @@ export const BrowseListingsPage: React.FC = () => {
           {filteredListings.map((listing) => (
             <div
               key={listing._id}
-              className="card-light p-5 sm:p-6 flex flex-col justify-between hover:shadow-md transition-all duration-200"
+              className="card-light p-5 sm:p-6 flex flex-col justify-between hover:shadow-md transition-all duration-200 bg-white border border-[#E7E8E1] rounded-2xl"
             >
-              <div className="space-y-4">
-                {/* Header row: Category Pill + Urgency Badge */}
+              <div className="space-y-3.5">
+                {/* Event type & Collection deadline window */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#174C3C] bg-[#DCEFE2] px-2.5 py-0.5 rounded-full border border-[#174C3C]/10">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#287653] bg-[#DDEBDD] px-2.5 py-0.5 rounded-full border border-[#287653]/15">
                     {listing.eventType}
                   </span>
                   <UrgencyBadge deadline={listing.collectionDeadline} />
                 </div>
 
-                {/* 1. What Food is available? */}
+                {/* Food Name */}
                 <div>
-                  <h3 className="font-bold text-base sm:text-lg text-[#18372D] font-serif line-clamp-1">
+                  <h3 className="font-bold text-base sm:text-lg text-[#202820] font-serif line-clamp-1">
                     {listing.foodTitle}
                   </h3>
-                  <p className="text-xs text-[#66756B] truncate mt-0.5">
+                  <p className="text-xs text-[#667067] truncate mt-0.5">
                     {listing.eventName}
                   </p>
                 </div>
 
-                {/* 2 & 3. Quantity & Approximate Location */}
+                {/* Available Quantity & Locality */}
                 <div className="space-y-2 pt-1 text-xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-[#66756B]">Available Amount:</span>
-                    <span className="font-bold text-[#174C3C] text-sm">
+                    <span className="text-[#667067]">Available Amount:</span>
+                    <span className="font-bold text-[#287653] text-sm">
                       {listing.quantity} {listing.unit}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between text-[#66756B]">
-                    <span>Pickup Area:</span>
-                    <span className="font-medium text-[#18372D] flex items-center gap-1 max-w-[180px] truncate">
-                      <MapPin className="w-3.5 h-3.5 text-[#2D8061] shrink-0" />
+                  <div className="flex items-center justify-between text-[#667067]">
+                    <span>Locality:</span>
+                    <span className="font-medium text-[#202820] flex items-center gap-1 max-w-[180px] truncate">
+                      <MapPin className="w-3.5 h-3.5 text-[#287653] shrink-0" />
                       {listing.areaOrAddress}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* 4 & 5. Status Badge & Direct CTA */}
-              <div className="mt-5 pt-4 border-t border-[#E3E8E0] flex items-center justify-between">
+              {/* Status Badge & Obvious "View Details" Action */}
+              <div className="mt-5 pt-4 border-t border-[#E7E8E1] flex items-center justify-between">
                 <StatusBadge status={listing.status} size="sm" />
 
                 <Link
                   to={`/listings/${listing._id}`}
                   className="btn-primary-brand text-xs py-1.5 px-3.5"
                 >
-                  View details <ArrowRight className="w-3.5 h-3.5 text-[#DCEFE2]" />
+                  View details <ArrowRight className="w-3.5 h-3.5 text-[#DDEBDD]" />
                 </Link>
               </div>
             </div>
@@ -306,3 +301,4 @@ export const BrowseListingsPage: React.FC = () => {
     </div>
   );
 };
+export default BrowseListingsPage;

@@ -29,9 +29,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     if (s === 'verified') {
       return (
         <span
-          className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/20 shadow-2xs ${sizeClasses}`}
+          className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DDEBDD] text-[#287653] border border-[#287653]/20 shadow-2xs ${sizeClasses}`}
         >
-          <ShieldCheck className="w-4 h-4 text-[#2D8061]" />
+          <ShieldCheck className="w-4 h-4 text-[#287653]" />
           Verified Partner
         </span>
       );
@@ -39,7 +39,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     if (s === 'pending') {
       return (
         <span
-          className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#E9B76A]/40 ${sizeClasses}`}
+          className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#E9AE62]/40 ${sizeClasses}`}
         >
           <Clock className="w-4 h-4 text-[#D97706]" />
           Pending Review
@@ -58,7 +58,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     }
     return (
       <span
-        className={`inline-flex items-center gap-1.5 font-medium rounded-full bg-stone-100 text-[#66756B] border border-[#E3E8E0] ${sizeClasses}`}
+        className={`inline-flex items-center gap-1.5 font-medium rounded-full bg-[#F0F4EE] text-[#667067] border border-[#E7E8E1] ${sizeClasses}`}
       >
         <Clock className="w-3.5 h-3.5 text-stone-400" />
         Not Submitted
@@ -70,9 +70,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   if (s === 'open') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/20 shadow-2xs ${sizeClasses}`}
+        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DDEBDD] text-[#287653] border border-[#287653]/20 shadow-2xs ${sizeClasses}`}
       >
-        <span className="w-1.5 h-1.5 rounded-full bg-[#2D8061] animate-pulse" />
+        <span className="w-1.5 h-1.5 rounded-full bg-[#287653] animate-pulse" />
         Open for Rescue
       </span>
     );
@@ -81,7 +81,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   if (s === 'requested') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#E9B76A]/40 ${sizeClasses}`}
+        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#E9AE62]/40 ${sizeClasses}`}
       >
         <Clock className="w-3.5 h-3.5 text-[#D97706]" />
         Requested
@@ -92,9 +92,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   if (s === 'assigned' || s === 'approved') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/20 shadow-2xs ${sizeClasses}`}
+        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DDEBDD] text-[#287653] border border-[#287653]/20 shadow-2xs ${sizeClasses}`}
       >
-        <CheckCircle2 className="w-3.5 h-3.5 text-[#2D8061]" />
+        <CheckCircle2 className="w-3.5 h-3.5 text-[#287653]" />
         {s === 'assigned' ? 'Partner Assigned' : 'Request Approved'}
       </span>
     );
@@ -103,7 +103,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   if (s === 'collected') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#E9B76A]/40 ${sizeClasses}`}
+        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#E9AE62]/40 ${sizeClasses}`}
       >
         <Truck className="w-3.5 h-3.5 text-[#D97706]" />
         Collected &amp; In Transit
@@ -114,9 +114,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   if (s === 'delivered') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/20 font-semibold shadow-2xs ${sizeClasses}`}
+        className={`inline-flex items-center gap-1.5 font-bold rounded-full bg-[#DDEBDD] text-[#287653] border border-[#287653]/20 font-semibold shadow-2xs ${sizeClasses}`}
       >
-        <PackageCheck className="w-3.5 h-3.5 text-[#2D8061]" />
+        <PackageCheck className="w-3.5 h-3.5 text-[#287653]" />
         Delivered
       </span>
     );
@@ -125,7 +125,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   if (s === 'cancelled' || s === 'rejected') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 font-semibold rounded-full bg-stone-100 text-[#66756B] border border-[#E3E8E0] ${sizeClasses}`}
+        className={`inline-flex items-center gap-1.5 font-semibold rounded-full bg-[#F0F4EE] text-[#667067] border border-[#E7E8E1] ${sizeClasses}`}
       >
         <XCircle className="w-3.5 h-3.5 text-stone-400" />
         {s === 'cancelled' ? 'Cancelled' : 'Declined'}
@@ -145,7 +145,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   }
 
   return (
-    <span className={`inline-flex items-center font-medium rounded-full bg-stone-100 text-[#66756B] ${sizeClasses}`}>
+    <span className={`inline-flex items-center font-medium rounded-full bg-[#F0F4EE] text-[#667067] ${sizeClasses}`}>
       {status}
     </span>
   );

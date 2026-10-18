@@ -89,19 +89,19 @@ export const RequestsPage: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E3E8E0]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E7E8E1]">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174C3C]">
-            <span className="w-2 h-2 rounded-full bg-[#2D8061]" />
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#287653]">
+            <span className="w-2 h-2 rounded-full bg-[#287653]" />
             Recovery Operations
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D] flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center shrink-0 shadow-xs">
-              <ClipboardList className="w-5 h-5 text-[#DCEFE2]" />
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#F0F4EE] text-[#287653] flex items-center justify-center shrink-0 border border-[#E7E8E1]">
+              <ClipboardList className="w-5 h-5 text-[#287653]" />
             </div>
             My Pickups &amp; Hand-Off Timeline
           </h1>
-          <p className="text-xs sm:text-sm text-[#66756B]">
+          <p className="text-xs sm:text-sm text-[#667067]">
             Track status progression with an immutable audit history from organizer approval to final distribution.
           </p>
         </div>
@@ -137,31 +137,31 @@ export const RequestsPage: React.FC = () => {
             return (
               <div
                 key={req._id}
-                className="card-light p-6 sm:p-7 space-y-5 bg-white"
+                className="card-light p-6 sm:p-7 space-y-5 bg-white border border-[#E7E8E1]"
               >
                 {/* Header row */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-[#E3E8E0]">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-[#E7E8E1]">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <StatusBadge status={req.status} type="request" />
-                      <span className="text-xs text-[#66756B] font-mono">
+                      <span className="text-xs text-[#667067] font-mono">
                         Ref: {req._id.slice(-6)}
                       </span>
                     </div>
 
-                    <h2 className="text-lg font-bold font-serif text-[#18372D]">
+                    <h2 className="text-lg font-bold font-serif text-[#202820]">
                       {listing?.foodTitle || 'Surplus Food Batch'}
                     </h2>
 
-                    <div className="text-xs text-[#66756B]">
-                      Event: <strong className="text-[#18372D]">{listing?.eventName}</strong> • Area:{' '}
-                      <strong>{listing?.areaOrAddress}</strong>
+                    <div className="text-xs text-[#667067]">
+                      Event: <strong className="text-[#202820]">{listing?.eventName}</strong> • Area:{' '}
+                      <strong className="text-[#202820]">{listing?.areaOrAddress}</strong>
                     </div>
                   </div>
 
                   <div className="flex flex-col sm:items-end gap-1 text-right">
-                    <span className="text-xs text-[#66756B] font-medium">Requested Surplus</span>
-                    <div className="text-2xl font-bold font-serif text-[#18372D]">
+                    <span className="text-xs text-[#667067] font-medium">Requested Surplus</span>
+                    <div className="text-2xl font-bold font-serif text-[#202820]">
                       {req.requestedQuantity}{' '}
                       <span className="text-xs font-semibold">{listing?.unit || 'units'}</span>
                     </div>
@@ -169,32 +169,32 @@ export const RequestsPage: React.FC = () => {
                 </div>
 
                 {/* Private Pickup Hand-Off Details (Unlocked once approved) */}
-                <div className="p-4 rounded-xl bg-[#EEF4ED] border border-[#E3E8E0] space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#18372D]">
+                <div className="p-4 rounded-xl bg-[#F0F4EE] border border-[#E7E8E1] space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#202820]">
                     {req.status === 'approved' ||
                     req.status === 'collected' ||
                     req.status === 'delivered' ? (
                       <>
-                        <Unlock className="w-3.5 h-3.5 text-[#2D8061]" /> Private Pickup Instructions
+                        <Unlock className="w-3.5 h-3.5 text-[#287653]" /> Private Pickup Instructions
                         (Unlocked)
                       </>
                     ) : (
                       <>
-                        <Lock className="w-3.5 h-3.5 text-[#D97706]" /> Private Pickup Instructions
+                        <Lock className="w-3.5 h-3.5 text-[#E9AE62]" /> Private Pickup Instructions
                         (Locked until approval)
                       </>
                     )}
                   </div>
-                  <p className="text-xs text-[#18372D] font-medium">
+                  <p className="text-xs text-[#202820] font-medium">
                     {listing?.pickupInstructions ||
                       'Pickup instructions will unlock upon verified organizer approval.'}
                   </p>
                 </div>
 
                 {/* Action Buttons for Hand-Off transitions */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#E3E8E0]">
-                  <div className="text-xs text-[#66756B]">
-                    My collection note: <span className="text-[#18372D] italic font-medium">&quot;{req.collectionNote}&quot;</span>
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#E7E8E1]">
+                  <div className="text-xs text-[#667067]">
+                    My collection note: <span className="text-[#202820] italic font-medium">&quot;{req.collectionNote}&quot;</span>
                   </div>
 
                   <div className="flex items-center gap-2.5">
@@ -204,7 +204,7 @@ export const RequestsPage: React.FC = () => {
                         onClick={() => openStatusModal(req, 'collected')}
                         className="btn-primary-brand text-xs py-2 px-4 shadow-2xs"
                       >
-                        <Truck className="w-4 h-4 text-[#DCEFE2]" /> Record Collection (Loaded)
+                        <Truck className="w-4 h-4 text-white" /> Record Collection (Loaded)
                       </button>
                     )}
 
@@ -214,7 +214,7 @@ export const RequestsPage: React.FC = () => {
                         onClick={() => openStatusModal(req, 'delivered')}
                         className="btn-primary-brand text-xs py-2 px-4 shadow-2xs"
                       >
-                        <PackageCheck className="w-4 h-4 text-[#DCEFE2]" /> Record Delivery (Completed)
+                        <PackageCheck className="w-4 h-4 text-white" /> Record Delivery (Completed)
                       </button>
                     )}
 
@@ -231,25 +231,25 @@ export const RequestsPage: React.FC = () => {
 
                 {/* Audit Trail Timeline */}
                 {req.statusHistory && req.statusHistory.length > 0 && (
-                  <div className="pt-3 border-t border-[#E3E8E0]">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#174C3C] uppercase tracking-wider mb-3">
-                      <History className="w-3.5 h-3.5 text-[#2D8061]" /> Immutable Status Audit Trail
+                  <div className="pt-3 border-t border-[#E7E8E1]">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#287653] uppercase tracking-wider mb-3">
+                      <History className="w-3.5 h-3.5 text-[#287653]" /> Immutable Status Audit Trail
                     </div>
 
                     <div className="space-y-2">
                       {req.statusHistory.map((entry, idx) => (
                         <div
                           key={idx}
-                          className="flex items-start gap-3 text-xs bg-[#F8F7F2] p-2.5 rounded-xl border border-[#E3E8E0]"
+                          className="flex items-start gap-3 text-xs bg-[#FAF9F6] p-2.5 rounded-xl border border-[#E7E8E1]"
                         >
-                          <span className="w-2 h-2 rounded-full bg-[#2D8061] mt-1.5 shrink-0" />
+                          <span className="w-2 h-2 rounded-full bg-[#287653] mt-1.5 shrink-0" />
                           <div className="space-y-0.5 flex-1">
                             <div className="flex items-center justify-between">
-                              <span className="font-bold text-[#18372D] uppercase tracking-wider text-[10px]">
+                              <span className="font-bold text-[#202820] uppercase tracking-wider text-[10px]">
                                 {entry.previousStatus ? `${entry.previousStatus} → ${entry.newStatus}` : entry.newStatus}
                                 {entry.actorName ? ` • ${entry.actorName}` : ''}
                               </span>
-                              <span className="text-[10px] text-[#66756B]">
+                              <span className="text-[10px] text-[#667067]">
                                 {new Date(entry.timestamp).toLocaleString([], {
                                   dateStyle: 'medium',
                                   timeStyle: 'short',
@@ -257,7 +257,7 @@ export const RequestsPage: React.FC = () => {
                               </span>
                             </div>
                             {entry.reason && (
-                              <p className="text-[11px] text-[#66756B] italic">&quot;{entry.reason}&quot;</p>
+                              <p className="text-[11px] text-[#667067] italic">&quot;{entry.reason}&quot;</p>
                             )}
                           </div>
                         </div>
@@ -276,38 +276,38 @@ export const RequestsPage: React.FC = () => {
         <div
           role="dialog"
           aria-label="Confirm Status Update"
-          className="fixed inset-0 z-50 bg-[#18372D]/50 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-50 bg-[#202820]/40 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in"
         >
-          <div className="card-light p-6 sm:p-7 max-w-lg w-full space-y-5 animate-slide-up shadow-2xl bg-white">
-            <div className="flex items-start justify-between pb-3 border-b border-[#E3E8E0]">
+          <div className="card-light p-6 sm:p-7 max-w-lg w-full space-y-5 animate-slide-up shadow-xl bg-white border border-[#E7E8E1]">
+            <div className="flex items-start justify-between pb-3 border-b border-[#E7E8E1]">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-[#DCEFE2] text-[#174C3C] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-[#DDEBDD] text-[#287653] flex items-center justify-center">
                   {targetStatus === 'collected' ? (
-                    <Truck className="w-4 h-4 text-[#2D8061]" />
+                    <Truck className="w-4 h-4 text-[#287653]" />
                   ) : (
-                    <PackageCheck className="w-4 h-4 text-[#2D8061]" />
+                    <PackageCheck className="w-4 h-4 text-[#287653]" />
                   )}
                 </div>
                 <div>
-                  <h3 className="font-bold font-serif text-base text-[#18372D]">
+                  <h3 className="font-bold font-serif text-base text-[#202820]">
                     {targetStatus === 'collected'
                       ? 'Confirm Food Collection Hand-Off'
                       : 'Confirm Community Delivery'}
                   </h3>
-                  <p className="text-xs text-[#66756B]">This record will be saved to the permanent audit trail.</p>
+                  <p className="text-xs text-[#667067]">This record will be saved to the permanent audit trail.</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedReqForModal(null)}
-                className="p-1 text-[#66756B] hover:text-[#18372D] rounded-lg"
+                className="p-1 text-[#667067] hover:text-[#202820] rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-3">
-              <label className="block text-xs font-bold text-[#18372D] uppercase tracking-wider">
+              <label className="block text-xs font-bold text-[#202820] uppercase tracking-wider">
                 Custody &amp; Inspection Note *
               </label>
               <textarea
@@ -316,11 +316,11 @@ export const RequestsPage: React.FC = () => {
                 value={statusReason}
                 onChange={(e) => setStatusReason(e.target.value)}
                 placeholder="Document thermal condition, container cleanliness, and responsible parties..."
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden"
               />
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E3E8E0]">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E7E8E1]">
               <button
                 type="button"
                 onClick={() => setSelectedReqForModal(null)}

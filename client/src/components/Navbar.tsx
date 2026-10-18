@@ -30,27 +30,27 @@ export const Navbar: React.FC = () => {
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `text-xs sm:text-sm font-medium tracking-tight transition-all px-3 py-1.5 rounded-xl ${
       isActive
-        ? 'text-[#174C3C] bg-[#DCEFE2] font-semibold border border-[#174C3C]/10 shadow-2xs'
-        : 'text-[#66756B] hover:text-[#18372D] hover:bg-[#EEF4ED]'
+        ? 'text-[#287653] bg-[#DDEBDD] font-semibold border border-[#287653]/15 shadow-2xs'
+        : 'text-[#667067] hover:text-[#202820] hover:bg-[#F0F4EE]'
     }`;
 
   return (
-    <header className="sticky top-0 z-40 bg-[#F8F7F2]/95 backdrop-blur-md border-b border-[#E3E8E0] transition-all">
+    <header className="sticky top-0 z-40 bg-[#FAF9F6]/95 backdrop-blur-md border-b border-[#E7E8E1] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18">
           {/* Brand Mark & Wordmark */}
           <Link
             to="/"
-            className="flex items-center gap-3 group focus:outline-hidden focus:ring-2 focus:ring-[#174C3C] rounded-xl p-1"
+            className="flex items-center gap-3 group focus:outline-hidden focus:ring-2 focus:ring-[#287653] rounded-xl p-1"
           >
-            <div className="w-10 h-10 rounded-xl bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center shadow-xs group-hover:bg-[#2D8061] transition-colors">
-              <UtensilsCrossed className="w-5 h-5 text-[#DCEFE2]" />
+            <div className="w-10 h-10 rounded-xl bg-[#287653] text-white flex items-center justify-center shadow-xs group-hover:bg-[#1f5c41] transition-colors">
+              <UtensilsCrossed className="w-5 h-5 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold font-serif text-[#18372D] tracking-tight leading-none">
-                Bhojan<span className="text-[#2D8061]">Setu</span>
+              <span className="text-xl font-bold font-serif text-[#202820] tracking-tight leading-none">
+                Bhojan<span className="text-[#287653]">Setu</span>
               </span>
-              <span className="text-[11px] text-[#66756B] font-medium tracking-wide">
+              <span className="text-[11px] text-[#667067] font-medium tracking-wide">
                 Food Recovery Network
               </span>
             </div>
@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
           <nav className="hidden md:flex items-center gap-1.5" aria-label="Main Navigation">
             <NavLink to="/listings" className={navLinkClasses}>
               <span className="flex items-center gap-1.5">
-                <Search className="w-3.5 h-3.5 text-[#2D8061]" /> Discover Food
+                <Search className="w-3.5 h-3.5 text-[#287653]" /> Discover Food
               </span>
             </NavLink>
             <a
@@ -71,18 +71,18 @@ export const Navbar: React.FC = () => {
                   document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="text-xs sm:text-sm font-medium tracking-tight text-[#66756B] hover:text-[#18372D] hover:bg-[#EEF4ED] px-3 py-1.5 rounded-xl transition-all"
+              className="text-xs sm:text-sm font-medium tracking-tight text-[#667067] hover:text-[#202820] hover:bg-[#F0F4EE] px-3 py-1.5 rounded-xl transition-all"
             >
               How It Works
             </a>
             <NavLink to="/impact" className={navLinkClasses}>
               <span className="flex items-center gap-1.5">
-                <BarChart3 className="w-3.5 h-3.5 text-[#2D8061]" /> Our Impact
+                <BarChart3 className="w-3.5 h-3.5 text-[#287653]" /> Our Impact
               </span>
             </NavLink>
             <NavLink to="/food-safety" className={navLinkClasses}>
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#2D8061]" /> Food Safety
+                <ShieldCheck className="w-3.5 h-3.5 text-[#287653]" /> Food Safety
               </span>
             </NavLink>
 
@@ -90,20 +90,20 @@ export const Navbar: React.FC = () => {
               <>
                 <NavLink to="/dashboard" className={navLinkClasses}>
                   <span className="flex items-center gap-1.5">
-                    <LayoutDashboard className="w-3.5 h-3.5 text-[#2D8061]" /> Dashboard
+                    <LayoutDashboard className="w-3.5 h-3.5 text-[#287653]" /> Dashboard
                   </span>
                 </NavLink>
                 {user.role === 'partner' && (
                   <NavLink to="/requests" className={navLinkClasses}>
                     <span className="flex items-center gap-1.5">
-                      <ClipboardList className="w-3.5 h-3.5 text-[#2D8061]" /> My Pickups
+                      <ClipboardList className="w-3.5 h-3.5 text-[#287653]" /> My Pickups
                     </span>
                   </NavLink>
                 )}
                 {user.role === 'admin' && (
                   <NavLink to="/admin/partners" className={navLinkClasses}>
                     <span className="flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5 text-[#2D8061]" /> Partners
+                      <Users className="w-3.5 h-3.5 text-[#287653]" /> Partners
                     </span>
                   </NavLink>
                 )}
@@ -116,11 +116,11 @@ export const Navbar: React.FC = () => {
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="flex flex-col text-right">
-                  <span className="text-xs font-bold text-[#18372D] leading-tight">
+                  <span className="text-xs font-bold text-[#202820] leading-tight">
                     {user.name}
                   </span>
-                  <span className="text-[10px] text-[#66756B] capitalize flex items-center justify-end gap-1 font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2D8061]" />
+                  <span className="text-[10px] text-[#667067] capitalize flex items-center justify-end gap-1 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#287653]" />
                     {user.role} {user.role === 'partner' && `(${user.verificationStatus})`}
                   </span>
                 </div>
@@ -130,7 +130,7 @@ export const Navbar: React.FC = () => {
                     to="/listings/create"
                     className="btn-primary-brand text-xs py-2 px-3.5 shadow-xs"
                   >
-                    <PlusCircle className="w-3.5 h-3.5 text-[#DCEFE2]" />
+                    <PlusCircle className="w-3.5 h-3.5 text-[#DDEBDD]" />
                     Donate Food
                   </Link>
                 ) : (
@@ -138,7 +138,7 @@ export const Navbar: React.FC = () => {
                     to="/listings"
                     className="btn-primary-brand text-xs py-2 px-3.5 shadow-xs"
                   >
-                    <Search className="w-3.5 h-3.5 text-[#DCEFE2]" />
+                    <Search className="w-3.5 h-3.5 text-[#DDEBDD]" />
                     Rescue Food
                   </Link>
                 )}
@@ -146,7 +146,7 @@ export const Navbar: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="p-2 text-[#66756B] hover:text-rose-700 hover:bg-rose-50 rounded-xl transition-colors"
+                  className="p-2 text-[#667067] hover:text-rose-700 hover:bg-rose-50 rounded-xl transition-colors"
                   title="Sign Out"
                   aria-label="Sign Out"
                 >
@@ -157,13 +157,13 @@ export const Navbar: React.FC = () => {
               <div className="flex items-center gap-2.5">
                 <Link
                   to="/login"
-                  className="px-3.5 py-2 text-xs font-semibold text-[#18372D] hover:bg-[#EEF4ED] rounded-xl transition-colors"
+                  className="px-3.5 py-2 text-xs font-semibold text-[#202820] hover:bg-[#F0F4EE] rounded-xl transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/listings"
-                  className="px-3.5 py-2 text-xs font-semibold text-[#2D8061] hover:bg-[#EEF4ED] rounded-xl transition-colors"
+                  className="px-3.5 py-2 text-xs font-semibold text-[#287653] hover:bg-[#F0F4EE] rounded-xl transition-colors"
                 >
                   Rescue Food
                 </Link>
@@ -172,7 +172,7 @@ export const Navbar: React.FC = () => {
                   className="btn-primary-brand text-xs py-2 px-4 shadow-xs"
                 >
                   Donate Food
-                  <ArrowRight className="w-3.5 h-3.5 text-[#DCEFE2]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#DDEBDD]" />
                 </Link>
               </div>
             )}
@@ -183,10 +183,10 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-[#18372D] hover:bg-[#EEF4ED] transition-colors"
+              className="p-2 rounded-xl text-[#202820] hover:bg-[#F0F4EE] transition-colors"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-[#174C3C]" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-[#287653]" />}
             </button>
           </div>
         </div>
@@ -194,13 +194,13 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-[#E3E8E0] bg-[#F8F7F2] px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl">
+        <div className="md:hidden border-t border-[#E7E8E1] bg-[#FAF9F6] px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl">
           <NavLink
             to="/listings"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18372D] hover:bg-[#EEF4ED]"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#202820] hover:bg-[#F0F4EE]"
           >
-            <Search className="w-4 h-4 text-[#2D8061]" /> Discover Surplus Food
+            <Search className="w-4 h-4 text-[#287653]" /> Discover Surplus Food
           </NavLink>
           <a
             href="/#how-it-works"
@@ -211,42 +211,42 @@ export const Navbar: React.FC = () => {
                 document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18372D] hover:bg-[#EEF4ED]"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#202820] hover:bg-[#F0F4EE]"
           >
             How It Works
           </a>
           <NavLink
             to="/impact"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18372D] hover:bg-[#EEF4ED]"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#202820] hover:bg-[#F0F4EE]"
           >
-            <BarChart3 className="w-4 h-4 text-[#2D8061]" /> Impact Dashboard
+            <BarChart3 className="w-4 h-4 text-[#287653]" /> Impact Dashboard
           </NavLink>
           <NavLink
             to="/food-safety"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18372D] hover:bg-[#EEF4ED]"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#202820] hover:bg-[#F0F4EE]"
           >
-            <ShieldCheck className="w-4 h-4 text-[#2D8061]" /> Food Safety Standards
+            <ShieldCheck className="w-4 h-4 text-[#287653]" /> Food Safety Standards
           </NavLink>
 
           {user ? (
-            <div className="pt-3 border-t border-[#E3E8E0] space-y-2">
+            <div className="pt-3 border-t border-[#E7E8E1] space-y-2">
               <NavLink
                 to="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18372D] hover:bg-[#EEF4ED]"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#202820] hover:bg-[#F0F4EE]"
               >
-                <LayoutDashboard className="w-4 h-4 text-[#2D8061]" /> My Dashboard ({user.role})
+                <LayoutDashboard className="w-4 h-4 text-[#287653]" /> My Dashboard ({user.role})
               </NavLink>
 
               {user.role === 'partner' && (
                 <NavLink
                   to="/requests"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18372D] hover:bg-[#EEF4ED]"
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#202820] hover:bg-[#F0F4EE]"
                 >
-                  <ClipboardList className="w-4 h-4 text-[#2D8061]" /> Rescue Requests &amp; Pickups
+                  <ClipboardList className="w-4 h-4 text-[#287653]" /> Rescue Requests &amp; Pickups
                 </NavLink>
               )}
 
@@ -254,14 +254,14 @@ export const Navbar: React.FC = () => {
                 <NavLink
                   to="/admin/partners"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18372D] hover:bg-[#EEF4ED]"
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold text-[#202820] hover:bg-[#F0F4EE]"
                 >
-                  <Users className="w-4 h-4 text-[#2D8061]" /> Partner Verification Console
+                  <Users className="w-4 h-4 text-[#287653]" /> Partner Verification Console
                 </NavLink>
               )}
 
               <div className="pt-2 flex items-center justify-between">
-                <span className="text-xs text-[#66756B]">Logged in as <strong>{user.name}</strong></span>
+                <span className="text-xs text-[#667067]">Logged in as <strong>{user.name}</strong></span>
                 <button
                   type="button"
                   onClick={handleLogout}
@@ -272,18 +272,18 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="pt-3 border-t border-[#E3E8E0] grid grid-cols-2 gap-2">
+            <div className="pt-3 border-t border-[#E7E8E1] grid grid-cols-2 gap-2">
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-center py-2.5 text-xs font-bold text-[#174C3C] bg-[#DCEFE2] rounded-xl border border-[#174C3C]/15"
+                className="text-center py-2.5 text-xs font-bold text-[#287653] bg-[#DDEBDD] rounded-xl border border-[#287653]/15"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-center py-2.5 text-xs font-bold text-white bg-[#174C3C] hover:bg-[#2D8061] rounded-xl shadow-xs"
+                className="text-center py-2.5 text-xs font-bold text-white bg-[#287653] hover:bg-[#1f5c41] rounded-xl shadow-xs"
               >
                 Register
               </Link>

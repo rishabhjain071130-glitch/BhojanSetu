@@ -5,7 +5,6 @@ import {
   X,
   ChevronRight,
   UserCheck,
-  Shield,
   ChefHat,
   HeartHandshake,
   Clock,
@@ -29,7 +28,6 @@ export const DemoFloatingWidget: React.FC = () => {
       email: 'organizer@bhojansetu.demo',
       icon: ChefHat,
       badge: 'Listing Creator',
-      color: 'border-[#235347]/30 bg-[#DAF1DE]/40',
     },
     {
       role: 'partner',
@@ -38,7 +36,6 @@ export const DemoFloatingWidget: React.FC = () => {
       email: 'partner.verified@bhojansetu.demo',
       icon: HeartHandshake,
       badge: 'Verified Rescuer',
-      color: 'border-[#235347]/30 bg-[#DAF1DE]/70',
     },
     {
       role: 'partner',
@@ -47,7 +44,6 @@ export const DemoFloatingWidget: React.FC = () => {
       email: 'partner.pending@bhojansetu.demo',
       icon: Clock,
       badge: 'Pending Review',
-      color: 'border-amber-400/30 bg-amber-50/70',
     },
     {
       role: 'admin',
@@ -56,7 +52,6 @@ export const DemoFloatingWidget: React.FC = () => {
       email: 'admin@bhojansetu.demo',
       icon: ShieldCheck,
       badge: 'Admin Console',
-      color: 'border-[#163832]/30 bg-[#EAF6EC]',
     },
   ];
 
@@ -81,24 +76,24 @@ export const DemoFloatingWidget: React.FC = () => {
         <div
           role="dialog"
           aria-label="Demo Role Switcher"
-          className="mb-3 w-[340px] sm:w-[380px] bg-white rounded-2xl border border-[#235347]/20 shadow-2xl p-4 sm:p-5 animate-slide-up backdrop-blur-md"
+          className="mb-3 w-[340px] sm:w-[380px] bg-white rounded-2xl border border-[#E7E8E1] shadow-xl p-4 sm:p-5 animate-slide-up backdrop-blur-md"
         >
-          <div className="flex items-center justify-between pb-3 border-b border-[#E3E8E0]">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E7E8E1]">
             <div className="flex items-center gap-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#174C3C] text-[#DCEFE2] text-xs shadow-xs">
+              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#287653] text-white text-xs shadow-xs">
                 <Sparkles className="w-3.5 h-3.5" />
               </span>
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#18372D]">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#202820]">
                   Judge &amp; Demo Evaluation
                 </h3>
-                <p className="text-[11px] text-[#66756B]">1-Click role switcher for testing workflows</p>
+                <p className="text-[11px] text-[#667067]">1-Click role switcher for testing workflows</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="p-1 rounded-lg text-[#66756B] hover:text-[#18372D] hover:bg-stone-100 transition-colors"
+              className="p-1 rounded-lg text-[#667067] hover:text-[#202820] hover:bg-stone-100 transition-colors"
               aria-label="Close demo panel"
             >
               <X className="w-4 h-4" />
@@ -126,32 +121,32 @@ export const DemoFloatingWidget: React.FC = () => {
                   onClick={() => handleQuickLogin(acc.email)}
                   className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between group ${
                     isCurrent
-                      ? 'ring-2 ring-[#2D8061] border-[#2D8061] bg-[#EEF4ED] shadow-xs'
-                      : 'border-[#E3E8E0] bg-[#F8F7F2] hover:border-[#174C3C]/40 hover:bg-white hover:shadow-xs'
+                      ? 'ring-2 ring-[#287653] border-[#287653] bg-[#F0F4EE] shadow-xs'
+                      : 'border-[#E7E8E1] bg-[#FAF9F6] hover:border-[#287653]/40 hover:bg-white hover:shadow-xs'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-white border border-[#E3E8E0] flex items-center justify-center text-[#174C3C] shrink-0 shadow-2xs">
-                      <IconComp className="w-4 h-4 text-[#2D8061]" />
+                    <div className="w-8 h-8 rounded-lg bg-white border border-[#E7E8E1] flex items-center justify-center text-[#287653] shrink-0 shadow-2xs">
+                      <IconComp className="w-4 h-4 text-[#287653]" />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-bold text-[#18372D]">{acc.title}</span>
-                        <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-white border border-[#E3E8E0] text-[#174C3C]">
+                        <span className="text-xs font-bold text-[#202820]">{acc.title}</span>
+                        <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-white border border-[#E7E8E1] text-[#287653]">
                           {acc.badge}
                         </span>
                       </div>
-                      <div className="text-[11px] text-[#66756B] truncate max-w-[200px]">
+                      <div className="text-[11px] text-[#667067] truncate max-w-[200px]">
                         {acc.sub}
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1 text-[#174C3C]">
+                  <div className="flex items-center gap-1 text-[#287653]">
                     {isLoading ? (
-                      <span className="text-[11px] font-semibold text-[#174C3C]">Logging in...</span>
+                      <span className="text-[11px] font-semibold text-[#287653]">Logging in...</span>
                     ) : isCurrent ? (
-                      <span className="text-[11px] font-bold text-[#2D8061] flex items-center gap-0.5">
+                      <span className="text-[11px] font-bold text-[#287653] flex items-center gap-0.5">
                         <UserCheck className="w-3.5 h-3.5" /> Active
                       </span>
                     ) : (
@@ -163,10 +158,10 @@ export const DemoFloatingWidget: React.FC = () => {
             })}
           </div>
 
-          <div className="mt-3 pt-2.5 border-t border-[#E3E8E0] flex items-center justify-between text-[11px] text-[#66756B]">
-            <span>Password: <code className="bg-stone-100 px-1 py-0.5 rounded text-[#18372D]">Password123!</code></span>
+          <div className="mt-3 pt-2.5 border-t border-[#E7E8E1] flex items-center justify-between text-[11px] text-[#667067]">
+            <span>Fast-track switcher • Instant testing</span>
             {user && (
-              <span className="font-semibold text-[#174C3C]">
+              <span className="font-semibold text-[#287653]">
                 Logged in: {user.name}
               </span>
             )}
@@ -178,15 +173,15 @@ export const DemoFloatingWidget: React.FC = () => {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#174C3C] text-white shadow-xl hover:bg-[#2D8061] transition-all duration-300 hover:scale-105 border border-[#DCEFE2]/30"
+        className="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#287653] text-white shadow-xl hover:bg-[#1f5c41] transition-all duration-300 hover:scale-105 border border-[#DDEBDD]/30"
         aria-label="Open Demo Account Switcher"
       >
         <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DCEFE2] opacity-75" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#DCEFE2]" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DDEBDD] opacity-75" />
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#DDEBDD]" />
         </span>
         <span className="text-xs font-bold tracking-wide">Demo Roles</span>
-        <Sparkles className="w-3.5 h-3.5 text-[#DCEFE2] group-hover:rotate-12 transition-transform" />
+        <Sparkles className="w-3.5 h-3.5 text-[#DDEBDD] group-hover:rotate-12 transition-transform" />
       </button>
     </div>
   );

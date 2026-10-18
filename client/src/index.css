@@ -2,25 +2,27 @@
 
 @layer base {
   :root {
-    /* Exact Final Mission Light Design Tokens */
-    --color-canvas: #F8F7F2;
+    /* BhojanSetu Light-First Design System Tokens */
+    --color-canvas: #FAF9F6;
     --color-surface: #FFFFFF;
-    --color-surface-soft: #EEF4ED;
-    --color-text-primary: #18372D;
-    --color-text-secondary: #66756B;
-    --color-brand-green: #174C3C;
-    --color-interactive-emerald: #2D8061;
-    --color-soft-mint: #DCEFE2;
-    --color-border-subtle: #E3E8E0;
-    --color-warm-accent: #E9B76A;
+    --color-surface-soft: #F0F4EE;
+    --color-text-primary: #202820;
+    --color-text-secondary: #667067;
+    --color-brand-green: #287653;
+    --color-brand-hover: #1f5c41;
+    --color-soft-green: #DDEBDD;
+    --color-border-subtle: #E7E8E1;
+    --color-warm-accent: #E9AE62;
 
-    /* Legacy compatibility mappings */
-    --color-bg-deepest: #174C3C;
-    --color-deep-forest: #18372D;
-    --color-dark-green: #174C3C;
-    --color-brand-emerald: #2D8061;
-    --color-muted-mint: #66756B;
-    --color-light-mint: #DCEFE2;
+    /* Legacy compatibility aliases mapped strictly to light tokens */
+    --color-bg-deepest: #287653;
+    --color-deep-forest: #202820;
+    --color-dark-green: #287653;
+    --color-brand-emerald: #287653;
+    --color-interactive-emerald: #287653;
+    --color-muted-mint: #667067;
+    --color-light-mint: #DDEBDD;
+    --color-soft-mint: #DDEBDD;
   }
 
   body {
@@ -40,61 +42,54 @@
   }
 
   ::selection {
-    background-color: #DCEFE2;
-    color: #174C3C;
+    background-color: #DDEBDD;
+    color: #287653;
   }
 }
 
 /* Custom Semantic Utility Classes */
 .bg-canvas {
-  background-color: #F8F7F2;
+  background-color: #FAF9F6;
 }
 .bg-surface {
   background-color: #FFFFFF;
 }
 .bg-surface-soft {
-  background-color: #EEF4ED;
+  background-color: #F0F4EE;
 }
 .bg-brand-green {
-  background-color: #174C3C;
+  background-color: #287653;
 }
-.bg-interactive-emerald {
-  background-color: #2D8061;
-}
+.bg-soft-green,
 .bg-soft-mint {
-  background-color: #DCEFE2;
+  background-color: #DDEBDD;
 }
 .bg-warm-accent {
-  background-color: #E9B76A;
+  background-color: #E9AE62;
 }
 
 .text-primary-dark {
-  color: #18372D;
+  color: #202820;
 }
 .text-secondary-muted {
-  color: #66756B;
+  color: #667067;
 }
 .text-brand-green {
-  color: #174C3C;
-}
-.text-interactive-emerald {
-  color: #2D8061;
+  color: #287653;
 }
 .text-warm-accent {
   color: #D97706;
 }
 
 .border-subtle {
-  border-color: #E3E8E0;
+  border-color: #E7E8E1;
 }
 .border-brand-green {
-  border-color: #174C3C;
+  border-color: #287653;
 }
-.border-interactive-emerald {
-  border-color: #2D8061;
-}
+.border-soft-green,
 .border-soft-mint {
-  border-color: #DCEFE2;
+  border-color: #DDEBDD;
 }
 
 /* Elevated Light Card (Clean, crisp, modern white surface) */
@@ -102,79 +97,82 @@
 .card-surface,
 .card-mint {
   background-color: #FFFFFF;
-  border: 1px solid #E3E8E0;
-  border-radius: 1.25rem;
-  box-shadow: 0 1px 3px 0 rgba(24, 55, 45, 0.04), 0 1px 2px -1px rgba(24, 55, 45, 0.02);
+  border: 1px solid #E7E8E1;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(32, 40, 32, 0.04), 0 1px 2px -1px rgba(32, 40, 32, 0.02);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
 }
 .card-light:hover,
 .card-surface:hover,
 .card-mint:hover {
-  border-color: #c8d4c5;
-  box-shadow: 0 8px 24px -4px rgba(24, 55, 45, 0.08);
+  border-color: #cbd5c9;
+  box-shadow: 0 8px 24px -4px rgba(32, 40, 32, 0.08);
 }
 
-/* Secondary Soft Mint Card */
+/* Secondary Soft Card */
 .card-soft {
-  background-color: #EEF4ED;
-  border: 1px solid #E3E8E0;
-  border-radius: 1.25rem;
+  background-color: #F0F4EE;
+  border: 1px solid #E7E8E1;
+  border-radius: 1rem;
   transition: all 0.2s ease;
 }
 
-/* Elevated Dark Focal Area Card (Used strictly for focal emphasis) */
+/* Intentional Branded Accent Card */
 .card-dark-emerald {
-  background-color: #174C3C;
-  border: 1px solid rgba(220, 239, 226, 0.2);
+  background-color: #287653;
+  border: 1px solid rgba(221, 235, 221, 0.25);
   border-radius: 1.25rem;
   color: #FFFFFF;
-  box-shadow: 0 8px 28px -4px rgba(24, 55, 45, 0.25);
+  box-shadow: 0 8px 28px -4px rgba(40, 118, 83, 0.25);
 }
 
 /* Tactile Interactive Buttons */
 .btn-primary-brand,
 .btn-primary-emerald {
-  background-color: #174C3C;
+  background-color: #287653;
   color: #FFFFFF;
   font-weight: 600;
-  border-radius: 0.875rem;
-  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.375rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: 0 2px 8px -1px rgba(23, 76, 60, 0.25);
+  box-shadow: 0 2px 6px -1px rgba(40, 118, 83, 0.25);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-primary-brand:hover,
 .btn-primary-emerald:hover {
-  background-color: #2D8061;
+  background-color: #1f5c41;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px -2px rgba(45, 128, 97, 0.35);
+  box-shadow: 0 6px 16px -2px rgba(40, 118, 83, 0.3);
 }
 .btn-primary-brand:active,
 .btn-primary-emerald:active {
   transform: translateY(1px);
 }
 
+.btn-secondary-light,
 .btn-secondary-mint {
-  background-color: #DCEFE2;
-  color: #174C3C;
+  background-color: #DDEBDD;
+  color: #287653;
   font-weight: 600;
-  border-radius: 0.875rem;
-  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.25rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border: 1px solid rgba(23, 76, 60, 0.12);
+  border: 1px solid rgba(40, 118, 83, 0.15);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.btn-secondary-light:hover,
 .btn-secondary-mint:hover {
-  background-color: #c9e8d2;
-  color: #174C3C;
+  background-color: #d0e4d0;
+  color: #1f5c41;
   transform: translateY(-1px);
 }
+.btn-secondary-light:active,
 .btn-secondary-mint:active {
   transform: translateY(1px);
 }
@@ -182,33 +180,34 @@
 .btn-outline,
 .btn-outline-emerald {
   background-color: #FFFFFF;
-  color: #174C3C;
+  color: #202820;
   font-weight: 600;
-  border-radius: 0.875rem;
-  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.25rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border: 1.5px solid #E3E8E0;
+  border: 1px solid #E7E8E1;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-outline:hover,
 .btn-outline-emerald:hover {
-  border-color: #174C3C;
-  background-color: #EEF4ED;
+  border-color: #287653;
+  background-color: #F0F4EE;
+  color: #287653;
   transform: translateY(-1px);
 }
 
-/* Glass Header (Clean, light translucent banner) */
+/* Translucent Light Header */
 .glass-header-light {
-  background-color: rgba(248, 247, 242, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid #E3E8E0;
+  background-color: rgba(250, 249, 246, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E7E8E1;
 }
 
-/* Reusable Keyframe Motion Primitives */
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -217,7 +216,7 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -225,33 +224,15 @@
   }
 }
 
-@keyframes floatGentle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.04); }
-}
-
 .animate-fade-in {
-  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-up {
-  animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-float {
-  animation: floatGentle 5s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-/* Accessibility: Respect Reduced Motion Preference */
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.001ms !important;

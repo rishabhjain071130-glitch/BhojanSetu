@@ -92,20 +92,20 @@ export const CreateListingPage: React.FC = () => {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in">
       {/* Page Header */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-xs text-[#66756B]">
-          <Link to="/dashboard" className="hover:text-[#174C3C] transition-colors">
+        <div className="flex items-center gap-2 text-xs text-[#667067]">
+          <Link to="/dashboard" className="hover:text-[#287653] transition-colors">
             Dashboard
           </Link>
           <span>/</span>
-          <span className="font-bold text-[#174C3C]">List Surplus Food</span>
+          <span className="font-bold text-[#287653]">List Surplus Food</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D] flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center shrink-0 shadow-xs">
-            <ChefHat className="w-5 h-5 text-[#DCEFE2]" />
+        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#287653] text-white flex items-center justify-center shrink-0 shadow-xs">
+            <ChefHat className="w-5 h-5 text-white" />
           </div>
           Donate Event Surplus Food
         </h1>
-        <p className="text-xs sm:text-sm text-[#66756B]">
+        <p className="text-xs sm:text-sm text-[#667067]">
           Capture preparation timestamps, thermal storage condition notes, and an operational collection deadline.
         </p>
       </div>
@@ -114,19 +114,19 @@ export const CreateListingPage: React.FC = () => {
 
       {error && <ErrorAlert message={error} details={errorDetails} />}
 
-      <form onSubmit={handleSubmit} className="space-y-8 card-light p-6 sm:p-9 bg-white">
+      <form onSubmit={handleSubmit} className="space-y-8 card-light p-6 sm:p-9 bg-white border border-[#E7E8E1] rounded-2xl">
         {/* Group 1: Event Information */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E3E8E0]">
-            <Building2 className="w-4 h-4 text-[#2D8061]" />
-            <h2 className="text-xs font-bold text-[#174C3C] uppercase tracking-wider">
+          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E7E8E1]">
+            <Building2 className="w-4 h-4 text-[#287653]" />
+            <h2 className="text-xs font-bold text-[#287653] uppercase tracking-wider">
               1. Event &amp; Context
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Event Name *
               </label>
               <input
@@ -136,19 +136,19 @@ export const CreateListingPage: React.FC = () => {
                 value={formData.eventName}
                 onChange={handleChange}
                 placeholder="e.g. Kapoor-Mehta Wedding Reception"
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Event Type *
               </label>
               <select
                 name="eventType"
                 value={formData.eventType}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
               >
                 <option value="wedding">Wedding Function</option>
                 <option value="banquet">Banquet / Conference</option>
@@ -163,16 +163,16 @@ export const CreateListingPage: React.FC = () => {
 
         {/* Group 2: Food & Quantity Details */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E3E8E0]">
-            <Utensils className="w-4 h-4 text-[#2D8061]" />
-            <h2 className="text-xs font-bold text-[#174C3C] uppercase tracking-wider">
+          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E7E8E1]">
+            <Utensils className="w-4 h-4 text-[#287653]" />
+            <h2 className="text-xs font-bold text-[#287653] uppercase tracking-wider">
               2. Food Details &amp; Quantity
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Food Title / Name *
               </label>
               <input
@@ -182,19 +182,19 @@ export const CreateListingPage: React.FC = () => {
                 value={formData.foodTitle}
                 onChange={handleChange}
                 placeholder="e.g. Mixed Veg Dum Biryani &amp; Dal Makhani"
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Food Category *
               </label>
               <select
                 name="foodCategory"
                 value={formData.foodCategory}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
               >
                 <option value="cooked_meals">Fresh Cooked Meals (Buffet/Curries)</option>
                 <option value="packaged_ration">Packaged / Sealed Rations</option>
@@ -208,7 +208,7 @@ export const CreateListingPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+            <label className="block text-xs font-bold text-[#202820] mb-1.5">
               Detailed Description *
             </label>
             <textarea
@@ -218,13 +218,13 @@ export const CreateListingPage: React.FC = () => {
               value={formData.description}
               onChange={handleChange}
               placeholder="Describe dishes, untouched condition, packaging state (e.g. untouched buffet food maintained in covered commercial food pans)..."
-              className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+              className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Surplus Quantity *
               </label>
               <input
@@ -236,19 +236,19 @@ export const CreateListingPage: React.FC = () => {
                 value={formData.quantity}
                 onChange={handleChange}
                 placeholder="e.g. 40"
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Measurement Unit *
               </label>
               <select
                 name="unit"
                 value={formData.unit}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
               >
                 <option value="kg">Kilograms (kg)</option>
                 <option value="servings">Individual Servings</option>
@@ -260,7 +260,7 @@ export const CreateListingPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+            <label className="block text-xs font-bold text-[#202820] mb-1.5">
               Allergen &amp; Dietary Notes (Optional)
             </label>
             <input
@@ -269,23 +269,23 @@ export const CreateListingPage: React.FC = () => {
               value={formData.allergenNotes}
               onChange={handleChange}
               placeholder="e.g. Vegetarian, contains dairy (paneer/butter), nut-free"
-              className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+              className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
             />
           </div>
         </div>
 
         {/* Group 3: Temperature, Storage & Safety Window */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E3E8E0]">
-            <ShieldCheck className="w-4 h-4 text-[#2D8061]" />
-            <h2 className="text-xs font-bold text-[#174C3C] uppercase tracking-wider">
+          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E7E8E1]">
+            <ShieldCheck className="w-4 h-4 text-[#287653]" />
+            <h2 className="text-xs font-bold text-[#287653] uppercase tracking-wider">
               3. Handling, Safety &amp; Critical Deadlines
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Preparation Date / Time *
               </label>
               <input
@@ -294,15 +294,15 @@ export const CreateListingPage: React.FC = () => {
                 required
                 value={formData.preparedAt}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+                className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
               />
-              <span className="text-[10px] text-[#66756B] mt-1 block">
+              <span className="text-[10px] text-[#667067] mt-1 block">
                 When was this batch completed in the event kitchen?
               </span>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+              <label className="block text-xs font-bold text-[#202820] mb-1.5">
                 Collection Deadline * (Must be in future)
               </label>
               <input
@@ -311,10 +311,10 @@ export const CreateListingPage: React.FC = () => {
                 required
                 value={formData.collectionDeadline}
                 onChange={handleChange}
-                className={`w-full px-3.5 py-2.5 border rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:outline-hidden transition-all ${
+                className={`w-full px-3.5 py-2.5 border rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:outline-hidden transition-all ${
                   isDeadlineInPast()
                     ? 'border-rose-400 bg-rose-50 text-rose-900'
-                    : 'border-[#E3E8E0] focus:ring-2 focus:ring-[#2D8061]'
+                    : 'border-[#E7E8E1] focus:ring-2 focus:ring-[#287653]'
                 }`}
               />
               {isDeadlineInPast() ? (
@@ -322,7 +322,7 @@ export const CreateListingPage: React.FC = () => {
                   <AlertTriangle className="w-3 h-3" /> Deadline must be in the future
                 </span>
               ) : (
-                <span className="text-[10px] text-[#66756B] mt-1 block">
+                <span className="text-[10px] text-[#667067] mt-1 block">
                   Cut-off time after which food can no longer be safely collected.
                 </span>
               )}
@@ -330,7 +330,7 @@ export const CreateListingPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+            <label className="block text-xs font-bold text-[#202820] mb-1.5">
               Storage &amp; Temperature Handling Conditions *
             </label>
             <input
@@ -340,22 +340,22 @@ export const CreateListingPage: React.FC = () => {
               value={formData.storageConditions}
               onChange={handleChange}
               placeholder="e.g. Hot holding > 65°C, or refrigerated < 5°C, or sealed ambient containers"
-              className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+              className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
             />
           </div>
         </div>
 
         {/* Group 4: Locality & Locked Pickup Hand-off */}
         <div className="space-y-4">
-          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E3E8E0]">
-            <MapPin className="w-4 h-4 text-[#2D8061]" />
-            <h2 className="text-xs font-bold text-[#174C3C] uppercase tracking-wider">
+          <div className="flex items-center gap-2 pb-2.5 border-b border-[#E7E8E1]">
+            <MapPin className="w-4 h-4 text-[#287653]" />
+            <h2 className="text-xs font-bold text-[#287653] uppercase tracking-wider">
               4. Locality &amp; Private Pickup Coordination
             </h2>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#18372D] mb-1.5">
+            <label className="block text-xs font-bold text-[#202820] mb-1.5">
               Approximate Area / Locality * (Publicly visible to partners)
             </label>
             <input
@@ -365,16 +365,16 @@ export const CreateListingPage: React.FC = () => {
               value={formData.areaOrAddress}
               onChange={handleChange}
               placeholder="e.g. South Delhi - Saket Banquet Cluster"
-              className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden transition-all"
+              className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm bg-[#FAF9F6] text-[#202820] focus:bg-white focus:ring-2 focus:ring-[#287653] focus:outline-hidden transition-all"
             />
-            <span className="text-[10px] text-[#66756B] mt-1 block">
+            <span className="text-[10px] text-[#667067] mt-1 block">
               General neighbourhood or zone used for discovery and rule-based proximity scoring.
             </span>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#EEF4ED] border border-[#E3E8E0] space-y-2">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#18372D]">
-              <Lock className="w-3.5 h-3.5 text-[#2D8061]" />
+          <div className="p-4 sm:p-5 rounded-2xl bg-[#F0F4EE] border border-[#E7E8E1] space-y-2">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#202820]">
+              <Lock className="w-3.5 h-3.5 text-[#287653]" />
               Private Pickup Instructions &amp; Contact * (Locked to assigned partner only)
             </div>
             <textarea
@@ -384,17 +384,17 @@ export const CreateListingPage: React.FC = () => {
               value={formData.pickupInstructions}
               onChange={handleChange}
               placeholder="e.g. Gate 3 Loading Dock behind Hall A. Ask for Executive Chef Ramesh on phone +91 98765 00000."
-              className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden bg-white text-[#18372D] transition-all"
+              className="w-full px-3.5 py-2.5 border border-[#E7E8E1] rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-[#287653] focus:outline-hidden bg-white text-[#202820] transition-all"
             />
-            <span className="text-[11px] text-[#66756B] flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#2D8061] shrink-0" />
+            <span className="text-[11px] text-[#667067] flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#287653] shrink-0" />
               Privacy Protection: These private instructions will remain masked until you explicitly approve a verified partner&apos;s request.
             </span>
           </div>
         </div>
 
         {/* Submit Button */}
-        <div className="pt-4 border-t border-[#E3E8E0] flex items-center justify-end gap-3">
+        <div className="pt-4 border-t border-[#E7E8E1] flex items-center justify-end gap-3">
           <Link
             to="/dashboard"
             className="btn-outline text-xs sm:text-sm py-2 px-4"
@@ -411,7 +411,7 @@ export const CreateListingPage: React.FC = () => {
               'Creating Listing...'
             ) : (
               <>
-                <CheckCircle className="w-4 h-4 text-[#DCEFE2]" /> Publish Surplus Listing
+                <CheckCircle className="w-4 h-4 text-[#DDEBDD]" /> Publish Surplus Listing
               </>
             )}
           </button>
@@ -420,3 +420,4 @@ export const CreateListingPage: React.FC = () => {
     </div>
   );
 };
+export default CreateListingPage;
