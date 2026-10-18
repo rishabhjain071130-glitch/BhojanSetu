@@ -82,7 +82,7 @@ BhojanSetu/
 ### 2. Clone and Configure Environment
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/rishabhjain071130-glitch/BhojanSetu.git
 cd BhojanSetu
 
 # Configure backend environment
@@ -92,20 +92,7 @@ cp server/.env.example server/.env
 cp client/.env.example client/.env
 ```
 
-Review `server/.env`:
-```ini
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=mongodb://127.0.0.1:27017/bhojansetu
-JWT_SECRET=bhojansetu_secure_hackathon_demo_jwt_secret_key_32chars!
-CLIENT_ORIGIN=http://localhost:5173
-DEMO_MODE=true
-```
-
-Review `client/.env`:
-```ini
-VITE_API_BASE_URL=http://localhost:5000/api
-```
+Ensure environment configurations in `server/.env` and `client/.env` are populated according to your local setup (reference templates provided in `server/.env.example` and `client/.env.example`).
 
 ### 3. Install Dependencies & Seed Demo Data
 
@@ -143,16 +130,18 @@ Open `http://localhost:5173` in your browser.
 
 ---
 
-## 🧪 Demo Credentials for Hackathon Evaluators
+## 🧪 Demo Accounts for Evaluators
 
-For rapid evaluation, the platform includes a **Hackathon Evaluation Fast-Track Switcher** located on the landing page, login page, and dashboard. You can switch between all 4 personas with a single click:
+For rapid evaluation, the platform includes a **Hackathon Evaluation Fast-Track Switcher** located on the landing page, login page, and dashboard. You can switch between all 4 personas with a single click without entering credentials manually:
 
-| Role | Email | Password | Organization | Capabilities |
-| :--- | :--- | :--- | :--- | :--- |
-| **Organizer** | `organizer@bhojansetu.demo` | `Password123!` | Royal Grand Banquets | List surplus, view candidates, approve/reject requests |
-| **Verified Partner** | `partner.verified@bhojansetu.demo` | `Password123!` | Annapurna Seva Trust | Browse open food, submit requests, record collection/delivery |
-| **Pending Partner** | `partner.pending@bhojansetu.demo` | `Password123!` | Navjeevan Rescue | Browse food; requests gated until admin verifies |
-| **Admin Coordinator** | `admin@bhojansetu.demo` | `Password123!` | BhojanSetu Desk | Review/approve partner verification, audit all listings |
+| Role | Demo Email | Organization | Capabilities |
+| :--- | :--- | :--- | :--- |
+| **Organizer** | `organizer@bhojansetu.demo` | Royal Grand Banquets | List surplus, view candidates, approve/reject requests |
+| **Verified Partner** | `partner.verified@bhojansetu.demo` | Annapurna Seva Trust | Browse open food, submit requests, record collection/delivery |
+| **Pending Partner** | `partner.pending@bhojansetu.demo` | Navjeevan Rescue | Browse food; requests gated until admin verifies |
+| **Admin Coordinator** | `admin@bhojansetu.demo` | BhojanSetu Desk | Review/approve partner verification, audit all listings |
+
+> **Quick Access**: Click any role in the floating evaluation widget or on the login screen to sign in automatically. If logging in manually, default demo credentials are initialized during `npm run seed`.
 
 *Disclaimer: All seeded organizations, event names, and contacts are fictional demo records clearly labeled for evaluation purposes.*
 
