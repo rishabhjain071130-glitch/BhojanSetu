@@ -564,6 +564,39 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* 5.5 REAL RECOVERY IN ACTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="card-editorial overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-6 p-8 sm:p-12 space-y-4">
+            <span className="text-xs uppercase font-bold tracking-widest text-[#237653]">
+              Community Impact
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820]">
+              From banquet surplus to shared nourishment.
+            </h2>
+            <p className="text-sm text-[#68736A] leading-relaxed">
+              Every recovered tray represents more than diverted food waste—it delivers dignity, immediate relief, and strengthened community bonds through verified grassroots partners.
+            </p>
+            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-semibold text-[#174D3A]">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#237653]" /> 100% Free Redistribution
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#237653]" /> Zero Commercial Resale
+              </span>
+            </div>
+          </div>
+          <div className="lg:col-span-6 relative h-64 sm:h-80 lg:h-full min-h-[300px]">
+            <img
+              src="/assets/community_rescue.jpg"
+              alt="Community volunteers receiving and distributing recovered surplus food"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* 6. CALL TO ACTION SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl overflow-hidden border border-[#174D3A]/20 shadow-xl bg-gradient-to-br from-[#174D3A] to-[#237653] p-8 sm:p-14 text-white">

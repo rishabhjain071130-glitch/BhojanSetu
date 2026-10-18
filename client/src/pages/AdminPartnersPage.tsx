@@ -146,7 +146,7 @@ export const AdminPartnersPage: React.FC = () => {
                   const isVerified = partner.verificationStatus === 'verified';
 
                   return (
-                    <tr key={partner.id} className="hover:bg-stone-50/70 transition-colors">
+                    <tr key={partner.id || (partner as any)._id} className="hover:bg-stone-50/70 transition-colors">
                       <td className="px-6 py-4">
                         <div className="font-bold text-[#202820]">
                           {partner.organizationName || partner.name}
