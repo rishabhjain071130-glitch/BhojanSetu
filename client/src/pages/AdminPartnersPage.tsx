@@ -13,6 +13,7 @@ import {
   Filter,
   Check,
   AlertTriangle,
+  X,
 } from 'lucide-react';
 
 export const AdminPartnersPage: React.FC = () => {
@@ -64,7 +65,7 @@ export const AdminPartnersPage: React.FC = () => {
       setSavingAction(true);
       setError(null);
 
-      await request(`/partners/admin/${actionPartner.id}/verification`, {
+      await request(`/partners/admin/${actionPartner.id || (actionPartner as any)._id}/verification`, {
         method: 'PATCH',
         body: JSON.stringify({
           status: actionStatus,
@@ -82,32 +83,32 @@ export const AdminPartnersPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#174D3A]/15">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174D3A]">
-            <span className="w-2 h-2 rounded-full bg-[#237653]" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E3E8E0]">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174C3C]">
+            <span className="w-2 h-2 rounded-full bg-[#2D8061]" />
             Platform Coordination Desk
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#174D3A] text-white flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5 text-[#E7A85B]" />
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center shrink-0 shadow-xs">
+              <ShieldCheck className="w-5 h-5 text-[#DCEFE2]" />
             </div>
             Partner Verification Console
           </h1>
-          <p className="text-xs sm:text-sm text-[#68736A]">
+          <p className="text-xs sm:text-sm text-[#66756B]">
             Review partner organizations, capacity standing, and grant or revoke rescue eligibility.
           </p>
         </div>
 
         {/* Filter bar */}
         <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-[#68736A]" />
+          <Filter className="w-4 h-4 text-[#66756B]" />
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3.5 py-2 border border-stone-200 rounded-xl text-xs font-semibold bg-white text-[#202820] focus:outline-none focus:ring-2 focus:ring-[#174D3A]"
+            className="px-3.5 py-2 border border-[#E3E8E0] rounded-xl text-xs font-bold bg-white text-[#18372D] focus:outline-hidden focus:ring-2 focus:ring-[#2D8061]"
           >
             <option value="all">All Verification States</option>
             <option value="pending">Pending Review</option>
@@ -122,77 +123,80 @@ export const AdminPartnersPage: React.FC = () => {
       {error && <ErrorAlert message={error} onRetry={fetchPartners} />}
 
       {loading ? (
-        <LoadingSpinner message="Fetching partner records from database..." size="lg" />
+        <LoadingSpinner message="Loading partner verification roster..." size="lg" />
       ) : partners.length === 0 ? (
-        <div className="card-editorial p-8 text-center text-sm text-[#68736A]">
-          No recovery partners match the selected filter.
+        <div className="card-light p-10 text-center text-xs text-[#66756B] bg-white">
+          No partner accounts match the selected verification filter.
         </div>
       ) : (
-        <div className="card-editorial overflow-hidden">
+        <div className="card-light overflow-hidden bg-white">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-stone-50 border-b border-stone-200/80 text-[#68736A] uppercase text-[11px] tracking-wider">
+              <thead className="bg-[#F8F7F2] text-[#66756B] font-semibold uppercase text-[10px] tracking-wider border-b border-[#E3E8E0]">
                 <tr>
-                  <th className="px-6 py-3.5 font-bold">Organization &amp; Contact</th>
-                  <th className="px-6 py-3.5 font-bold">Capacity &amp; Locality</th>
-                  <th className="px-6 py-3.5 font-bold">Submitted Notes / Credentials</th>
-                  <th className="px-6 py-3.5 font-bold">Current Status</th>
-                  <th className="px-6 py-3.5 font-bold text-right">Admin Actions</th>
+                  <th className="px-6 py-3.5">Organization / Rep</th>
+                  <th className="px-6 py-3.5">Service Area</th>
+                  <th className="px-6 py-3.5">Vehicle Capacity</th>
+                  <th className="px-6 py-3.5">Status</th>
+                  <th className="px-6 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-[#E3E8E0] text-[#18372D]">
                 {partners.map((partner) => {
-                  const isPending = partner.verificationStatus === 'pending';
+                  const pId = partner.id || (partner as any)._id;
                   const isVerified = partner.verificationStatus === 'verified';
+                  const isPending = partner.verificationStatus === 'pending';
 
                   return (
-                    <tr key={partner.id || (partner as any)._id} className="hover:bg-stone-50/70 transition-colors">
+                    <tr key={pId} className="hover:bg-[#F8F7F2] transition-colors">
                       <td className="px-6 py-4">
-                        <div className="font-bold text-[#202820]">
+                        <div className="font-bold text-[#18372D]">
                           {partner.organizationName || partner.name}
                         </div>
-                        <div className="text-xs text-[#68736A]">
-                          Rep: {partner.name} • {partner.email}
+                        <div className="text-xs text-[#66756B]">
+                          Rep: {partner.name} ({partner.email})
                         </div>
                         {partner.phone && (
-                          <div className="text-[11px] text-[#68736A]">Phone: {partner.phone}</div>
+                          <div className="text-[11px] text-[#66756B] mt-0.5">Phone: {partner.phone}</div>
                         )}
                       </td>
 
                       <td className="px-6 py-4">
-                        <div className="font-bold text-[#174D3A]">
-                          {partner.partnerCapacity || 0} units capacity
-                        </div>
-                        <div className="text-xs text-[#68736A]">{partner.partnerServiceArea || 'Central'}</div>
-                      </td>
-
-                      <td className="px-6 py-4 max-w-xs">
-                        <p className="text-xs text-[#202820] italic truncate" title={partner.verificationNote}>
-                          "{partner.verificationNote || 'No notes on file'}"
-                        </p>
+                        <span className="font-medium text-[#18372D]">
+                          {partner.partnerServiceArea || 'NCR General Zone'}
+                        </span>
                       </td>
 
                       <td className="px-6 py-4">
-                        <StatusBadge status={partner.verificationStatus} type="verification" size="sm" />
+                        <span className="font-bold text-[#174C3C]">
+                          {partner.partnerCapacity || 0} units
+                        </span>
+                      </td>
+
+                      <td className="px-6 py-4">
+                        <StatusBadge status={partner.verificationStatus} type="verification" />
                       </td>
 
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          {!isVerified ? (
+                          {!isVerified && (
                             <button
                               type="button"
                               onClick={() => openDecisionModal(partner, 'verified')}
-                              className="px-3.5 py-1.5 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs transition-colors flex items-center gap-1 shadow-xs"
+                              className="btn-primary-brand text-xs py-1.5 px-3"
                             >
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#E7A85B]" /> Approve
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#DCEFE2]" />
+                              Approve
                             </button>
-                          ) : (
+                          )}
+
+                          {isVerified && (
                             <button
                               type="button"
                               onClick={() => openDecisionModal(partner, 'rejected')}
-                              className="px-3.5 py-1.5 rounded-xl border border-rose-300 text-rose-700 hover:bg-rose-50 font-semibold text-xs transition-colors flex items-center gap-1"
+                              className="px-3 py-1.5 rounded-xl border border-rose-300 text-xs font-semibold text-rose-800 hover:bg-rose-50 transition-colors"
                             >
-                              <XCircle className="w-3.5 h-3.5" /> Revoke
+                              Revoke
                             </button>
                           )}
 
@@ -200,7 +204,7 @@ export const AdminPartnersPage: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => openDecisionModal(partner, 'rejected')}
-                              className="px-3.5 py-1.5 rounded-xl border border-stone-200 text-[#68736A] hover:bg-stone-100 font-semibold text-xs transition-colors"
+                              className="px-3 py-1.5 rounded-xl border border-[#E3E8E0] text-xs font-semibold text-[#66756B] hover:bg-stone-50 transition-colors"
                             >
                               Decline
                             </button>
@@ -216,63 +220,76 @@ export const AdminPartnersPage: React.FC = () => {
         </div>
       )}
 
-      {/* Decision Modal */}
+      {/* Decision Dialog Modal */}
       {actionPartner && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 space-y-4 shadow-2xl border border-[#174D3A]/20">
-            <h3 className="text-xl font-bold text-[#202820] font-serif flex items-center gap-2">
-              {actionStatus === 'verified' ? (
-                <>
-                  <CheckCircle2 className="w-5 h-5 text-[#237653]" /> Authorize Partner Verification
-                </>
-              ) : (
-                <>
-                  <XCircle className="w-5 h-5 text-rose-700" /> Decline / Revoke Verification
-                </>
-              )}
-            </h3>
+        <div
+          role="dialog"
+          aria-label="Partner Verification Action"
+          className="fixed inset-0 z-50 bg-[#18372D]/50 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+        >
+          <div className="card-light p-6 sm:p-7 max-w-lg w-full space-y-5 animate-slide-up shadow-2xl bg-white">
+            <div className="flex items-start justify-between pb-3 border-b border-[#E3E8E0]">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-[#DCEFE2] text-[#174C3C] flex items-center justify-center">
+                  <ShieldCheck className="w-4 h-4 text-[#2D8061]" />
+                </div>
+                <div>
+                  <h3 className="font-bold font-serif text-base text-[#18372D]">
+                    {actionStatus === 'verified'
+                      ? 'Approve Partner Eligibility'
+                      : 'Decline / Revoke Verification'}
+                  </h3>
+                  <p className="text-xs text-[#66756B]">
+                    Organization: {actionPartner.organizationName || actionPartner.name}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActionPartner(null)}
+                className="p-1 text-[#66756B] hover:text-[#18372D] rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-            <p className="text-xs text-[#68736A] leading-relaxed">
-              Updating <strong>{actionPartner.organizationName || actionPartner.name}</strong> to{' '}
-              <strong className="text-[#202820]">{actionStatus.toUpperCase()}</strong>.
-              {actionStatus === 'verified'
-                ? ' This will grant clearance to submit rescue requests and receive surplus food assignments.'
-                : ' This will restrict this account from claiming surplus food rescue assignments.'}
-            </p>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1.5">
-                Admin Audit Note *
+            <div className="space-y-3">
+              <label className="block text-xs font-bold text-[#18372D] uppercase tracking-wider">
+                Audit &amp; Compliance Verification Note *
               </label>
               <textarea
                 rows={3}
                 required
                 value={reviewNote}
                 onChange={(e) => setReviewNote(e.target.value)}
-                className="w-full p-3 border border-stone-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-[#174D3A] focus:outline-none bg-stone-50/50"
+                placeholder="State verified documents, capacity verification, or reason for status decision..."
+                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden"
               />
             </div>
 
-            <div className="flex justify-end gap-3 pt-2">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E3E8E0]">
               <button
                 type="button"
                 onClick={() => setActionPartner(null)}
-                className="px-4 py-2 rounded-xl border border-stone-200 text-xs font-semibold text-[#68736A] hover:bg-stone-50"
+                className="btn-outline text-xs sm:text-sm py-2 px-4"
               >
                 Cancel
               </button>
-
               <button
                 type="button"
-                disabled={savingAction}
+                disabled={savingAction || !reviewNote.trim()}
                 onClick={handleConfirmDecision}
-                className={`px-5 py-2 rounded-xl text-white font-semibold text-xs shadow-xs disabled:opacity-50 transition-colors ${
+                className={`text-xs sm:text-sm py-2 px-5 rounded-xl font-bold transition-all ${
                   actionStatus === 'verified'
-                    ? 'bg-[#174D3A] hover:bg-[#237653]'
-                    : 'bg-rose-700 hover:bg-rose-800'
+                    ? 'btn-primary-brand'
+                    : 'bg-rose-700 hover:bg-rose-800 text-white shadow-xs'
                 }`}
               >
-                {savingAction ? 'Updating...' : `Confirm ${actionStatus === 'verified' ? 'Approval' : 'Revocation'}`}
+                {savingAction
+                  ? 'Saving...'
+                  : actionStatus === 'verified'
+                  ? 'Confirm Verification'
+                  : 'Confirm Decline'}
               </button>
             </div>
           </div>

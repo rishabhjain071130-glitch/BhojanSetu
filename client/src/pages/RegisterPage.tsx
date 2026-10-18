@@ -54,13 +54,13 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-10 sm:py-14 animate-fade-in">
-      <div className="card-editorial p-6 sm:p-9 space-y-6">
+      <div className="card-light p-6 sm:p-9 space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-[#174D3A] text-white flex items-center justify-center mx-auto shadow-sm">
-            <UtensilsCrossed className="w-6 h-6 text-[#E7A85B]" />
+          <div className="w-12 h-12 rounded-2xl bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center mx-auto shadow-sm">
+            <UtensilsCrossed className="w-6 h-6 text-[#DCEFE2]" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820]">Join BhojanSetu</h1>
-          <p className="text-xs sm:text-sm text-[#68736A]">
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D]">Join BhojanSetu</h1>
+          <p className="text-xs sm:text-sm text-[#66756B]">
             Create an account to coordinate or rescue surplus event food.
           </p>
         </div>
@@ -70,7 +70,7 @@ export const RegisterPage: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Role selector buttons */}
           <div>
-            <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-[#18372D] uppercase tracking-wider mb-2">
               Select Your Operational Role
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -79,20 +79,20 @@ export const RegisterPage: React.FC = () => {
                 onClick={() => setRole('organizer')}
                 className={`p-3.5 rounded-2xl border text-left transition-all flex items-center gap-3 ${
                   role === 'organizer'
-                    ? 'border-[#174D3A] bg-[#DDE8D8]/50 ring-1 ring-[#174D3A]'
-                    : 'border-stone-200 bg-stone-50 hover:bg-stone-100'
+                    ? 'border-[#174C3C] bg-[#DCEFE2]/70 ring-1 ring-[#174C3C]'
+                    : 'border-[#E3E8E0] bg-white hover:bg-[#EEF4ED]'
                 }`}
               >
                 <div
-                  className={`p-2 rounded-xl ${
-                    role === 'organizer' ? 'bg-[#174D3A] text-white' : 'bg-stone-200 text-[#68736A]'
+                  className={`p-2 rounded-xl transition-colors ${
+                    role === 'organizer' ? 'bg-[#174C3C] text-[#DCEFE2]' : 'bg-[#EEF4ED] text-[#174C3C]'
                   }`}
                 >
                   <Building2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-[#202820]">Event Organizer / Caterer</div>
-                  <div className="text-[11px] text-[#68736A]">List surplus food</div>
+                  <div className="text-xs font-bold text-[#18372D]">Event Organizer / Caterer</div>
+                  <div className="text-[11px] text-[#66756B]">List surplus food</div>
                 </div>
               </button>
 
@@ -101,31 +101,31 @@ export const RegisterPage: React.FC = () => {
                 onClick={() => setRole('partner')}
                 className={`p-3.5 rounded-2xl border text-left transition-all flex items-center gap-3 ${
                   role === 'partner'
-                    ? 'border-[#174D3A] bg-[#DDE8D8]/50 ring-1 ring-[#174D3A]'
-                    : 'border-stone-200 bg-stone-50 hover:bg-stone-100'
+                    ? 'border-[#174C3C] bg-[#DCEFE2]/70 ring-1 ring-[#174C3C]'
+                    : 'border-[#E3E8E0] bg-white hover:bg-[#EEF4ED]'
                 }`}
               >
                 <div
-                  className={`p-2 rounded-xl ${
-                    role === 'partner' ? 'bg-[#174D3A] text-white' : 'bg-stone-200 text-[#68736A]'
+                  className={`p-2 rounded-xl transition-colors ${
+                    role === 'partner' ? 'bg-[#174C3C] text-[#DCEFE2]' : 'bg-[#EEF4ED] text-[#174C3C]'
                   }`}
                 >
                   <HeartHandshake className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-[#202820]">Recovery Partner / NGO</div>
-                  <div className="text-[11px] text-[#68736A]">Collect &amp; redistribute</div>
+                  <div className="text-xs font-bold text-[#18372D]">Recovery Partner / NGO</div>
+                  <div className="text-[11px] text-[#66756B]">Collect &amp; redistribute</div>
                 </div>
               </button>
             </div>
-            <p className="text-[11px] text-[#68736A] mt-1.5 italic">
+            <p className="text-[11px] text-[#66756B] mt-1.5 italic">
               * Note: Platform administrative roles are pre-seeded and cannot be registered publicly.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-[#18372D] uppercase tracking-wider mb-1">
                 Full Contact Name *
               </label>
               <input
@@ -134,12 +134,12 @@ export const RegisterPage: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Priya Nair"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-stone-50/50 focus:bg-white focus:ring-2 focus:ring-[#174D3A] focus:outline-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-[#F8F7F2] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-none transition-all text-[#18372D]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-[#18372D] uppercase tracking-wider mb-1">
                 Organization / Caterer Name
               </label>
               <input
@@ -147,14 +147,14 @@ export const RegisterPage: React.FC = () => {
                 value={organizationName}
                 onChange={(e) => setOrganizationName(e.target.value)}
                 placeholder={role === 'organizer' ? 'Royal Grand Banquets' : 'Annapurna Seva Trust'}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-stone-50/50 focus:bg-white focus:ring-2 focus:ring-[#174D3A] focus:outline-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-[#F8F7F2] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-none transition-all text-[#18372D]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-[#18372D] uppercase tracking-wider mb-1">
                 Official Email Address *
               </label>
               <input
@@ -163,12 +163,12 @@ export const RegisterPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="contact@organization.org"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-stone-50/50 focus:bg-white focus:ring-2 focus:ring-[#174D3A] focus:outline-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-[#F8F7F2] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-none transition-all text-[#18372D]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-[#18372D] uppercase tracking-wider mb-1">
                 Direct Contact Phone
               </label>
               <input
@@ -176,13 +176,13 @@ export const RegisterPage: React.FC = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+91 98765 43210"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-stone-50/50 focus:bg-white focus:ring-2 focus:ring-[#174D3A] focus:outline-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-[#F8F7F2] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-none transition-all text-[#18372D]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1">
+            <label className="block text-xs font-semibold text-[#18372D] uppercase tracking-wider mb-1">
               Create Secure Password * (min 6 chars)
             </label>
             <input
@@ -192,20 +192,20 @@ export const RegisterPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-stone-50/50 focus:bg-white focus:ring-2 focus:ring-[#174D3A] focus:outline-none transition-all"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-[#F8F7F2] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-none transition-all text-[#18372D]"
             />
           </div>
 
           {/* Partner Specific Configuration */}
           {role === 'partner' && (
-            <div className="p-4 bg-[#DDE8D8]/40 rounded-2xl border border-[#174D3A]/20 space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#174D3A] block">
+            <div className="p-4 bg-[#EEF4ED] rounded-2xl border border-[#E3E8E0] space-y-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#174C3C] block">
                 Partner Operational Capacity &amp; Service Zone
               </span>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#202820] mb-1">
+                  <label className="block text-xs font-semibold text-[#18372D] mb-1">
                     Pickup Capacity (Units / kg / boxes)
                   </label>
                   <input
@@ -215,15 +215,15 @@ export const RegisterPage: React.FC = () => {
                     required
                     value={partnerCapacity}
                     onChange={(e) => setPartnerCapacity(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-white text-[#18372D]"
                   />
-                  <span className="text-[10px] text-[#68736A] mt-1 block">
+                  <span className="text-[10px] text-[#66756B] mt-1 block">
                     Used by the Rule-Based Matching Engine to assess load suitability.
                   </span>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#202820] mb-1">
+                  <label className="block text-xs font-semibold text-[#18372D] mb-1">
                     Primary Service Locality / Area
                   </label>
                   <input
@@ -232,7 +232,7 @@ export const RegisterPage: React.FC = () => {
                     value={partnerServiceArea}
                     onChange={(e) => setPartnerServiceArea(e.target.value)}
                     placeholder="e.g. South Delhi, Saket"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm bg-white"
+                    className="w-full px-3 py-2 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-white text-[#18372D]"
                   />
                 </div>
               </div>
@@ -242,21 +242,21 @@ export const RegisterPage: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full btn-primary-brand py-3 px-4 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {loading ? (
               'Creating Account...'
             ) : (
               <>
-                <UserPlus className="w-4 h-4 text-[#E7A85B]" /> Complete Registration
+                <UserPlus className="w-4 h-4 text-[#DCEFE2]" /> Complete Registration
               </>
             )}
           </button>
         </form>
 
-        <div className="pt-4 border-t border-stone-100 text-center text-xs text-[#68736A]">
+        <div className="pt-4 border-t border-[#E3E8E0] text-center text-xs text-[#66756B]">
           Already registered?{' '}
-          <Link to="/login" className="font-semibold text-[#174D3A] hover:underline">
+          <Link to="/login" className="font-semibold text-[#174C3C] hover:underline">
             Sign In here
           </Link>
         </div>

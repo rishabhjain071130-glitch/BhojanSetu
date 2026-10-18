@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext.js';
-import { Sparkles, X, ChevronRight, UserCheck, Shield, Users, Building, AlertCircle } from 'lucide-react';
+import {
+  Sparkles,
+  X,
+  ChevronRight,
+  UserCheck,
+  Shield,
+  ChefHat,
+  HeartHandshake,
+  Clock,
+  ShieldCheck,
+  AlertCircle,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const DemoFloatingWidget: React.FC = () => {
@@ -16,36 +27,36 @@ export const DemoFloatingWidget: React.FC = () => {
       title: 'Event Organizer',
       sub: 'Royal Grand Banquets',
       email: 'organizer@bhojansetu.demo',
-      icon: '👨‍🍳',
+      icon: ChefHat,
       badge: 'Listing Creator',
-      color: 'border-emerald-700/30 bg-emerald-50/50',
+      color: 'border-[#235347]/30 bg-[#DAF1DE]/40',
     },
     {
       role: 'partner',
       title: 'Verified Partner',
       sub: 'Annapurna Seva Trust (Cap: 250)',
       email: 'partner.verified@bhojansetu.demo',
-      icon: '🤝',
+      icon: HeartHandshake,
       badge: 'Verified Rescuer',
-      color: 'border-blue-700/30 bg-blue-50/50',
+      color: 'border-[#235347]/30 bg-[#DAF1DE]/70',
     },
     {
       role: 'partner',
       title: 'Pending Partner',
       sub: 'Navjeevan Rescue (Gated)',
       email: 'partner.pending@bhojansetu.demo',
-      icon: '⏳',
+      icon: Clock,
       badge: 'Pending Review',
-      color: 'border-amber-700/30 bg-amber-50/50',
+      color: 'border-amber-400/30 bg-amber-50/70',
     },
     {
       role: 'admin',
       title: 'Platform Admin',
       sub: 'Coordination & Verification',
       email: 'admin@bhojansetu.demo',
-      icon: '🛡️',
+      icon: ShieldCheck,
       badge: 'Admin Console',
-      color: 'border-purple-700/30 bg-purple-50/50',
+      color: 'border-[#163832]/30 bg-[#EAF6EC]',
     },
   ];
 
@@ -70,24 +81,24 @@ export const DemoFloatingWidget: React.FC = () => {
         <div
           role="dialog"
           aria-label="Demo Role Switcher"
-          className="mb-3 w-[340px] sm:w-[380px] bg-white rounded-2xl border border-[#174D3A]/20 shadow-2xl p-4 sm:p-5 animate-slide-up backdrop-blur-md"
+          className="mb-3 w-[340px] sm:w-[380px] bg-white rounded-2xl border border-[#235347]/20 shadow-2xl p-4 sm:p-5 animate-slide-up backdrop-blur-md"
         >
-          <div className="flex items-center justify-between pb-3 border-b border-[#174D3A]/10">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E3E8E0]">
             <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#174D3A] text-white text-xs">
+              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#174C3C] text-[#DCEFE2] text-xs shadow-xs">
                 <Sparkles className="w-3.5 h-3.5" />
               </span>
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#174D3A]">
-                  Demo Evaluation Mode
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#18372D]">
+                  Judge &amp; Demo Evaluation
                 </h3>
-                <p className="text-[11px] text-[#68736A]">Switch roles to test complete workflow</p>
+                <p className="text-[11px] text-[#66756B]">1-Click role switcher for testing workflows</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="p-1 rounded-lg text-[#68736A] hover:text-[#202820] hover:bg-stone-100 transition-colors"
+              className="p-1 rounded-lg text-[#66756B] hover:text-[#18372D] hover:bg-stone-100 transition-colors"
               aria-label="Close demo panel"
             >
               <X className="w-4 h-4" />
@@ -101,48 +112,50 @@ export const DemoFloatingWidget: React.FC = () => {
             </div>
           )}
 
-          <div className="mt-3 space-y-2">
-            {demoAccounts.map((acc) => {
-              const isActive = user?.email === acc.email;
+          <div className="mt-3 space-y-2 max-h-[340px] overflow-y-auto pr-1">
+            {demoAccounts.map((acc, idx) => {
+              const isCurrent = user?.email === acc.email;
               const isLoading = loadingEmail === acc.email;
+              const IconComp = acc.icon;
 
               return (
                 <button
-                  key={acc.email}
+                  key={idx}
                   type="button"
+                  disabled={isLoading}
                   onClick={() => handleQuickLogin(acc.email)}
-                  disabled={isLoading || isActive}
-                  className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center justify-between gap-3 ${
-                    isActive
-                      ? 'border-[#174D3A] bg-[#DDE8D8]/40 ring-1 ring-[#174D3A]/40'
-                      : 'border-stone-200 bg-stone-50/60 hover:bg-white hover:border-[#237653] hover:shadow-xs'
+                  className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between group ${
+                    isCurrent
+                      ? 'ring-2 ring-[#2D8061] border-[#2D8061] bg-[#EEF4ED] shadow-xs'
+                      : 'border-[#E3E8E0] bg-[#F8F7F2] hover:border-[#174C3C]/40 hover:bg-white hover:shadow-xs'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <span className="text-xl shrink-0" role="img" aria-label={acc.title}>
-                      {acc.icon}
-                    </span>
-                    <div className="min-w-0">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-white border border-[#E3E8E0] flex items-center justify-center text-[#174C3C] shrink-0 shadow-2xs">
+                      <IconComp className="w-4 h-4 text-[#2D8061]" />
+                    </div>
+                    <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-bold text-[#202820] truncate">{acc.title}</span>
-                        <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-white border border-stone-200 text-[#68736A]">
+                        <span className="text-xs font-bold text-[#18372D]">{acc.title}</span>
+                        <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-white border border-[#E3E8E0] text-[#174C3C]">
                           {acc.badge}
                         </span>
                       </div>
-                      <div className="text-[11px] text-[#68736A] truncate">{acc.sub}</div>
+                      <div className="text-[11px] text-[#66756B] truncate max-w-[200px]">
+                        {acc.sub}
+                      </div>
                     </div>
                   </div>
 
-                  <div className="shrink-0 text-right">
-                    {isActive ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#174D3A]">
+                  <div className="flex items-center gap-1 text-[#174C3C]">
+                    {isLoading ? (
+                      <span className="text-[11px] font-semibold text-[#174C3C]">Logging in...</span>
+                    ) : isCurrent ? (
+                      <span className="text-[11px] font-bold text-[#2D8061] flex items-center gap-0.5">
                         <UserCheck className="w-3.5 h-3.5" /> Active
                       </span>
                     ) : (
-                      <span className="inline-flex items-center text-[11px] font-semibold text-[#237653] hover:underline">
-                        {isLoading ? '...' : 'Switch'}
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </span>
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                     )}
                   </div>
                 </button>
@@ -150,32 +163,30 @@ export const DemoFloatingWidget: React.FC = () => {
             })}
           </div>
 
-          <div className="mt-3 pt-2.5 border-t border-[#174D3A]/10 text-[10px] text-[#68736A] text-center">
-            Passwords preloaded. Real JWT authentication enforced on all endpoints.
+          <div className="mt-3 pt-2.5 border-t border-[#E3E8E0] flex items-center justify-between text-[11px] text-[#66756B]">
+            <span>Password: <code className="bg-stone-100 px-1 py-0.5 rounded text-[#18372D]">Password123!</code></span>
+            {user && (
+              <span className="font-semibold text-[#174C3C]">
+                Logged in: {user.name}
+              </span>
+            )}
           </div>
         </div>
       )}
 
-      {/* Floating Pill Trigger */}
+      {/* Floating Trigger Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-[#174D3A] text-white shadow-xl hover:bg-[#237653] hover:shadow-2xl transition-all border border-emerald-400/20 focus:outline-none focus:ring-2 focus:ring-[#E7A85B]"
-        title="Toggle Demo Role Switcher"
+        className="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#174C3C] text-white shadow-xl hover:bg-[#2D8061] transition-all duration-300 hover:scale-105 border border-[#DCEFE2]/30"
+        aria-label="Open Demo Account Switcher"
       >
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E7A85B] text-[#174D3A] text-xs font-bold">
-          ⚡
+        <span className="relative flex h-2.5 w-2.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DCEFE2] opacity-75" />
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#DCEFE2]" />
         </span>
-        <span className="text-xs font-semibold tracking-wide">
-          {user ? (
-            <span className="flex items-center gap-1.5">
-              <span>Demo Role:</span>
-              <span className="capitalize font-bold text-[#E7A85B]">{user.role}</span>
-            </span>
-          ) : (
-            <span>Try Demo Mode</span>
-          )}
-        </span>
+        <span className="text-xs font-bold tracking-wide">Demo Roles</span>
+        <Sparkles className="w-3.5 h-3.5 text-[#DCEFE2] group-hover:rotate-12 transition-transform" />
       </button>
     </div>
   );

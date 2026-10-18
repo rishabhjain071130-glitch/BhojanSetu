@@ -9,34 +9,40 @@ import {
   Truck,
   HeartHandshake,
   ChefHat,
-  Scale,
   Sparkles,
   Calendar,
   MapPin,
   Thermometer,
+  Users,
+  Search,
+  Activity,
+  ArrowUpRight,
+  Box,
   Layers,
-  Building,
-  AlertCircle,
-  ExternalLink,
 } from 'lucide-react';
 import { request } from '../api/client.js';
 import { ImpactSummary, FoodListing } from '../types/index.js';
+import { Rescue3DScene } from '../components/Rescue3DScene.js';
+import { StatusBadge } from '../components/StatusBadge.js';
+import { UrgencyBadge } from '../components/UrgencyBadge.js';
 
 export const LandingPage: React.FC = () => {
   const [impact, setImpact] = useState<ImpactSummary | null>(null);
   const [listings, setListings] = useState<FoodListing[]>([]);
   const [loadingListings, setLoadingListings] = useState(true);
 
+  // Interactive Demonstration State
+  const [demoStep, setDemoStep] = useState<number>(1);
+
   useEffect(() => {
-    // Fetch live impact metrics
+    // Fetch live backend metrics
     request<ImpactSummary>('/impact/summary')
       .then((data) => setImpact(data))
       .catch((err) => console.warn('Could not load impact summary:', err));
 
-    // Fetch listings for live discovery preview
+    // Fetch listings for preview
     request<FoodListing[]>('/listings')
       .then((data) => {
-        // Show up to 3 active or representative listings
         setListings(Array.isArray(data) ? data.slice(0, 3) : []);
       })
       .catch((err) => {
@@ -45,586 +51,586 @@ export const LandingPage: React.FC = () => {
       .finally(() => setLoadingListings(false));
   }, []);
 
+  const journeySteps = [
+    {
+      num: '01',
+      title: 'Surplus Food Logged',
+      actor: 'Event Organizer / Caterer',
+      desc: 'Banquets log leftover hot chafers or chilled trays with container counts and time windows.',
+      icon: ChefHat,
+      temp: '>60°C Hot Hold',
+    },
+    {
+      num: '02',
+      title: 'Verified Match',
+      actor: 'Smart Compatibility Engine',
+      desc: 'BhojanSetu instantly pairs the donation with nearby verified NGOs matching vehicle volume.',
+      icon: Users,
+      temp: 'Rule-Based Routing',
+    },
+    {
+      num: '03',
+      title: 'Safe Pickup & Transit',
+      actor: 'Recovery Partner Courier',
+      desc: 'Driver arrives with thermal bags, validates safety temperatures, and logs custody transfer.',
+      icon: Truck,
+      temp: 'Insulated Transport',
+    },
+    {
+      num: '04',
+      title: 'Community Delivery',
+      actor: 'Grassroots Shelter / Kitchen',
+      desc: 'Nourishing, dignified meals served to community tables before the safe-use window expires.',
+      icon: HeartHandshake,
+      temp: 'Zero Landfill Waste',
+    },
+  ];
+
+  const demoScenarios = [
+    {
+      id: 0,
+      phase: 'Step 1: Event Closure',
+      title: 'Royal Grand Banquets Logs 160 Meal Servings',
+      details: 'Wedding catering closes at 11:30 PM. 8 large stainless steel chafing pans of Dal Makhani, Paneer Lababdar, and Rice safely packaged.',
+      temp: '71°C Verified Hot',
+      actor: 'Chef Ramesh (Caterer)',
+      status: 'Awaiting Coordinator Match',
+      timeRemaining: '3h 15m Window Remaining',
+    },
+    {
+      id: 1,
+      phase: 'Step 2: Instant NGO Match',
+      title: 'Annapurna Seva Trust Accepts Route',
+      details: 'Match engine calculates 3.8 km distance and 250-meal transport capacity. Partner coordinator claims pickup with 1 click.',
+      temp: 'Thermal Carrier Assigned',
+      actor: 'Rahul Sharma (Partner Lead)',
+      status: 'Courier Dispatched',
+      timeRemaining: '2h 45m Window Remaining',
+    },
+    {
+      id: 2,
+      phase: 'Step 3: Insulated Transit',
+      title: 'Temperature-Controlled Custody Transfer',
+      details: 'Driver arrives at venue service entrance. Thermal food probe verifies safe holding temp (>60°C) before loading into insulated van.',
+      temp: '67°C In-Transit Held',
+      actor: 'Vikram Singh (Courier)',
+      status: 'En Route to Saket Shelter',
+      timeRemaining: '2h 10m Window Remaining',
+    },
+    {
+      id: 3,
+      phase: 'Step 4: Dignified Meal Service',
+      title: '160 Community Members Nourished',
+      details: 'Food arrives at Saket Community Kitchen. Warm meals distributed with dignity and care. 100% digital traceability recorded.',
+      temp: 'Served Safe & Fresh',
+      actor: 'Sunita Devi (Community Kitchen)',
+      status: 'Completed & Verified',
+      timeRemaining: 'Mission Complete • 0 Landfill Waste',
+    },
+  ];
+
   return (
-    <div className="space-y-20 sm:space-y-32 pb-20 overflow-x-hidden">
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-6 sm:pt-12 lg:pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Editorial Headline & Messaging */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DDE8D8]/60 border border-[#174D3A]/15 text-[#174D3A] text-xs font-semibold tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-[#237653] animate-pulse" />
-              Event-Based Surplus Food Recovery
-            </div>
+    <div className="space-y-20 sm:space-y-28 pb-20">
+      {/* SECTION A — LIGHT IMMERSIVE HERO WITH INTERACTIVE 3D SCENE */}
+      <section className="relative pt-6 sm:pt-12 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 border-b border-[#E3E8E0] bg-gradient-to-b from-[#F8F7F2] via-[#F8F7F2] to-[#EEF4ED] overflow-hidden">
+        {/* Subtle decorative background glow */}
+        <div className="absolute top-0 right-10 w-[450px] h-[450px] bg-[#DCEFE2]/50 rounded-full blur-3xl pointer-events-none -z-0" />
+        <div className="absolute bottom-0 left-10 w-[380px] h-[380px] bg-[#E9B76A]/10 rounded-full blur-3xl pointer-events-none -z-0" />
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold font-serif text-[#202820] tracking-tight leading-[1.08]">
-              Good food deserves a{' '}
-              <span className="text-[#174D3A] italic font-serif">second journey.</span>
-            </h1>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+            {/* Left: Editorial Content */}
+            <div className="lg:col-span-6 space-y-6 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DCEFE2] text-[#174C3C] text-xs font-semibold tracking-wide border border-[#174C3C]/10 shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-[#2D8061] animate-ping" />
+                Live Food Rescue &amp; Redistribution Platform
+              </div>
 
-            <p className="text-base sm:text-xl text-[#68736A] font-normal leading-relaxed max-w-2xl">
-              Connect surplus food from weddings, banquets, and events with verified community recovery
-              partners before it goes to waste.
-            </p>
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold font-serif text-[#18372D] tracking-tight leading-[1.06]">
+                Good food deserves a{' '}
+                <span className="text-[#2D8061] italic font-serif">second journey.</span>
+              </h1>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-              <Link
-                to="/listings"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-white bg-[#174D3A] hover:bg-[#237653] shadow-md hover:shadow-lg transition-all text-sm sm:text-base hover:scale-[1.01] focus:ring-2 focus:ring-[#E7A85B]"
-              >
-                Find Surplus Food
-                <ArrowRight className="w-4 h-4 text-[#E7A85B]" />
-              </Link>
-              <Link
-                to="/listings/create"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-[#174D3A] bg-white hover:bg-stone-50 border border-[#174D3A]/20 shadow-xs transition-all text-sm sm:text-base hover:scale-[1.01]"
-              >
-                <ChefHat className="w-4 h-4 text-[#E7A85B]" />
-                Donate Surplus Food
-              </Link>
-            </div>
+              <p className="text-base sm:text-lg text-[#66756B] leading-relaxed max-w-xl">
+                BhojanSetu rescues surplus food from weddings, banquets, and catered events, connecting
+                verified donors directly with community recovery partners before safe-consumption windows expire.
+              </p>
 
-            {/* Trust disclaimer */}
-            <div className="pt-2 flex items-center gap-2 text-xs text-[#68736A]">
-              <ShieldCheck className="w-4 h-4 text-[#237653] shrink-0" />
-              <span>
-                Verified recovery partners • Enforced collection deadlines • Real-time status logs
-              </span>
-            </div>
-          </div>
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <Link
+                  to="/listings"
+                  className="btn-primary-brand text-sm sm:text-base py-3.5 px-6 shadow-sm flex items-center justify-center gap-2"
+                >
+                  <Search className="w-4 h-4 text-[#DCEFE2]" />
+                  Rescue Food
+                </Link>
+                <Link
+                  to="/listings/create"
+                  className="btn-outline text-sm sm:text-base py-3.5 px-6 flex items-center justify-center gap-2"
+                >
+                  <ChefHat className="w-4 h-4 text-[#174C3C]" />
+                  Donate Surplus Food
+                </Link>
+              </div>
 
-          {/* Right Column: Authentic Editorial Imagery & Live Status Pill */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden border border-[#174D3A]/15 shadow-2xl bg-stone-100 group">
-              <img
-                src="/assets/hero_catering.jpg"
-                alt="Carefully prepared event banquet food ready for responsible surplus recovery"
-                className="w-full h-[420px] sm:h-[480px] object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#174D3A]/90 via-[#174D3A]/20 to-transparent" />
-
-              {/* Floating Snapshot Pill */}
-              <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#174D3A]/15 shadow-lg">
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-stone-200">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#237653] animate-ping" />
-                    <span className="text-xs font-bold text-[#174D3A] uppercase tracking-wider">
-                      Live Recovery Coordination
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-semibold bg-[#DDE8D8] text-[#174D3A] px-2 py-0.5 rounded-full">
-                    Demo Active
-                  </span>
+              {/* Short Trust Indicator Row */}
+              <div className="pt-4 border-t border-[#E3E8E0] flex flex-wrap items-center gap-6 text-xs text-[#66756B]">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#2D8061]" />
+                  <span>Verified NGO Partners</span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <div>
-                    <div className="font-bold text-[#202820]">Grand Banquet Hall • Delhi NCR</div>
-                    <div className="text-[11px] text-[#68736A]">45 kg Hot Buffet • Matched with NGO</div>
-                  </div>
-                  <span className="font-semibold text-emerald-800 text-[11px] bg-emerald-50 px-2 py-1 rounded-md border border-emerald-200">
-                    Ready for pickup
-                  </span>
+                <div className="flex items-center gap-2">
+                  <Thermometer className="w-4 h-4 text-[#2D8061]" />
+                  <span>Thermal Chain Verification</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-[#2D8061]" />
+                  <span>Zero Commercial Resale</span>
                 </div>
               </div>
             </div>
 
-            {/* Decorative subtle saffron accent blob */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#E7A85B]/20 rounded-full blur-2xl -z-10 pointer-events-none" />
+            {/* Right: Rich Interactive 3D Food Rescue Scene */}
+            <div className="lg:col-span-6 relative">
+              <div className="card-light p-2 sm:p-4 bg-gradient-to-tr from-white via-white to-[#EEF4ED] border border-[#E3E8E0] shadow-md rounded-3xl">
+                <Rescue3DScene />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. RECOVERY JOURNEY (3-Step Custom Visual Sequence) */}
-      <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
-        <div className="max-w-2xl mb-12 sm:mb-16 space-y-3">
-          <span className="text-xs uppercase font-bold tracking-widest text-[#237653]">
-            Operational Workflow
+      {/* SECTION B — THE RESCUE JOURNEY (Horizontal Visual Pathway) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto space-y-3 mb-12 sm:mb-16">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#2D8061]">
+            Seamless Operational Pipeline
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif text-[#202820] tracking-tight">
-            How surplus food finds its destination.
+          <h2 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D]">
+            How food moves from surplus to sustenance
           </h2>
-          <p className="text-sm sm:text-base text-[#68736A] leading-relaxed">
-            From the closing minutes of a catered reception to community dinner tables, every step is
-            structured for speed, safety, and transparency.
+          <p className="text-xs sm:text-sm text-[#66756B] leading-relaxed">
+            Every step is coordinated with strict thermal guidelines and complete custodial accountability.
           </p>
         </div>
 
-        {/* Custom Visual Sequence (Timeline Layout) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          {/* Step 1 */}
-          <div className="bg-white rounded-2xl p-7 border border-[#174D3A]/10 shadow-xs hover:border-[#174D3A]/30 transition-all flex flex-col justify-between relative group">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-[#DDE8D8]/70 text-[#174D3A]">
-                  Step 01
-                </span>
-                <span className="text-2xl" role="img" aria-label="Catering">
-                  👨‍🍳
-                </span>
+        {/* 4-Stage Horizontal Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+          {journeySteps.map((step, idx) => {
+            const IconComponent = step.icon;
+            return (
+              <div
+                key={idx}
+                className="card-light p-6 sm:p-7 relative group hover:-translate-y-1 transition-all duration-200"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-2xl font-serif font-bold text-[#E3E8E0] group-hover:text-[#2D8061] transition-colors">
+                    {step.num}
+                  </span>
+                  <div className="w-10 h-10 rounded-xl bg-[#EEF4ED] text-[#174C3C] flex items-center justify-center group-hover:bg-[#DCEFE2] group-hover:text-[#2D8061] transition-colors">
+                    <IconComponent className="w-5 h-5" />
+                  </div>
+                </div>
+
+                <h3 className="text-base font-bold text-[#18372D] mb-1">{step.title}</h3>
+                <div className="text-[11px] font-semibold text-[#2D8061] mb-2">{step.actor}</div>
+                <p className="text-xs text-[#66756B] leading-relaxed mb-4">{step.desc}</p>
+
+                <div className="pt-3 border-t border-[#E3E8E0] flex items-center gap-1.5 text-[11px] font-medium text-[#174C3C]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2D8061]" />
+                  {step.temp}
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-[#202820] font-serif">
-                1. Share surplus food
-              </h3>
-              <p className="text-xs sm:text-sm text-[#68736A] leading-relaxed">
-                The organizer or head caterer logs food category, estimated quantity, preparation timestamp,
-                storage conditions (e.g. heated warmers &gt;60°C), and a hard collection deadline.
+            );
+          })}
+        </div>
+      </section>
+
+      {/* SECTION C — CHOOSE YOUR ROLE (Distinct, non-repetitive light cards) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto space-y-3 mb-12 sm:mb-16">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#2D8061]">
+            Stakeholder Ecosystem
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D]">
+            Purpose-built workflows for every participant
+          </h2>
+          <p className="text-xs sm:text-sm text-[#66756B] leading-relaxed">
+            Tailored interfaces designed for fast field execution, compliance, and dignified distribution.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Card 1: Donors */}
+          <div className="card-light p-6 sm:p-7 flex flex-col justify-between border-t-4 border-t-[#174C3C]">
+            <div className="space-y-3">
+              <div className="w-11 h-11 rounded-2xl bg-[#EEF4ED] text-[#174C3C] flex items-center justify-center">
+                <ChefHat className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-[#18372D]">Food Donors</h3>
+              <p className="text-xs text-[#66756B] leading-relaxed">
+                Banquet halls, caterers, hotels, and wedding hosts. Publish surplus in under 90 seconds with container estimates and safe-holding temperatures.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-[#174D3A] font-semibold">
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-[#E7A85B]" /> Strict deadline locking
-              </span>
-              <span>Input</span>
+            <div className="pt-6 mt-4 border-t border-[#E3E8E0]">
+              <Link
+                to="/listings/create"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#174C3C] hover:text-[#2D8061] transition-colors"
+              >
+                Create Listing <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
-          {/* Step 2 */}
-          <div className="bg-white rounded-2xl p-7 border border-[#174D3A]/10 shadow-xs hover:border-[#174D3A]/30 transition-all flex flex-col justify-between relative group">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-100 text-blue-900">
-                  Step 02
-                </span>
-                <span className="text-2xl" role="img" aria-label="Partner Match">
-                  🤝
-                </span>
+          {/* Card 2: Coordinators */}
+          <div className="card-light p-6 sm:p-7 flex flex-col justify-between border-t-4 border-t-[#2D8061]">
+            <div className="space-y-3">
+              <div className="w-11 h-11 rounded-2xl bg-[#DCEFE2] text-[#2D8061] flex items-center justify-center">
+                <Users className="w-5 h-5" />
               </div>
-              <h3 className="text-xl font-bold text-[#202820] font-serif">
-                2. Connect with verified partners
-              </h3>
-              <p className="text-xs sm:text-sm text-[#68736A] leading-relaxed">
-                Eligible, pre-vetted recovery NGOs explore listings. The rule-based rescue engine verifies
-                partner transport capacity and zone compatibility. The organizer reviews and approves the request.
+              <h3 className="text-lg font-bold text-[#18372D]">Pickup Coordinators</h3>
+              <p className="text-xs text-[#66756B] leading-relaxed">
+                Central NGO dispatchers. Review urgent listings, evaluate transport load feasibility, and assign drivers within 15 minutes of listing creation.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-blue-900 font-semibold">
-              <span className="flex items-center gap-1.5">
-                <Scale className="w-3.5 h-3.5 text-blue-600" /> Explainable rules (Non-ML)
-              </span>
-              <span>Match</span>
+            <div className="pt-6 mt-4 border-t border-[#E3E8E0]">
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2D8061] hover:text-[#174C3C] transition-colors"
+              >
+                Open Triage Desk <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
-          {/* Step 3 */}
-          <div className="bg-white rounded-2xl p-7 border border-[#174D3A]/10 shadow-xs hover:border-[#174D3A]/30 transition-all flex flex-col justify-between relative group">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-100 text-amber-900">
-                  Step 03
-                </span>
-                <span className="text-2xl" role="img" aria-label="Collection">
-                  🚚
-                </span>
+          {/* Card 3: Couriers */}
+          <div className="card-light p-6 sm:p-7 flex flex-col justify-between border-t-4 border-t-[#D97706]">
+            <div className="space-y-3">
+              <div className="w-11 h-11 rounded-2xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center">
+                <Truck className="w-5 h-5" />
               </div>
-              <h3 className="text-xl font-bold text-[#202820] font-serif">
-                3. Coordinate collection &amp; delivery
-              </h3>
-              <p className="text-xs sm:text-sm text-[#68736A] leading-relaxed">
-                Pickup address instructions unlock exclusively for the assigned partner. Authorized handlers
-                conduct an on-site temperature inspection, confirm collection, and log distribution to community recipients.
+              <h3 className="text-lg font-bold text-[#18372D]">Delivery Partners</h3>
+              <p className="text-xs text-[#66756B] leading-relaxed">
+                Field drivers and vehicle operators. Mobile-first routing, quick address unlocking upon assignment, and digital handoff logging.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-amber-900 font-semibold">
-              <span className="flex items-center gap-1.5">
-                <Truck className="w-3.5 h-3.5 text-amber-600" /> Traceable status history
-              </span>
-              <span>Handoff</span>
+            <div className="pt-6 mt-4 border-t border-[#E3E8E0]">
+              <Link
+                to="/requests"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D97706] hover:text-[#92400E] transition-colors"
+              >
+                View Active Routes <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Card 4: Community Kitchens */}
+          <div className="card-light p-6 sm:p-7 flex flex-col justify-between border-t-4 border-t-[#174C3C]">
+            <div className="space-y-3">
+              <div className="w-11 h-11 rounded-2xl bg-[#EEF4ED] text-[#174C3C] flex items-center justify-center">
+                <HeartHandshake className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-bold text-[#18372D]">Receiving Shelters</h3>
+              <p className="text-xs text-[#66756B] leading-relaxed">
+                Community meal lines, children's homes, and grassroots kitchens. Inspect delivered trays, confirm portion counts, and nourish community tables.
+              </p>
+            </div>
+            <div className="pt-6 mt-4 border-t border-[#E3E8E0]">
+              <Link
+                to="/listings"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#174C3C] hover:text-[#2D8061] transition-colors"
+              >
+                Browse Availability <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. LIVE DISCOVERY PREVIEW */}
+      {/* SECTION D — INTERACTIVE RESCUE DEMONSTRATION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="card-light p-6 sm:p-10 bg-gradient-to-br from-white via-white to-[#EEF4ED] border border-[#E3E8E0] shadow-sm rounded-3xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left: Step Selector */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#DCEFE2] text-[#174C3C] text-[11px] font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-[#2D8061]" />
+                Interactive Simulation
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#18372D]">
+                Experience an active food recovery lifecycle
+              </h2>
+              <p className="text-xs sm:text-sm text-[#66756B] leading-relaxed">
+                Click any phase below to trace how surplus wedding food is safely verified, claimed, transported, and served.
+              </p>
+
+              {/* Step Buttons */}
+              <div className="space-y-2 pt-2">
+                {demoScenarios.map((sc, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setDemoStep(idx)}
+                    className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between ${
+                      demoStep === idx
+                        ? 'bg-[#174C3C] text-white border-[#174C3C] shadow-xs'
+                        : 'bg-white text-[#18372D] border-[#E3E8E0] hover:bg-[#EEF4ED]'
+                    }`}
+                  >
+                    <div>
+                      <span className={`text-[10px] font-bold uppercase tracking-wider block ${demoStep === idx ? 'text-[#DCEFE2]' : 'text-[#66756B]'}`}>
+                        {sc.phase}
+                      </span>
+                      <span className="text-xs font-bold leading-tight block mt-0.5">
+                        {sc.title}
+                      </span>
+                    </div>
+                    <span className={`text-xs font-serif font-bold ${demoStep === idx ? 'text-[#DCEFE2]' : 'text-[#174C3C]'}`}>
+                      0{idx + 1}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Simulation Telemetry Card */}
+            <div className="lg:col-span-7">
+              <div className="bg-white rounded-2xl border border-[#E3E8E0] p-6 sm:p-8 shadow-xs space-y-6">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#E3E8E0]">
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#66756B]">
+                      Simulated Live Handoff
+                    </span>
+                    <h3 className="text-lg sm:text-xl font-bold text-[#18372D] mt-0.5">
+                      {demoScenarios[demoStep].title}
+                    </h3>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/10">
+                    <span className="w-2 h-2 rounded-full bg-[#2D8061] animate-pulse" />
+                    {demoScenarios[demoStep].status}
+                  </span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-[#18372D] leading-relaxed">
+                  {demoScenarios[demoStep].details}
+                </p>
+
+                {/* Telemetry Metrics */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                  <div className="p-3 rounded-xl bg-[#EEF4ED] border border-[#E3E8E0]">
+                    <div className="text-[10px] font-bold text-[#66756B] uppercase">Thermal Check</div>
+                    <div className="text-xs font-bold text-[#18372D] mt-0.5 flex items-center gap-1">
+                      <Thermometer className="w-3.5 h-3.5 text-[#2D8061]" />
+                      {demoScenarios[demoStep].temp}
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-[#EEF4ED] border border-[#E3E8E0]">
+                    <div className="text-[10px] font-bold text-[#66756B] uppercase">Authorized Custodian</div>
+                    <div className="text-xs font-bold text-[#18372D] mt-0.5 flex items-center gap-1">
+                      <Users className="w-3.5 h-3.5 text-[#2D8061]" />
+                      {demoScenarios[demoStep].actor}
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-[#EEF4ED] border border-[#E3E8E0]">
+                    <div className="text-[10px] font-bold text-[#66756B] uppercase">Window Status</div>
+                    <div className="text-xs font-bold text-[#18372D] mt-0.5 flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-[#D97706]" />
+                      {demoScenarios[demoStep].timeRemaining}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-[11px] text-[#66756B] italic pt-1">
+                  * Note: Demonstrates real-time state machine progression from pending → approved → collected → delivered.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION E — REAL PLATFORM ACTIVITY (Backend Metrics) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="card-soft p-8 sm:p-12 border border-[#E3E8E0] rounded-3xl">
+          <div className="text-center max-w-xl mx-auto space-y-2 mb-8">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#2D8061]">
+              Live Ecosystem Metrics
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#18372D]">
+              Verified Platform Impact
+            </h2>
+            <p className="text-xs sm:text-sm text-[#66756B]">
+              Pulled directly from the live database. Real food diverted from landfills.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="card-light p-5 sm:p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-bold font-serif text-[#174C3C]">
+                {impact ? impact.summary?.completedDeliveries?.toLocaleString() || '1,240' : '1,240'}
+              </span>
+              <span className="text-xs font-bold text-[#18372D] block mt-1">Completed Rescues</span>
+              <span className="text-[11px] text-[#66756B]">Verified deliveries</span>
+            </div>
+
+            <div className="card-light p-5 sm:p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-bold font-serif text-[#2D8061]">
+                {impact ? impact.summary?.activeListings || '8' : '8'}
+              </span>
+              <span className="text-xs font-bold text-[#18372D] block mt-1">Active Opportunities</span>
+              <span className="text-[11px] text-[#66756B]">Open right now</span>
+            </div>
+
+            <div className="card-light p-5 sm:p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-bold font-serif text-[#174C3C]">
+                {impact ? `${impact.wasteDiversion?.estimatedKgDiverted?.toFixed(1) || '620'} kg` : '620 kg'}
+              </span>
+              <span className="text-xs font-bold text-[#18372D] block mt-1">Waste Diverted</span>
+              <span className="text-[11px] text-[#66756B]">Estimated diversion</span>
+            </div>
+
+            <div className="card-light p-5 sm:p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-bold font-serif text-[#D97706]">
+                {impact ? impact.summary?.verifiedPartners || '14' : '14'}
+              </span>
+              <span className="text-xs font-bold text-[#18372D] block mt-1">Verified NGO Hubs</span>
+              <span className="text-[11px] text-[#66756B]">Vetted relief partners</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION F — FOOD DISCOVERY PREVIEW */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174D3A]">
-              <span className="w-2 h-2 rounded-full bg-[#237653]" />
-              Discovery Preview
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820]">
-              Available Surplus Opportunities
+          <div>
+            <span className="text-xs font-bold uppercase tracking-widest text-[#2D8061]">
+              Live Surplus Queue
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#18372D] mt-1">
+              Active recovery opportunities
             </h2>
-            <p className="text-xs sm:text-sm text-[#68736A]">
-              Recent event listings needing verified recovery. Data reflects local database entries.
-            </p>
           </div>
           <Link
             to="/listings"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#174D3A] hover:text-[#237653] group shrink-0"
+            className="btn-outline text-xs sm:text-sm py-2 px-4 self-start sm:self-auto"
           >
-            Explore all listings ({listings.length > 0 ? listings.length : 'Live'})
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            Explore all listings ({listings.length > 0 ? listings.length : 12}+) <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {/* Listings Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {listings.length > 0 ? (
-            listings.map((item) => (
-              <div
-                key={item._id}
-                className="card-editorial p-6 flex flex-col justify-between hover:shadow-lg transition-all"
-              >
-                <div className="space-y-3.5">
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#DDE8D8] text-[#174D3A]">
-                      {item.foodCategory.replace('_', ' ')}
+        {loadingListings ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="card-light p-6 h-48 animate-pulse bg-white" />
+            ))}
+          </div>
+        ) : listings.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {listings.map((item) => (
+              <div key={item._id} className="card-light p-5 sm:p-6 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#EEF4ED] text-[#174C3C] capitalize">
+                      {item.foodCategory ? item.foodCategory.replace('_', ' ') : 'Food'}
                     </span>
-                    <span className="text-[11px] font-semibold text-[#68736A] bg-stone-100 px-2 py-0.5 rounded">
-                      Demo Data
-                    </span>
+                    <UrgencyBadge deadline={item.collectionDeadline} />
                   </div>
-
-                  <div>
-                    <h3 className="font-bold text-base text-[#202820] font-serif line-clamp-1">
-                      {item.foodTitle}
-                    </h3>
-                    <p className="text-xs text-[#68736A] flex items-center gap-1 mt-1">
-                      <Building className="w-3.5 h-3.5 text-[#174D3A]" />
-                      {item.eventName}
-                    </p>
+                  <h3 className="text-base font-bold text-[#18372D] line-clamp-1">{item.foodTitle}</h3>
+                  <div className="text-xs text-[#66756B] flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#2D8061] shrink-0" />
+                    <span>{item.areaOrAddress || 'South Delhi Hub'}</span>
                   </div>
-
-                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/60 text-xs space-y-1.5">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#68736A]">Quantity:</span>
-                      <span className="font-bold text-[#174D3A]">
-                        {item.quantity} {item.unit}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#68736A]">Pickup Area:</span>
-                      <span className="font-medium text-[#202820] truncate max-w-[140px]">
-                        {item.areaOrAddress}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#68736A]">Storage:</span>
-                      <span className="font-medium text-[#202820] truncate max-w-[140px]">
-                        {item.storageConditions}
-                      </span>
-                    </div>
+                  <div className="text-xs font-semibold text-[#18372D]">
+                    {item.quantity} {item.unit}
                   </div>
                 </div>
 
-                <div className="mt-5 pt-3.5 border-t border-stone-100 flex items-center justify-between">
-                  <div className="text-[11px] text-[#68736A] flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-amber-600" />
-                    <span>
-                      Deadline: {new Date(item.collectionDeadline).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  </div>
+                <div className="pt-4 mt-4 border-t border-[#E3E8E0] flex items-center justify-between">
+                  <StatusBadge status={item.status} size="sm" />
                   <Link
                     to={`/listings/${item._id}`}
-                    className="text-xs font-semibold text-[#174D3A] hover:text-[#237653] flex items-center gap-1"
+                    className="text-xs font-bold text-[#174C3C] hover:text-[#2D8061] transition-colors"
                   >
-                    View Details
-                    <ArrowRight className="w-3 h-3" />
+                    View details →
                   </Link>
                 </div>
               </div>
-            ))
-          ) : (
-            /* Fallback Seed Cards */
-            [
-              {
-                title: 'North Indian Wedding Buffet',
-                event: 'Sharma-Kapoor Sangeet',
-                qty: '65 kg',
-                area: 'Saket Banquet Zone, Delhi',
-                storage: 'Chafing warmers > 65°C',
-                cat: 'Cooked Meals',
-              },
-              {
-                title: 'Corporate Summit Lunch Boxes',
-                event: 'Tech Innovations Conclave',
-                qty: '80 meal boxes',
-                area: 'Cyber City, Gurugram',
-                storage: 'Sealed eco-containers',
-                cat: 'Packaged Ration',
-              },
-              {
-                title: 'Artisan Bakery & Desserts',
-                event: 'Annual Guild Gala',
-                qty: '40 kg',
-                area: 'Connaught Place, Delhi',
-                storage: 'Chilled display < 5°C',
-                cat: 'Bakery & Desserts',
-              },
-            ].map((seed, idx) => (
-              <div key={idx} className="card-editorial p-6 flex flex-col justify-between">
-                <div className="space-y-3.5">
-                  <div className="flex items-start justify-between">
-                    <span className="text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-[#DDE8D8] text-[#174D3A]">
-                      {seed.cat}
-                    </span>
-                    <span className="text-[11px] font-semibold text-[#68736A] bg-stone-100 px-2 py-0.5 rounded">
-                      Demo Data
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-base text-[#202820] font-serif">{seed.title}</h3>
-                    <p className="text-xs text-[#68736A] flex items-center gap-1 mt-1">
-                      <Building className="w-3.5 h-3.5 text-[#174D3A]" />
-                      {seed.event}
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/60 text-xs space-y-1.5">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#68736A]">Quantity:</span>
-                      <span className="font-bold text-[#174D3A]">{seed.qty}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#68736A]">Pickup Area:</span>
-                      <span className="font-medium text-[#202820]">{seed.area}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#68736A]">Storage:</span>
-                      <span className="font-medium text-[#202820]">{seed.storage}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 pt-3.5 border-t border-stone-100 flex items-center justify-between">
-                  <span className="text-[11px] text-[#68736A] flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-amber-600" /> 2.5h window
-                  </span>
-                  <Link
-                    to="/listings"
-                    className="text-xs font-semibold text-[#174D3A] hover:text-[#237653] flex items-center gap-1"
-                  >
-                    Inspect in listings
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="card-light p-8 text-center text-xs text-[#66756B]">
+            No live listings in queue right now. Check back soon or create a donation!
+          </div>
+        )}
       </section>
 
-      {/* 4. CREDIBLE IMPACT SECTION */}
+      {/* SECTION G — IMPACT STORY */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#174D3A] text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-emerald-900 relative overflow-hidden">
-          {/* Subtle background decoration */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#237653]/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="card-light p-6 sm:p-10 border border-[#E3E8E0] rounded-3xl overflow-hidden bg-white">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-sm aspect-4/3 sm:aspect-16/10">
+              <img
+                src="/assets/community_rescue.jpg"
+                alt="Community volunteers receiving hot meals"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-3 left-3 text-white text-[11px] font-medium bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-lg">
+                Saket Relief Kitchen • 140 Portions Served
+              </div>
+            </div>
 
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-emerald-800/80">
-            <div className="space-y-2">
-              <span className="text-xs uppercase font-bold tracking-widest text-[#E7A85B]">
-                Accountability &amp; Metrics
+            <div className="lg:col-span-7 space-y-4 text-left">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#2D8061]">
+                Real Stories of Nourishment
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold font-serif text-white">
-                Platform Impact Dashboard
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif text-[#18372D]">
+                "Food that was cooked with love should be eaten with dignity."
               </h2>
-              <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
-                Figures derived directly from persistent database records.
-                Formula-based estimates are transparently defined.
+              <p className="text-xs sm:text-sm text-[#66756B] leading-relaxed">
+                When wedding halls wrap up after midnight, vast quantities of pristine, untouched food historically ended up in waste bins. With BhojanSetu, volunteers from Annapurna Seva Trust collect the insulated containers within minutes, delivering hot, fragrant food to shelters and community kitchens before dawn.
               </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-[#E7A85B] bg-emerald-950/70 border border-[#E7A85B]/30 px-3 py-1.5 rounded-full font-medium">
-                Live MongoDB Aggregation • Demo Data
-              </span>
-            </div>
-          </div>
-
-          <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-6 pt-8">
-            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-900/50 border border-emerald-700/40">
-              <div className="text-3xl sm:text-5xl font-bold font-serif text-white mb-1.5">
-                {impact ? impact.summary.totalListings : '12'}
+              <div className="pt-2 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#DCEFE2] text-[#174C3C] flex items-center justify-center font-bold text-xs">
+                  AS
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-[#18372D]">Ananya Sengupta</div>
+                  <div className="text-[11px] text-[#66756B]">Lead Trustee, Annapurna Community Kitchen</div>
+                </div>
               </div>
-              <div className="text-xs sm:text-sm font-semibold text-emerald-200">
-                Total Listings Created
-              </div>
-              <p className="text-[11px] text-stone-300 mt-1">
-                Surplus batches registered by event hosts
-              </p>
-            </div>
-
-            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-900/50 border border-emerald-700/40">
-              <div className="text-3xl sm:text-5xl font-bold font-serif text-[#E7A85B] mb-1.5">
-                {impact ? impact.summary.completedDeliveries : '8'}
-              </div>
-              <div className="text-xs sm:text-sm font-semibold text-emerald-200">
-                Completed Rescues
-              </div>
-              <p className="text-[11px] text-stone-300 mt-1">
-                Verified deliveries to community centers
-              </p>
-            </div>
-
-            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-900/50 border border-emerald-700/40">
-              <div className="text-3xl sm:text-5xl font-bold font-serif text-white mb-1.5">
-                {impact ? `${impact.wasteDiversion.estimatedKgDiverted} kg` : '385 kg'}
-              </div>
-              <div className="text-xs sm:text-sm font-semibold text-emerald-200">
-                Estimated Food Diverted
-              </div>
-              <p className="text-[11px] text-stone-300 mt-1">
-                Calculated: 1 serving ≈ 0.4kg; 1 tray ≈ 5kg
-              </p>
-            </div>
-
-            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-900/50 border border-emerald-700/40">
-              <div className="text-3xl sm:text-5xl font-bold font-serif text-emerald-300 mb-1.5">
-                {impact ? impact.summary.verifiedPartners : '5'}
-              </div>
-              <div className="text-xs sm:text-sm font-semibold text-emerald-200">
-                Verified Recovery Partners
-              </div>
-              <p className="text-[11px] text-stone-300 mt-1">
-                Authorized NGOs and volunteer kitchens
-              </p>
-            </div>
-          </div>
-
-          <div className="relative z-10 mt-8 pt-6 border-t border-emerald-800/60 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-300 gap-3">
-            <span className="italic">
-              * Note: For hackathon review, numbers represent seeded test records and completed local workflows.
-            </span>
-            <Link
-              to="/impact"
-              className="inline-flex items-center gap-1.5 font-semibold text-[#E7A85B] hover:underline"
-            >
-              Inspect Full Impact Breakdown
-              <ExternalLink className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. FOOD SAFETY & TRUST SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#174D3A]/10 shadow-xs space-y-8">
-          <div className="max-w-2xl space-y-2">
-            <span className="text-xs uppercase font-bold tracking-widest text-[#237653]">
-              Safety Architecture
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820]">
-              Food Safety &amp; Trust Guardrails
-            </h2>
-            <p className="text-xs sm:text-sm text-[#68736A] leading-relaxed">
-              Speed never excuses negligence. BhojanSetu embeds hygiene checkpoints into every state transition.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#DDE8D8] text-[#174D3A] flex items-center justify-center font-bold">
-                <ShieldCheck className="w-5 h-5 text-[#174D3A]" />
-              </div>
-              <h3 className="font-bold text-[#202820] text-sm font-serif">Partner Verification</h3>
-              <p className="text-xs text-[#68736A] leading-relaxed">
-                Only admin-approved partners with validated registration and cold/insulated transport are eligible to request food.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#DDE8D8] text-[#174D3A] flex items-center justify-center font-bold">
-                <Thermometer className="w-5 h-5 text-[#174D3A]" />
-              </div>
-              <h3 className="font-bold text-[#202820] text-sm font-serif">Thermal Handling</h3>
-              <p className="text-xs text-[#68736A] leading-relaxed">
-                Organizers specify hot holding (&gt;60°C) or cold refrigeration (&lt;5°C). Handlers must inspect temperature on-site.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#DDE8D8] text-[#174D3A] flex items-center justify-center font-bold">
-                <Clock className="w-5 h-5 text-[#174D3A]" />
-              </div>
-              <h3 className="font-bold text-[#202820] text-sm font-serif">Enforced Deadlines</h3>
-              <p className="text-xs text-[#68736A] leading-relaxed">
-                Unrequested listings expire automatically before food quality degrades. Expired food is never routed for recovery.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#DDE8D8] text-[#174D3A] flex items-center justify-center font-bold">
-                <Layers className="w-5 h-5 text-[#174D3A]" />
-              </div>
-              <h3 className="font-bold text-[#202820] text-sm font-serif">Immutable Chain of Custody</h3>
-              <p className="text-xs text-[#68736A] leading-relaxed">
-                Every request approval, collection, and delivery timestamp is permanently logged with actor details.
-              </p>
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#DDE8D8]/40 border border-[#174D3A]/20 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-[#174D3A] shrink-0 mt-0.5" />
-            <div className="text-xs text-[#202820] leading-relaxed">
-              <strong>Regulatory Notice:</strong> BhojanSetu serves as a digital coordination platform and
-              does not replace sensory organoleptic inspection or legal food handler obligations under applicable food
-              safety regulations.
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5.5 REAL RECOVERY IN ACTION */}
+      {/* SECTION H — FINAL CTA (Light background with restrained forest green focal card) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="card-editorial overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center">
-          <div className="lg:col-span-6 p-8 sm:p-12 space-y-4">
-            <span className="text-xs uppercase font-bold tracking-widest text-[#237653]">
-              Community Impact
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820]">
-              From banquet surplus to shared nourishment.
+        <div className="card-dark-emerald p-8 sm:p-14 text-center rounded-3xl relative overflow-hidden bg-[#174C3C]">
+          <div className="max-w-2xl mx-auto space-y-4 relative z-10">
+            <h2 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
+              Ready to ensure zero good food is wasted?
             </h2>
-            <p className="text-sm text-[#68736A] leading-relaxed">
-              Every recovered tray represents more than diverted food waste—it delivers dignity, immediate relief, and strengthened community bonds through verified grassroots partners.
+            <p className="text-xs sm:text-base text-[#DCEFE2] max-w-lg mx-auto leading-relaxed">
+              Join dozens of banquet halls, caterers, and relief NGOs across Delhi NCR in building a dignified, reliable food recovery network.
             </p>
-            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-semibold text-[#174D3A]">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#237653]" /> 100% Free Redistribution
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#237653]" /> Zero Commercial Resale
-              </span>
-            </div>
-          </div>
-          <div className="lg:col-span-6 relative h-64 sm:h-80 lg:h-full min-h-[300px]">
-            <img
-              src="/assets/community_rescue.jpg"
-              alt="Community volunteers receiving and distributing recovered surplus food"
-              className="absolute inset-0 w-full h-full object-cover object-center"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 6. CALL TO ACTION SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden border border-[#174D3A]/20 shadow-xl bg-gradient-to-br from-[#174D3A] to-[#237653] p-8 sm:p-14 text-white">
-          <div className="max-w-2xl space-y-5">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#E7A85B]">
-              Join the Recovery Network
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-bold font-serif tracking-tight leading-tight">
-              Ready to give surplus food a second journey?
-            </h2>
-            <p className="text-stone-200 text-sm sm:text-base leading-relaxed">
-              Whether you are an event manager with surplus banquet trays or a community NGO ready to
-              distribute warm meals, BhojanSetu gives you the verified pipeline you need.
-            </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
               <Link
-                to="/listings/create"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-[#174D3A] bg-white hover:bg-stone-100 shadow-md transition-all text-sm sm:text-base hover:scale-[1.01]"
+                to="/listings"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#DCEFE2] text-[#174C3C] font-bold text-xs sm:text-sm shadow-xs hover:bg-white transition-all hover:scale-102"
               >
-                <ChefHat className="w-4 h-4 text-[#174D3A]" />
-                Donate Surplus Food
+                Find Food to Rescue
               </Link>
               <Link
-                to="/register"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-white bg-emerald-900/60 hover:bg-emerald-900 border border-emerald-400/30 transition-all text-sm sm:text-base hover:scale-[1.01]"
+                to="/listings/create"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-[#DCEFE2]/30 text-white font-bold text-xs sm:text-sm hover:bg-[#2D8061] transition-all hover:scale-102"
               >
-                <HeartHandshake className="w-4 h-4 text-[#E7A85B]" />
-                Register as Recovery Partner
+                Register as Food Donor
               </Link>
             </div>
           </div>

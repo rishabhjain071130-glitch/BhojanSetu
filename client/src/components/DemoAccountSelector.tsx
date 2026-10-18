@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext.js';
-import { UserCheck, Sparkles, ChevronRight, AlertCircle } from 'lucide-react';
+import { UserCheck, Sparkles, ChevronRight, AlertCircle, ChefHat, HeartHandshake, Clock, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface DemoAccountSelectorProps {
@@ -23,36 +23,36 @@ export const DemoAccountSelector: React.FC<DemoAccountSelectorProps> = ({
       title: 'Event Organizer',
       sub: 'Royal Grand Banquets',
       email: 'organizer@bhojansetu.demo',
-      icon: '👨‍🍳',
+      icon: ChefHat,
       badge: 'Listing Creator',
-      badgeColor: 'bg-[#DDE8D8] text-[#174D3A]',
+      badgeColor: 'bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/20',
     },
     {
       role: 'partner',
       title: 'Verified Partner',
       sub: 'Annapurna Seva Trust (Capacity: 250)',
       email: 'partner.verified@bhojansetu.demo',
-      icon: '🤝',
+      icon: HeartHandshake,
       badge: 'Verified Rescuer',
-      badgeColor: 'bg-blue-100 text-blue-900',
+      badgeColor: 'bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/30 font-bold',
     },
     {
       role: 'partner',
       title: 'Pending Partner',
       sub: 'Navjeevan Rescue (Gated)',
       email: 'partner.pending@bhojansetu.demo',
-      icon: '⏳',
+      icon: Clock,
       badge: 'Pending Review',
-      badgeColor: 'bg-amber-100 text-amber-900',
+      badgeColor: 'bg-[#FEF3C7] text-[#92400E] border border-[#E9B76A]/40',
     },
     {
       role: 'admin',
       title: 'Platform Admin',
       sub: 'Central Coordination Desk',
       email: 'admin@bhojansetu.demo',
-      icon: '🛡️',
+      icon: ShieldCheck,
       badge: 'Admin Console',
-      badgeColor: 'bg-purple-100 text-purple-900',
+      badgeColor: 'bg-[#EEF4ED] text-[#174C3C] border border-[#174C3C]/20',
     },
   ];
 
@@ -64,83 +64,83 @@ export const DemoAccountSelector: React.FC<DemoAccountSelectorProps> = ({
       if (onSelect) onSelect();
       navigate('/dashboard');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Quick sign-in failed. Please ensure the server is active.');
+      setErrorMsg(err.message || 'Login failed. Please verify the backend is running.');
     } finally {
       setLoadingEmail(null);
     }
   };
 
   return (
-    <div className={`card-editorial ${compact ? 'p-3' : 'p-4 sm:p-6'}`}>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-[#174D3A] text-white flex items-center justify-center text-xs font-bold">
-            <Sparkles className="w-4 h-4 text-[#E7A85B]" />
+    <div className="space-y-3">
+      {!compact && (
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-6 h-6 rounded-lg bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center text-xs shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5" />
           </div>
           <div>
-            <h3 className="text-xs uppercase tracking-wider font-bold text-[#174D3A]">
-              Hackathon Evaluation Fast-Track
-            </h3>
-            <p className="text-xs text-[#68736A]">
-              Instant one-click role switching to test the full event recovery lifecycle
-            </p>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#18372D]">
+              Evaluation Quick Access
+            </h4>
+            <p className="text-[11px] text-[#66756B]">Select a pre-configured role to inspect the platform</p>
           </div>
         </div>
-        {user && (
-          <span className="text-xs text-[#202820] bg-[#DDE8D8]/60 border border-[#174D3A]/20 px-3 py-1 rounded-full flex items-center gap-1.5 self-start sm:self-auto font-medium">
-            <span className="w-2 h-2 rounded-full bg-[#237653]" />
-            Active: <strong className="capitalize">{user.role}</strong> ({user.name.split(' ')[0]})
-          </span>
-        )}
-      </div>
+      )}
 
       {errorMsg && (
-        <div className="mb-3 text-xs text-rose-800 bg-rose-50 border border-rose-200 rounded-xl p-2.5 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center gap-1.5">
+          <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {demoAccounts.map((acc) => {
-          const isActive = user?.email === acc.email;
-          const isLoading = loadingEmail === acc.email;
+      <div className={`grid ${compact ? 'grid-cols-1 sm:grid-cols-2 gap-2' : 'grid-cols-1 gap-2.5'}`}>
+        {demoAccounts.map((account, idx) => {
+          const isCurrent = user?.email === account.email;
+          const isLoading = loadingEmail === account.email;
+          const IconComp = account.icon;
 
           return (
             <button
-              key={acc.email}
+              key={idx}
               type="button"
-              onClick={() => handleQuickLogin(acc.email)}
-              disabled={isLoading || isActive}
-              className={`text-left p-3.5 rounded-xl border transition-all flex flex-col justify-between ${
-                isActive
-                  ? 'border-[#174D3A] bg-[#DDE8D8]/40 shadow-xs ring-1 ring-[#174D3A]/30'
-                  : 'border-stone-200 bg-stone-50/70 hover:bg-white hover:border-[#237653] hover:shadow-xs'
+              disabled={isLoading}
+              onClick={() => handleQuickLogin(account.email)}
+              className={`text-left p-3 rounded-xl border transition-all flex items-center justify-between group ${
+                isCurrent
+                  ? 'border-[#2D8061] bg-[#EEF4ED] shadow-xs ring-1 ring-[#2D8061]'
+                  : 'border-[#E3E8E0] bg-white hover:border-[#174C3C]/40 hover:bg-[#F8F7F2]'
               }`}
             >
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-2xl" role="img" aria-label={acc.title}>
-                    {acc.icon}
-                  </span>
-                  <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${acc.badgeColor}`}>
-                    {acc.badge}
-                  </span>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-lg bg-[#F8F7F2] border border-[#E3E8E0] flex items-center justify-center text-[#174C3C] shrink-0">
+                  <IconComp className="w-4 h-4 text-[#2D8061]" />
                 </div>
-                <div className="font-bold text-[#202820] text-sm">{acc.title}</div>
-                <div className="text-xs text-[#68736A] truncate mt-0.5">{acc.sub}</div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-[#18372D] truncate">
+                      {account.title}
+                    </span>
+                    <span
+                      className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.2 rounded-full ${account.badgeColor}`}
+                    >
+                      {account.badge}
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-[#66756B] truncate">
+                    {account.sub}
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-3.5 pt-2.5 border-t border-stone-200/80 flex items-center justify-between text-xs font-semibold">
-                {isActive ? (
-                  <span className="text-[#174D3A] flex items-center gap-1">
-                    <UserCheck className="w-3.5 h-3.5" /> Currently signed in
+              <div className="shrink-0 ml-2">
+                {isLoading ? (
+                  <span className="text-[11px] font-semibold text-[#174C3C]">...</span>
+                ) : isCurrent ? (
+                  <span className="text-[11px] font-bold text-[#2D8061] flex items-center gap-0.5">
+                    <UserCheck className="w-3.5 h-3.5" />
                   </span>
                 ) : (
-                  <span className="text-[#237653] flex items-center gap-1 group-hover:underline">
-                    {isLoading ? 'Switching...' : 'Switch to role'}
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </span>
+                  <ChevronRight className="w-4 h-4 text-[#66756B] group-hover:text-[#174C3C] group-hover:translate-x-0.5 transition-transform" />
                 )}
               </div>
             </button>

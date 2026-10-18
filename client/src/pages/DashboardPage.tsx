@@ -21,6 +21,11 @@ import {
   HeartHandshake,
   Users,
   Search,
+  ChefHat,
+  Thermometer,
+  Calendar,
+  Layers,
+  MapPin,
 } from 'lucide-react';
 
 export const DashboardPage: React.FC = () => {
@@ -79,24 +84,24 @@ export const DashboardPage: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-8 animate-fade-in">
       {/* Greeting & Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#174D3A]/15">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E3E8E0]">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#174D3A] bg-[#DDE8D8]/70 px-2.5 py-0.5 rounded-full border border-[#174D3A]/10">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#174C3C] bg-[#DCEFE2] px-3 py-0.5 rounded-full border border-[#174C3C]/15">
               {user.role} Workspace
             </span>
             {user.role === 'partner' && (
               <StatusBadge status={user.verificationStatus} type="verification" size="sm" />
             )}
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D] tracking-tight">
             Welcome back, {user.name}
           </h1>
-          <p className="text-xs sm:text-sm text-[#68736A] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#66756B] mt-0.5">
             {user.organizationName ? `${user.organizationName} • ` : ''}
-            Verified event-based surplus food recovery pipeline
+            Verified surplus food recovery operational desk
           </p>
         </div>
 
@@ -104,27 +109,27 @@ export const DashboardPage: React.FC = () => {
           {user.role === 'organizer' && (
             <Link
               to="/listings/create"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all hover:scale-[1.01]"
+              className="btn-primary-brand text-xs sm:text-sm"
             >
-              <PlusCircle className="w-4 h-4 text-[#E7A85B]" /> Donate Surplus Food
+              <PlusCircle className="w-4 h-4 text-[#DCEFE2]" /> Donate Surplus Food
             </Link>
           )}
 
           {user.role === 'partner' && (
             <Link
               to="/listings"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all hover:scale-[1.01]"
+              className="btn-primary-brand text-xs sm:text-sm"
             >
-              <Search className="w-4 h-4 text-[#E7A85B]" /> Discover Available Food
+              <Search className="w-4 h-4 text-[#DCEFE2]" /> Discover Available Food
             </Link>
           )}
 
           {user.role === 'admin' && (
             <Link
               to="/admin/partners"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all hover:scale-[1.01]"
+              className="btn-primary-brand text-xs sm:text-sm"
             >
-              <ShieldCheck className="w-4 h-4 text-[#E7A85B]" /> Partner Verification Console
+              <ShieldCheck className="w-4 h-4 text-[#DCEFE2]" /> Partner Verification Console
             </Link>
           )}
         </div>
@@ -134,7 +139,7 @@ export const DashboardPage: React.FC = () => {
 
       {/* Partner Verification Gate Warning Banner */}
       {user.role === 'partner' && user.verificationStatus !== 'verified' && (
-        <div className="p-5 rounded-2xl border border-amber-300 bg-amber-50/80 text-amber-950 space-y-2 shadow-xs">
+        <div className="p-5 rounded-2xl border border-amber-300 bg-amber-50 text-amber-950 space-y-2 shadow-2xs">
           <div className="flex items-center gap-2 font-bold text-sm text-amber-900">
             <AlertCircle className="w-5 h-5 text-amber-700 shrink-0" />
             <span>Account Verification Status: {user.verificationStatus.toUpperCase()}</span>
@@ -156,117 +161,134 @@ export const DashboardPage: React.FC = () => {
       )}
 
       {loading ? (
-        <LoadingSpinner message="Fetching live persistent dashboard metrics..." size="lg" />
+        <LoadingSpinner message="Fetching dashboard records..." size="lg" />
       ) : (
         <>
-          {/* ===================== ORGANIZER VIEW ===================== */}
+          {/* ===================== ORGANIZER / DONOR VIEW ===================== */}
           {user.role === 'organizer' && (
             <div className="space-y-8">
+              {/* Quick Donor Guidance Banner */}
+              <div className="card-light p-5 sm:p-6 bg-gradient-to-r from-white via-white to-[#EEF4ED] border border-[#E3E8E0] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-[#DCEFE2] text-[#174C3C] flex items-center justify-center shrink-0 shadow-2xs">
+                    <ChefHat className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm text-[#18372D] font-serif">
+                      Surplus Donation Readiness Checklist
+                    </h3>
+                    <p className="text-xs text-[#66756B] leading-relaxed mt-0.5 max-w-2xl">
+                      Cooked buffet meals, sealed boxed meals, and fresh bakery items are eligible.
+                      Ensure chafing dishes maintain &gt;60°C or cold desserts stay &lt;5°C until driver handoff.
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  to="/listings/create"
+                  className="btn-primary-brand text-xs py-2 px-4 shrink-0"
+                >
+                  Create New Batch
+                </Link>
+              </div>
+
               {/* Stat Counters */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     My Active Listings
                   </div>
-                  <div className="text-3xl font-bold font-serif text-[#174D3A] mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#18372D] mt-2">
                     {myListings.filter((l) => ['open', 'requested'].includes(l.status)).length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Available for rescue</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Available for rescue</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     Assigned Pickups
                   </div>
-                  <div className="text-3xl font-bold font-serif text-blue-900 mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#174C3C] mt-2">
                     {myListings.filter((l) => l.status === 'assigned').length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Partner assigned, awaiting pickup</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Partner assigned, awaiting pickup</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     Collected / In Transit
                   </div>
-                  <div className="text-3xl font-bold font-serif text-amber-900 mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#D97706] mt-2">
                     {myListings.filter((l) => l.status === 'collected').length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Hand-off recorded</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Hand-off recorded</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     Completed Rescues
                   </div>
-                  <div className="text-3xl font-bold font-serif text-[#174D3A] mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#2D8061] mt-2">
                     {myListings.filter((l) => l.status === 'delivered').length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Successfully distributed</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Successfully distributed</div>
                 </div>
               </div>
 
               {/* My Food Listings Table */}
-              <div className="card-editorial overflow-hidden">
-                <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
+              <div className="card-light overflow-hidden">
+                <div className="px-6 py-4 border-b border-[#E3E8E0] flex items-center justify-between">
                   <div>
-                    <h2 className="text-base font-bold font-serif text-[#202820]">
-                      My Surplus Food Listings
+                    <h2 className="text-base font-bold font-serif text-[#18372D]">
+                      My Food Donations
                     </h2>
-                    <p className="text-xs text-[#68736A]">
-                      Manage listings, review requests, inspect candidate partner recommendations, and track status.
+                    <p className="text-xs text-[#66756B]">
+                      Review incoming requests from verified partners, track driver arrival, and view rescue status.
                     </p>
                   </div>
                   <Link
                     to="/listings/create"
-                    className="text-xs font-semibold text-[#174D3A] hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-[#174C3C] hover:text-[#2D8061] hover:underline"
                   >
-                    + Donate Surplus
+                    + New Donation
                   </Link>
                 </div>
 
                 {myListings.length === 0 ? (
                   <div className="p-8">
                     <EmptyState
-                      title="No listings created yet"
-                      description="Create your first surplus food listing to coordinate rescue with verified partners."
-                      actionText="Create Listing Now"
+                      title="No surplus food listed yet"
+                      description="Create your first food donation to allow verified community partners to collect surplus before expiry."
+                      actionText="Create Food Donation"
                       actionHref="/listings/create"
                     />
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs sm:text-sm">
-                      <thead className="bg-stone-50 border-b border-stone-200/80 text-[#68736A] uppercase text-[11px] tracking-wider">
+                      <thead className="bg-[#F8F7F2] text-[#66756B] font-semibold uppercase text-[10px] tracking-wider border-b border-[#E3E8E0]">
                         <tr>
-                          <th className="px-6 py-3.5 font-bold">Event &amp; Food Title</th>
-                          <th className="px-6 py-3.5 font-bold">Surplus Volume</th>
-                          <th className="px-6 py-3.5 font-bold">Collection Deadline</th>
-                          <th className="px-6 py-3.5 font-bold">Current Status</th>
-                          <th className="px-6 py-3.5 font-bold text-right">Actions</th>
+                          <th className="px-6 py-3">Surplus Food Batch</th>
+                          <th className="px-6 py-3">Quantity</th>
+                          <th className="px-6 py-3">Safe Window</th>
+                          <th className="px-6 py-3">Status</th>
+                          <th className="px-6 py-3 text-right">Action</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100">
+                      <tbody className="divide-y divide-[#E3E8E0] text-[#18372D]">
                         {myListings.map((listing) => (
-                          <tr key={listing._id} className="hover:bg-stone-50/70 transition-colors">
+                          <tr key={listing._id} className="hover:bg-[#F8F7F2] transition-colors">
                             <td className="px-6 py-4">
-                              <div className="font-bold text-[#202820]">{listing.foodTitle}</div>
-                              <div className="text-xs text-[#68736A]">{listing.eventName}</div>
+                              <div className="font-bold text-[#18372D]">{listing.foodTitle}</div>
+                              <div className="text-xs text-[#66756B]">
+                                Event: {listing.eventName} • {listing.eventType}
+                              </div>
                             </td>
                             <td className="px-6 py-4">
-                              <span className="font-bold text-[#174D3A]">
+                              <span className="font-bold text-[#174C3C]">
                                 {listing.quantity} {listing.unit}
                               </span>
-                              <div className="text-[11px] text-[#68736A] capitalize">
-                                {listing.foodCategory.replace('_', ' ')}
-                              </div>
                             </td>
                             <td className="px-6 py-4">
-                              <div className="text-xs text-[#202820] font-medium">
-                                {new Date(listing.collectionDeadline).toLocaleTimeString([], {
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                })}
-                              </div>
                               <UrgencyBadge deadline={listing.collectionDeadline} />
                             </td>
                             <td className="px-6 py-4">
@@ -275,9 +297,9 @@ export const DashboardPage: React.FC = () => {
                             <td className="px-6 py-4 text-right">
                               <Link
                                 to={`/listings/${listing._id}`}
-                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-stone-200 text-xs font-semibold text-[#174D3A] hover:bg-stone-100 transition-colors"
+                                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#E3E8E0] text-xs font-semibold text-[#18372D] hover:bg-[#EEF4ED] transition-colors"
                               >
-                                View / Manage Requests <ArrowRight className="w-3.5 h-3.5" />
+                                View Requests <ArrowRight className="w-3.5 h-3.5 text-[#2D8061]" />
                               </Link>
                             </td>
                           </tr>
@@ -290,66 +312,84 @@ export const DashboardPage: React.FC = () => {
             </div>
           )}
 
-          {/* ===================== PARTNER VIEW ===================== */}
+          {/* ===================== PARTNER / COORDINATOR / DRIVER VIEW ===================== */}
           {user.role === 'partner' && (
             <div className="space-y-8">
               {/* Stat Counters */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     Available Listings
                   </div>
-                  <div className="text-3xl font-bold font-serif text-[#174D3A] mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#18372D] mt-2">
                     {availableListings.length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Open for rescue</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Open for rescue</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     My Pending Requests
                   </div>
-                  <div className="text-3xl font-bold font-serif text-amber-800 mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#D97706] mt-2">
                     {myRequests.filter((r) => r.status === 'pending').length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Awaiting organizer review</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Awaiting organizer review</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
-                    Assigned Pickups
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
+                    Approved Pickups
                   </div>
-                  <div className="text-3xl font-bold font-serif text-blue-900 mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#174C3C] mt-2">
                     {myRequests.filter((r) => r.status === 'approved').length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Ready for physical collection</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Ready for physical collection</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     Completed Rescues
                   </div>
-                  <div className="text-3xl font-bold font-serif text-[#174D3A] mt-2">
+                  <div className="text-3xl font-bold font-serif text-[#2D8061] mt-2">
                     {myRequests.filter((r) => r.status === 'delivered').length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Delivered to beneficiaries</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Delivered to beneficiaries</div>
+                </div>
+              </div>
+
+              {/* Step-by-Step Task Progression Header */}
+              <div className="card-light p-5 bg-[#EEF4ED] border-[#E3E8E0]">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#174C3C] block mb-2">
+                  Delivery Lifecycle Progression
+                </span>
+                <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-[#18372D]">
+                  <span className="bg-white px-3 py-1 rounded-xl border border-[#E3E8E0]">1. Assigned</span>
+                  <span className="text-[#66756B]">→</span>
+                  <span className="bg-white px-3 py-1 rounded-xl border border-[#E3E8E0]">2. En Route</span>
+                  <span className="text-[#66756B]">→</span>
+                  <span className="bg-white px-3 py-1 rounded-xl border border-[#E3E8E0]">3. Picked Up</span>
+                  <span className="text-[#66756B]">→</span>
+                  <span className="bg-white px-3 py-1 rounded-xl border border-[#E3E8E0]">4. In Transit</span>
+                  <span className="text-[#66756B]">→</span>
+                  <span className="bg-[#174C3C] text-white px-3 py-1 rounded-xl">5. Delivered</span>
                 </div>
               </div>
 
               {/* My Active Pickups Section */}
-              <div className="card-editorial overflow-hidden">
-                <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
+              <div className="card-light overflow-hidden">
+                <div className="px-6 py-4 border-b border-[#E3E8E0] flex items-center justify-between">
                   <div>
-                    <h2 className="text-base font-bold font-serif text-[#202820]">
+                    <h2 className="text-base font-bold font-serif text-[#18372D]">
                       My Recovery Requests &amp; Hand-Offs
                     </h2>
-                    <p className="text-xs text-[#68736A]">
+                    <p className="text-xs text-[#66756B]">
                       Track status history, access pickup instructions, and record collection/delivery.
                     </p>
                   </div>
                   <Link
                     to="/requests"
-                    className="text-xs font-semibold text-[#174D3A] hover:underline"
+                    className="text-xs font-bold text-[#174C3C] hover:text-[#2D8061] hover:underline"
                   >
                     View All Requests →
                   </Link>
@@ -365,29 +405,29 @@ export const DashboardPage: React.FC = () => {
                     />
                   </div>
                 ) : (
-                  <div className="divide-y divide-stone-100">
+                  <div className="divide-y divide-[#E3E8E0]">
                     {myRequests.slice(0, 5).map((req) => {
                       const listing = req.listingId as FoodListing;
                       return (
                         <div
                           key={req._id}
-                          className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-stone-50 transition-colors"
+                          className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-[#F8F7F2] transition-colors"
                         >
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
                               <StatusBadge status={req.status} type="request" size="sm" />
-                              <span className="text-xs text-[#68736A]">
+                              <span className="text-xs text-[#66756B]">
                                 Requested {req.requestedQuantity} {listing?.unit || 'units'}
                               </span>
                             </div>
-                            <h3 className="font-bold text-[#202820] text-sm">
+                            <h3 className="font-bold text-[#18372D] text-sm">
                               {listing?.foodTitle || 'Surplus Food'}
                             </h3>
-                            <div className="text-xs text-[#68736A]">
+                            <div className="text-xs text-[#66756B]">
                               Event: {listing?.eventName} • Locality: {listing?.areaOrAddress}
                             </div>
-                            <div className="text-[11px] text-[#68736A] italic">
-                              "{req.collectionNote}"
+                            <div className="text-[11px] text-[#66756B] italic">
+                              &quot;{req.collectionNote}&quot;
                             </div>
                           </div>
 
@@ -395,16 +435,16 @@ export const DashboardPage: React.FC = () => {
                             {listing?._id && (
                               <Link
                                 to={`/listings/${listing._id}`}
-                                className="px-3.5 py-1.5 rounded-xl border border-stone-200 text-xs font-semibold text-[#202820] hover:bg-stone-100 transition-colors"
+                                className="px-3.5 py-1.5 rounded-xl border border-[#E3E8E0] text-xs font-semibold text-[#18372D] hover:bg-[#EEF4ED] transition-colors"
                               >
                                 Listing Details
                               </Link>
                             )}
                             <Link
                               to="/requests"
-                              className="px-4 py-1.5 rounded-xl bg-[#174D3A] text-white text-xs font-semibold hover:bg-[#237653] transition-colors shadow-xs"
+                              className="btn-primary-brand text-xs py-1.5 px-3.5"
                             >
-                              Manage Hand-Off
+                              Update Status
                             </Link>
                           </div>
                         </div>
@@ -412,59 +452,6 @@ export const DashboardPage: React.FC = () => {
                     })}
                   </div>
                 )}
-              </div>
-
-              {/* Available Surplus Listings Preview */}
-              <div className="card-editorial overflow-hidden">
-                <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
-                  <div>
-                    <h2 className="text-base font-bold font-serif text-[#202820]">
-                      Eligible Surplus Food Available For Rescue
-                    </h2>
-                    <p className="text-xs text-[#68736A]">
-                      Non-expired event listings within open collection windows.
-                    </p>
-                  </div>
-                  <Link
-                    to="/listings"
-                    className="text-xs font-semibold text-[#174D3A] hover:underline"
-                  >
-                    View All Filtered →
-                  </Link>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
-                  {availableListings.slice(0, 4).map((listing) => (
-                    <div
-                      key={listing._id}
-                      className="p-4 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white hover:border-[#174D3A] transition-all space-y-3"
-                    >
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <div className="font-bold text-sm text-[#202820]">{listing.foodTitle}</div>
-                          <div className="text-xs text-[#68736A]">{listing.eventName}</div>
-                        </div>
-                        <UrgencyBadge deadline={listing.collectionDeadline} />
-                      </div>
-
-                      <div className="text-xs text-[#68736A] line-clamp-2">
-                        {listing.description}
-                      </div>
-
-                      <div className="flex items-center justify-between pt-2 border-t border-stone-200/60 text-xs">
-                        <span className="font-bold text-[#174D3A]">
-                          {listing.quantity} {listing.unit}
-                        </span>
-                        <Link
-                          to={`/listings/${listing._id}`}
-                          className="font-semibold text-[#174D3A] hover:underline flex items-center gap-1"
-                        >
-                          View &amp; Request <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           )}
@@ -474,94 +461,92 @@ export const DashboardPage: React.FC = () => {
             <div className="space-y-8">
               {/* Stat Counters */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
-                    Pending Verifications
-                  </div>
-                  <div className="text-3xl font-bold font-serif text-amber-800 mt-2">
-                    {pendingPartners.length}
-                  </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Partners awaiting review</div>
-                </div>
-
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
                     Total Platform Listings
                   </div>
-                  <div className="text-3xl font-bold font-serif text-[#174D3A] mt-2">
-                    {impact?.summary.totalListings || 0}
+                  <div className="text-3xl font-bold font-serif text-[#18372D] mt-2">
+                    {myListings.length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Created in database</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Recorded to date</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
-                    Active Pickups
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
+                    Pending Partner Verifications
                   </div>
-                  <div className="text-3xl font-bold font-serif text-blue-900 mt-2">
-                    {(impact?.summary.inProgressPickups || 0) + (impact?.summary.collectedListings || 0)}
+                  <div className="text-3xl font-bold font-serif text-[#D97706] mt-2">
+                    {pendingPartners.length}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">In transit or assigned</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Awaiting admin review</div>
                 </div>
 
-                <div className="card-editorial p-5">
-                  <div className="text-xs font-bold text-[#68736A] uppercase tracking-wider">
-                    Delivered Rescues
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
+                    Meals Rescued
                   </div>
-                  <div className="text-3xl font-bold font-serif text-[#174D3A] mt-2">
-                    {impact?.summary.completedDeliveries || 0}
+                  <div className="text-3xl font-bold font-serif text-[#174C3C] mt-2">
+                    {impact ? impact.summary?.completedDeliveries || 0 : 0}
                   </div>
-                  <div className="text-[11px] text-[#68736A] mt-1">Successful hand-offs</div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Verified hand-offs</div>
+                </div>
+
+                <div className="card-light p-5">
+                  <div className="text-xs font-bold text-[#66756B] uppercase tracking-wider">
+                    Verified NGOs
+                  </div>
+                  <div className="text-3xl font-bold font-serif text-[#2D8061] mt-2">
+                    {impact ? impact.summary?.verifiedPartners || 0 : 0}
+                  </div>
+                  <div className="text-[11px] text-[#66756B] mt-1">Active relief partners</div>
                 </div>
               </div>
 
-              {/* Pending Verifications Quick Table */}
-              <div className="card-editorial overflow-hidden">
-                <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
+              {/* Pending Partner Verifications Card */}
+              <div className="card-light overflow-hidden">
+                <div className="px-6 py-4 border-b border-[#E3E8E0] flex items-center justify-between">
                   <div>
-                    <h2 className="text-base font-bold font-serif text-[#202820]">
-                      Partner Verifications Pending Review
+                    <h2 className="text-base font-bold font-serif text-[#18372D]">
+                      Pending Partner Verifications
                     </h2>
-                    <p className="text-xs text-[#68736A]">
-                      Review submitted NGO/partner credentials before authorizing food rescue allocations.
+                    <p className="text-xs text-[#66756B]">
+                      Review NGO credentials and approve organizations to submit rescue requests.
                     </p>
                   </div>
                   <Link
                     to="/admin/partners"
-                    className="text-xs font-semibold text-[#174D3A] hover:underline"
+                    className="text-xs font-bold text-[#174C3C] hover:text-[#2D8061] hover:underline"
                   >
-                    Open Admin Console →
+                    Open Console →
                   </Link>
                 </div>
 
                 {pendingPartners.length === 0 ? (
-                  <div className="p-8 text-center text-xs text-[#68736A]">
-                    <CheckCircle2 className="w-8 h-8 text-[#237653] mx-auto mb-2" />
-                    All registered partner verification submissions have been reviewed!
+                  <div className="p-8 text-center text-xs text-[#66756B]">
+                    No partners currently pending verification. All applications triaged.
                   </div>
                 ) : (
-                  <div className="divide-y divide-stone-100">
-                    {pendingPartners.map((p) => (
+                  <div className="divide-y divide-[#E3E8E0]">
+                    {pendingPartners.map((partner) => (
                       <div
-                        key={p.id}
-                        className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                        key={partner.id}
+                        className="p-5 flex items-center justify-between gap-4 hover:bg-[#F8F7F2] transition-colors"
                       >
-                        <div className="space-y-1">
-                          <div className="font-bold text-sm text-[#202820]">{p.name}</div>
-                          <div className="text-xs text-[#68736A]">
-                            Organization: {p.organizationName || 'N/A'} • Email: {p.email} • Capacity:{' '}
-                            {p.partnerCapacity || 0} units
+                        <div>
+                          <div className="font-bold text-sm text-[#18372D]">{partner.name}</div>
+                          <div className="text-xs text-[#66756B]">
+                            Org: {partner.organizationName} • Locality: {partner.partnerServiceArea}
                           </div>
-                          <div className="text-[11px] text-[#68736A] italic">
-                            Note: "{p.verificationNote || 'No notes submitted'}"
+                          <div className="text-xs font-semibold text-[#174C3C] mt-0.5">
+                            Declared Capacity: {partner.partnerCapacity} units
                           </div>
                         </div>
 
                         <Link
                           to="/admin/partners"
-                          className="px-4 py-2 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white text-xs font-semibold transition-colors shrink-0 shadow-xs"
+                          className="btn-primary-brand text-xs py-1.5 px-3.5"
                         >
-                          Review &amp; Decide
+                          Review &amp; Verify
                         </Link>
                       </div>
                     ))}
@@ -570,9 +555,6 @@ export const DashboardPage: React.FC = () => {
               </div>
             </div>
           )}
-
-          {/* Persistent Food Safety Reminder in Dashboards */}
-          <FoodSafetyBanner compact />
         </>
       )}
     </div>

@@ -38,8 +38,8 @@ export const UrgencyBadge: React.FC<UrgencyBadgeProps> = ({ deadline }) => {
   }
 
   return (
-    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#DDE8D8]/80 text-[#174D3A] border border-[#174D3A]/15">
-      <Clock className="w-3.5 h-3.5 text-[#237653]" />
+    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#DCEFE2] text-[#174C3C] border border-[#174C3C]/20">
+      <Clock className="w-3.5 h-3.5 text-[#2D8061]" />
       {Math.round(diffHours)}h window
     </span>
   );

@@ -20,6 +20,7 @@ import {
   ArrowRight,
   ShieldCheck,
   History,
+  X,
 } from 'lucide-react';
 
 export const RequestsPage: React.FC = () => {
@@ -86,28 +87,28 @@ export const RequestsPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#174D3A]/15">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174D3A]">
-            <span className="w-2 h-2 rounded-full bg-[#237653]" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E3E8E0]">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174C3C]">
+            <span className="w-2 h-2 rounded-full bg-[#2D8061]" />
             Recovery Operations
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#174D3A] text-white flex items-center justify-center shrink-0">
-              <ClipboardList className="w-5 h-5 text-[#E7A85B]" />
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center shrink-0 shadow-xs">
+              <ClipboardList className="w-5 h-5 text-[#DCEFE2]" />
             </div>
             My Pickups &amp; Hand-Off Timeline
           </h1>
-          <p className="text-xs sm:text-sm text-[#68736A]">
+          <p className="text-xs sm:text-sm text-[#66756B]">
             Track status progression with an immutable audit history from organizer approval to final distribution.
           </p>
         </div>
 
         <Link
           to="/listings"
-          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all hover:scale-[1.01] self-start sm:self-auto"
+          className="btn-primary-brand text-xs sm:text-sm self-start sm:self-auto"
         >
           Discover More Surplus Food
         </Link>
@@ -136,31 +137,31 @@ export const RequestsPage: React.FC = () => {
             return (
               <div
                 key={req._id}
-                className="card-editorial p-6 sm:p-7 space-y-5"
+                className="card-light p-6 sm:p-7 space-y-5 bg-white"
               >
                 {/* Header row */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-stone-100">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-[#E3E8E0]">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <StatusBadge status={req.status} type="request" />
-                      <span className="text-xs text-[#68736A] font-mono">
+                      <span className="text-xs text-[#66756B] font-mono">
                         Ref: {req._id.slice(-6)}
                       </span>
                     </div>
 
-                    <h2 className="text-lg font-bold font-serif text-[#202820]">
+                    <h2 className="text-lg font-bold font-serif text-[#18372D]">
                       {listing?.foodTitle || 'Surplus Food Batch'}
                     </h2>
 
-                    <div className="text-xs text-[#68736A]">
-                      Event: <strong className="text-[#202820]">{listing?.eventName}</strong> • Area:{' '}
+                    <div className="text-xs text-[#66756B]">
+                      Event: <strong className="text-[#18372D]">{listing?.eventName}</strong> • Area:{' '}
                       <strong>{listing?.areaOrAddress}</strong>
                     </div>
                   </div>
 
                   <div className="flex flex-col sm:items-end gap-1 text-right">
-                    <span className="text-xs text-[#68736A] font-medium">Requested Surplus</span>
-                    <div className="text-2xl font-bold font-serif text-[#174D3A]">
+                    <span className="text-xs text-[#66756B] font-medium">Requested Surplus</span>
+                    <div className="text-2xl font-bold font-serif text-[#18372D]">
                       {req.requestedQuantity}{' '}
                       <span className="text-xs font-semibold">{listing?.unit || 'units'}</span>
                     </div>
@@ -168,32 +169,32 @@ export const RequestsPage: React.FC = () => {
                 </div>
 
                 {/* Private Pickup Hand-Off Details (Unlocked once approved) */}
-                <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/80 space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#202820]">
+                <div className="p-4 rounded-xl bg-[#EEF4ED] border border-[#E3E8E0] space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#18372D]">
                     {req.status === 'approved' ||
                     req.status === 'collected' ||
                     req.status === 'delivered' ? (
                       <>
-                        <Unlock className="w-3.5 h-3.5 text-[#237653]" /> Private Pickup Instructions
+                        <Unlock className="w-3.5 h-3.5 text-[#2D8061]" /> Private Pickup Instructions
                         (Unlocked)
                       </>
                     ) : (
                       <>
-                        <Lock className="w-3.5 h-3.5 text-[#E7A85B]" /> Private Pickup Instructions
+                        <Lock className="w-3.5 h-3.5 text-[#D97706]" /> Private Pickup Instructions
                         (Locked until approval)
                       </>
                     )}
                   </div>
-                  <p className="text-xs text-[#202820] font-medium">
+                  <p className="text-xs text-[#18372D] font-medium">
                     {listing?.pickupInstructions ||
-                      '🔒 Pickup instructions will unlock upon verified organizer approval.'}
+                      'Pickup instructions will unlock upon verified organizer approval.'}
                   </p>
                 </div>
 
                 {/* Action Buttons for Hand-Off transitions */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-stone-100">
-                  <div className="text-xs text-[#68736A]">
-                    My collection note: <span className="text-[#202820] italic font-medium">"{req.collectionNote}"</span>
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#E3E8E0]">
+                  <div className="text-xs text-[#66756B]">
+                    My collection note: <span className="text-[#18372D] italic font-medium">&quot;{req.collectionNote}&quot;</span>
                   </div>
 
                   <div className="flex items-center gap-2.5">
@@ -201,9 +202,9 @@ export const RequestsPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => openStatusModal(req, 'collected')}
-                        className="px-4 py-2 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs shadow-xs transition-colors flex items-center gap-1.5"
+                        className="btn-primary-brand text-xs py-2 px-4 shadow-2xs"
                       >
-                        <Truck className="w-4 h-4 text-[#E7A85B]" /> Record Collection (Loaded)
+                        <Truck className="w-4 h-4 text-[#DCEFE2]" /> Record Collection (Loaded)
                       </button>
                     )}
 
@@ -211,16 +212,16 @@ export const RequestsPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => openStatusModal(req, 'delivered')}
-                        className="px-4 py-2 rounded-xl bg-[#237653] hover:bg-[#174D3A] text-white font-semibold text-xs shadow-xs transition-colors flex items-center gap-1.5"
+                        className="btn-primary-brand text-xs py-2 px-4 shadow-2xs"
                       >
-                        <PackageCheck className="w-4 h-4 text-[#E7A85B]" /> Record Delivery (Completed)
+                        <PackageCheck className="w-4 h-4 text-[#DCEFE2]" /> Record Delivery (Completed)
                       </button>
                     )}
 
                     {listing?._id && (
                       <Link
                         to={`/listings/${listing._id}`}
-                        className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs font-semibold text-[#68736A] hover:bg-stone-100 transition-colors"
+                        className="btn-outline text-xs py-2 px-3.5"
                       >
                         Listing Details
                       </Link>
@@ -228,30 +229,37 @@ export const RequestsPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Chronological Status History Timeline */}
+                {/* Audit Trail Timeline */}
                 {req.statusHistory && req.statusHistory.length > 0 && (
-                  <div className="pt-3 border-t border-stone-100 space-y-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#68736A] flex items-center gap-1">
-                      <History className="w-3.5 h-3.5 text-[#174D3A]" /> Chronological Traceability Audit History
-                    </span>
-                    <div className="space-y-1.5 pl-3 border-l-2 border-[#174D3A]/30">
-                      {req.statusHistory.map((item, idx) => (
-                        <div key={idx} className="text-xs text-[#68736A] flex flex-wrap items-baseline gap-2">
-                          <span className="font-bold text-[#202820] capitalize">
-                            [{item.newStatus}]
-                          </span>
-                          <span className="text-[#68736A] text-[11px]">
-                            {new Date(item.timestamp).toLocaleString([], {
-                              dateStyle: 'short',
-                              timeStyle: 'short',
-                            })}
-                          </span>
-                          <span className="text-[#202820]">
-                            by {item.actorName} ({item.actorRole})
-                          </span>
-                          {item.reason && (
-                            <span className="text-[#68736A] italic">— "{item.reason}"</span>
-                          )}
+                  <div className="pt-3 border-t border-[#E3E8E0]">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#174C3C] uppercase tracking-wider mb-3">
+                      <History className="w-3.5 h-3.5 text-[#2D8061]" /> Immutable Status Audit Trail
+                    </div>
+
+                    <div className="space-y-2">
+                      {req.statusHistory.map((entry, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-3 text-xs bg-[#F8F7F2] p-2.5 rounded-xl border border-[#E3E8E0]"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-[#2D8061] mt-1.5 shrink-0" />
+                          <div className="space-y-0.5 flex-1">
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-[#18372D] uppercase tracking-wider text-[10px]">
+                                {entry.previousStatus ? `${entry.previousStatus} → ${entry.newStatus}` : entry.newStatus}
+                                {entry.actorName ? ` • ${entry.actorName}` : ''}
+                              </span>
+                              <span className="text-[10px] text-[#66756B]">
+                                {new Date(entry.timestamp).toLocaleString([], {
+                                  dateStyle: 'medium',
+                                  timeStyle: 'short',
+                                })}
+                              </span>
+                            </div>
+                            {entry.reason && (
+                              <p className="text-[11px] text-[#66756B] italic">&quot;{entry.reason}&quot;</p>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -263,60 +271,70 @@ export const RequestsPage: React.FC = () => {
         </div>
       )}
 
-      {/* Hand-Off Transition Modal */}
+      {/* Transition Confirmation Modal */}
       {selectedReqForModal && targetStatus && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 space-y-4 shadow-2xl border border-[#174D3A]/20">
-            <h3 className="text-xl font-bold text-[#202820] font-serif flex items-center gap-2">
-              {targetStatus === 'collected' ? (
-                <>
-                  <Truck className="w-5 h-5 text-[#174D3A]" /> Confirm Food Collection
-                </>
-              ) : (
-                <>
-                  <PackageCheck className="w-5 h-5 text-[#237653]" /> Confirm Final Distribution
-                </>
-              )}
-            </h3>
+        <div
+          role="dialog"
+          aria-label="Confirm Status Update"
+          className="fixed inset-0 z-50 bg-[#18372D]/50 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+        >
+          <div className="card-light p-6 sm:p-7 max-w-lg w-full space-y-5 animate-slide-up shadow-2xl bg-white">
+            <div className="flex items-start justify-between pb-3 border-b border-[#E3E8E0]">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-[#DCEFE2] text-[#174C3C] flex items-center justify-center">
+                  {targetStatus === 'collected' ? (
+                    <Truck className="w-4 h-4 text-[#2D8061]" />
+                  ) : (
+                    <PackageCheck className="w-4 h-4 text-[#2D8061]" />
+                  )}
+                </div>
+                <div>
+                  <h3 className="font-bold font-serif text-base text-[#18372D]">
+                    {targetStatus === 'collected'
+                      ? 'Confirm Food Collection Hand-Off'
+                      : 'Confirm Community Delivery'}
+                  </h3>
+                  <p className="text-xs text-[#66756B]">This record will be saved to the permanent audit trail.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedReqForModal(null)}
+                className="p-1 text-[#66756B] hover:text-[#18372D] rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-            <p className="text-xs text-[#68736A] leading-relaxed">
-              {targetStatus === 'collected'
-                ? 'Recording collection signifies you have arrived on-site, verified temperature/handling conditions, and loaded the surplus into your recovery vehicle.'
-                : 'Recording delivery certifies the rescued food was safely distributed to community kitchen meal recipients or shelter beneficiaries.'}
-            </p>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1.5">
-                Hand-Off Verification Note *
+            <div className="space-y-3">
+              <label className="block text-xs font-bold text-[#18372D] uppercase tracking-wider">
+                Custody &amp; Inspection Note *
               </label>
               <textarea
                 rows={3}
                 required
                 value={statusReason}
                 onChange={(e) => setStatusReason(e.target.value)}
-                className="w-full p-3 border border-stone-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-[#174D3A] focus:outline-none bg-stone-50/50"
+                placeholder="Document thermal condition, container cleanliness, and responsible parties..."
+                className="w-full px-3.5 py-2.5 border border-[#E3E8E0] rounded-xl text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:ring-2 focus:ring-[#2D8061] focus:outline-hidden"
               />
             </div>
 
-            <div className="flex justify-end gap-3 pt-2">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E3E8E0]">
               <button
                 type="button"
-                onClick={() => {
-                  setSelectedReqForModal(null);
-                  setTargetStatus(null);
-                }}
-                className="px-4 py-2 rounded-xl border border-stone-200 text-xs font-semibold text-[#68736A] hover:bg-stone-50"
+                onClick={() => setSelectedReqForModal(null)}
+                className="btn-outline text-xs sm:text-sm py-2 px-4"
               >
                 Cancel
               </button>
-
               <button
                 type="button"
-                disabled={actionLoadingId !== null}
+                disabled={actionLoadingId !== null || !statusReason.trim()}
                 onClick={handleConfirmStatusUpdate}
-                className="px-5 py-2 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs shadow-xs disabled:opacity-50 transition-colors"
+                className="btn-primary-brand text-xs sm:text-sm py-2 px-5 disabled:opacity-50"
               >
-                {actionLoadingId ? 'Saving...' : 'Confirm Hand-Off Status'}
+                {actionLoadingId ? 'Updating...' : 'Confirm State Transition'}
               </button>
             </div>
           </div>

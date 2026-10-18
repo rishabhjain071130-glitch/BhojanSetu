@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { request } from '../api/client.js';
 import { FoodListing } from '../types/index.js';
@@ -7,17 +7,18 @@ import { UrgencyBadge } from '../components/UrgencyBadge.js';
 import { LoadingSpinner } from '../components/LoadingSpinner.js';
 import { EmptyState } from '../components/EmptyState.js';
 import { ErrorAlert } from '../components/ErrorAlert.js';
-import { FoodSafetyBanner } from '../components/FoodSafetyBanner.js';
 import {
   Search,
   Filter,
-  Clock,
   MapPin,
-  Utensils,
-  ArrowRight,
+  Clock,
   Flame,
-  Building2,
-  Calendar,
+  ArrowRight,
+  X,
+  SlidersHorizontal,
+  ChevronDown,
+  UtensilsCrossed,
+  PackageOpen,
 } from 'lucide-react';
 
 export const BrowseListingsPage: React.FC = () => {
@@ -25,16 +26,17 @@ export const BrowseListingsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filters
+  // Search & Filter state
+  const [searchQuery, setSearchQuery] = useState('');
   const [category, setCategory] = useState('all');
-  const [eventType, setEventType] = useState('all');
   const [status, setStatus] = useState('all');
-  const [area, setArea] = useState('');
   const [urgentOnly, setUrgentOnly] = useState(false);
+  const [sortBy, setSortBy] = useState<'deadline' | 'quantity'>('deadline');
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   useEffect(() => {
     fetchListings();
-  }, [category, eventType, status, urgentOnly]);
+  }, [category, status, urgentOnly]);
 
   const fetchListings = async () => {
     try {
@@ -43,9 +45,8 @@ export const BrowseListingsPage: React.FC = () => {
 
       const params = new URLSearchParams();
       if (category !== 'all') params.append('category', category);
-      if (eventType !== 'all') params.append('eventType', eventType);
       if (status !== 'all') params.append('status', status);
-      if (area.trim()) params.append('area', area.trim());
+      if (searchQuery.trim()) params.append('area', searchQuery.trim());
       if (urgentOnly) params.append('urgentOnly', 'true');
 
       const data = await request<{ listings: FoodListing[] }>(`/listings?${params.toString()}`);
@@ -62,196 +63,244 @@ export const BrowseListingsPage: React.FC = () => {
     fetchListings();
   };
 
+  const clearAllFilters = () => {
+    setCategory('all');
+    setStatus('all');
+    setUrgentOnly(false);
+    setSearchQuery('');
+  };
+
+  // Client-side text filter and sorting for instant responsiveness
+  const filteredListings = useMemo(() => {
+    let result = [...listings];
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (item) =>
+          item.foodTitle.toLowerCase().includes(q) ||
+          item.eventName.toLowerCase().includes(q) ||
+          item.areaOrAddress.toLowerCase().includes(q) ||
+          item.foodCategory.toLowerCase().includes(q)
+      );
+    }
+
+    if (sortBy === 'deadline') {
+      result.sort((a, b) => new Date(a.collectionDeadline).getTime() - new Date(b.collectionDeadline).getTime());
+    } else if (sortBy === 'quantity') {
+      result.sort((a, b) => b.quantity - a.quantity);
+    }
+
+    return result;
+  }, [listings, searchQuery, sortBy]);
+
+  const hasActiveFilters = category !== 'all' || status !== 'all' || urgentOnly || searchQuery.trim() !== '';
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in">
-      {/* Editorial Header */}
-      <div className="space-y-2">
-        <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174D3A]">
-          <span className="w-2 h-2 rounded-full bg-[#237653]" />
-          Surplus Discovery Hub
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] tracking-tight">
-          Browse Eligible Event Surplus Food
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6 animate-fade-in">
+      {/* A. SIMPLE, STREAMLINED HEADER */}
+      <div className="space-y-1">
+        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D] tracking-tight">
+          Find food to rescue
         </h1>
-        <p className="text-xs sm:text-sm text-[#68736A] max-w-2xl leading-relaxed">
-          Discover non-expired surplus batches from weddings, corporate banquets, and caterers.
-          Review handling conditions and claim with verified recovery partner credentials.
+        <p className="text-xs sm:text-sm text-[#66756B]">
+          Discover available surplus food and coordinate a safe pickup.
         </p>
       </div>
 
-      <FoodSafetyBanner compact />
-
-      {/* Filter and Search Bar */}
-      <div className="card-editorial p-5 space-y-4">
-        <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-3">
+      {/* B. ONE CLEAR SEARCH AREA */}
+      <div className="card-light p-4 sm:p-5 space-y-4">
+        {/* Main Search Bar */}
+        <form onSubmit={handleSearchSubmit} className="flex gap-2">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-3" />
+            <Search className="w-4 h-4 text-[#66756B] absolute left-3.5 top-3" />
             <input
               type="text"
-              value={area}
-              onChange={(e) => setArea(e.target.value)}
-              placeholder="Filter by locality or area (e.g. Saket, Connaught Place, Gurugram)..."
-              className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm border border-stone-200 rounded-xl bg-stone-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174D3A] focus:border-transparent transition-all"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by food, event, or locality..."
+              className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm border border-[#E3E8E0] rounded-xl bg-[#F8F7F2] text-[#18372D] placeholder:text-[#66756B] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#2D8061] focus:border-transparent transition-all"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-2.5 text-[#66756B] hover:text-[#18372D]"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
+
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white text-xs sm:text-sm font-semibold transition-all shadow-xs shrink-0"
+            className="btn-primary-brand text-xs sm:text-sm py-2 px-5 shrink-0"
           >
-            Search Locality
+            Search
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+            className="sm:hidden btn-outline px-3 py-2 text-xs flex items-center gap-1.5"
+            aria-label="Toggle filters"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5 text-[#2D8061]" />
           </button>
         </form>
 
-        <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-stone-100 text-xs">
-          <div className="flex items-center gap-1.5 text-[#68736A] font-semibold">
-            <Filter className="w-3.5 h-3.5 text-[#174D3A]" /> Filters:
-          </div>
-
+        {/* Compact Filter Row (Desktop & Tablet) */}
+        <div className={`${mobileFiltersOpen ? 'flex' : 'hidden'} sm:flex flex-wrap items-center gap-2 pt-2 border-t border-[#E3E8E0] text-xs`}>
           {/* Category Filter */}
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="px-3 py-1.5 border border-stone-200 rounded-xl bg-white text-[#202820] focus:outline-none focus:ring-1 focus:ring-[#174D3A]"
+            className="px-3 py-1.5 border border-[#E3E8E0] rounded-xl bg-white text-[#18372D] text-xs focus:ring-1 focus:ring-[#2D8061] focus:outline-hidden"
           >
-            <option value="all">All Food Categories</option>
+            <option value="all">All Food Types</option>
             <option value="cooked_meals">Cooked Meals</option>
             <option value="packaged_ration">Packaged Rations</option>
-            <option value="bakery">Bakery / Bread</option>
+            <option value="bakery">Bakery &amp; Bread</option>
             <option value="desserts">Desserts / Sweets</option>
             <option value="fruits_vegetables">Fruits &amp; Vegetables</option>
-            <option value="beverages">Beverages</option>
-            <option value="other">Other</option>
-          </select>
-
-          {/* Event Type Filter */}
-          <select
-            value={eventType}
-            onChange={(e) => setEventType(e.target.value)}
-            className="px-3 py-1.5 border border-stone-200 rounded-xl bg-white text-[#202820] focus:outline-none focus:ring-1 focus:ring-[#174D3A]"
-          >
-            <option value="all">All Event Types</option>
-            <option value="wedding">Weddings</option>
-            <option value="banquet">Banquets</option>
-            <option value="catering">Catering</option>
-            <option value="college">College Festivals</option>
-            <option value="community">Community Gatherings</option>
-            <option value="other">Other Events</option>
           </select>
 
           {/* Status Filter */}
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="px-3 py-1.5 border border-stone-200 rounded-xl bg-white text-[#202820] focus:outline-none focus:ring-1 focus:ring-[#174D3A]"
+            className="px-3 py-1.5 border border-[#E3E8E0] rounded-xl bg-white text-[#18372D] text-xs focus:ring-1 focus:ring-[#2D8061] focus:outline-hidden"
           >
-            <option value="all">Open &amp; Requested</option>
+            <option value="all">All Availability</option>
             <option value="open">Open Only</option>
-            <option value="assigned">Assigned / In Progress</option>
-            <option value="delivered">Delivered Rescues</option>
+            <option value="assigned">Assigned / In Transit</option>
           </select>
 
-          {/* Urgent Toggle */}
+          {/* Urgent Toggle Chip */}
           <button
             type="button"
             onClick={() => setUrgentOnly(!urgentOnly)}
-            className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-all ${
               urgentOnly
-                ? 'bg-amber-50 border-amber-300 text-amber-900 font-bold'
-                : 'border-stone-200 text-[#68736A] hover:bg-stone-50'
+                ? 'bg-[#FEF3C7] border-[#E9B76A] text-[#92400E]'
+                : 'border-[#E3E8E0] bg-white text-[#66756B] hover:bg-[#EEF4ED]'
             }`}
           >
-            <Flame className={`w-3.5 h-3.5 ${urgentOnly ? 'text-amber-600' : 'text-stone-400'}`} />
+            <Flame className={`w-3.5 h-3.5 ${urgentOnly ? 'text-[#D97706]' : 'text-[#66756B]'}`} />
             Urgent (&lt;4h window)
           </button>
+
+          {/* Active Filter Chips & Clear Action */}
+          {hasActiveFilters && (
+            <div className="flex items-center gap-1.5 ml-auto">
+              <button
+                type="button"
+                onClick={clearAllFilters}
+                className="text-xs font-bold text-[#174C3C] hover:text-[#2D8061] hover:underline px-2 py-1"
+              >
+                Clear all filters
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* C. COMPACT RESULT SUMMARY & SORTING */}
+      <div className="flex items-center justify-between text-xs sm:text-sm text-[#66756B]">
+        <div className="font-semibold text-[#18372D]">
+          {loading ? (
+            'Searching listings...'
+          ) : (
+            <>
+              <span className="text-[#174C3C] font-bold">{filteredListings.length}</span>{' '}
+              {filteredListings.length === 1 ? 'food listing' : 'food listings'} available
+            </>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-[#66756B] hidden sm:inline">Sort:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as any)}
+            className="px-2.5 py-1 border border-[#E3E8E0] rounded-xl bg-white text-[#18372D] text-xs focus:ring-1 focus:ring-[#2D8061] focus:outline-hidden"
+          >
+            <option value="deadline">Nearest deadline first</option>
+            <option value="quantity">Highest quantity first</option>
+          </select>
         </div>
       </div>
 
       {error && <ErrorAlert message={error} onRetry={fetchListings} />}
 
-      {/* Listings Grid */}
+      {/* D. BEAUTIFUL, SIMPLIFIED FOOD LISTING CARDS */}
       {loading ? (
-        <LoadingSpinner message="Searching persistent food listings..." size="lg" />
-      ) : listings.length === 0 ? (
+        <LoadingSpinner message="Loading surplus opportunities..." size="lg" />
+      ) : filteredListings.length === 0 ? (
         <EmptyState
-          title="No surplus listings found"
-          description="Try broadening your locality or category filter, or check back shortly as events conclude."
-          actionText="Reset All Filters"
-          onAction={() => {
-            setCategory('all');
-            setEventType('all');
-            setStatus('all');
-            setArea('');
-            setUrgentOnly(false);
-          }}
+          title="No food listings found"
+          description="Try broadening your search term or clearing active filters to see available surplus."
+          actionText="Clear All Filters"
+          onAction={clearAllFilters}
         />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {listings.map((listing) => {
-            return (
-              <div
-                key={listing._id}
-                className="card-editorial p-6 flex flex-col justify-between"
-              >
-                <div className="space-y-3.5">
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#174D3A] bg-[#DDE8D8]/70 px-2.5 py-0.5 rounded-full border border-[#174D3A]/10">
-                      {listing.eventType}
-                    </span>
-                    <UrgencyBadge deadline={listing.collectionDeadline} />
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-base text-[#202820] font-serif line-clamp-1">
-                      {listing.foodTitle}
-                    </h3>
-                    <p className="text-xs text-[#68736A] font-medium truncate mt-0.5">
-                      Event: {listing.eventName}
-                    </p>
-                  </div>
-
-                  <p className="text-xs text-[#68736A] line-clamp-2 leading-relaxed">
-                    {listing.description}
-                  </p>
-
-                  <div className="p-3 bg-stone-50 rounded-xl space-y-1.5 text-xs text-[#202820] border border-stone-200/60">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#68736A]">Surplus Volume:</span>
-                      <strong className="text-[#174D3A] text-sm">
-                        {listing.quantity} {listing.unit}
-                      </strong>
-                    </div>
-
-                    <div className="flex justify-between items-center text-[11px]">
-                      <span className="text-[#68736A]">Holding Temp:</span>
-                      <span className="font-medium truncate max-w-[170px]" title={listing.storageConditions}>
-                        {listing.storageConditions}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between items-center text-[11px] text-[#68736A]">
-                      <span>Locality:</span>
-                      <span className="font-medium text-[#202820] flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-[#174D3A]" />
-                        {listing.areaOrAddress}
-                      </span>
-                    </div>
-                  </div>
+          {filteredListings.map((listing) => (
+            <div
+              key={listing._id}
+              className="card-light p-5 sm:p-6 flex flex-col justify-between hover:shadow-md transition-all duration-200"
+            >
+              <div className="space-y-4">
+                {/* Header row: Category Pill + Urgency Badge */}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#174C3C] bg-[#DCEFE2] px-2.5 py-0.5 rounded-full border border-[#174C3C]/10">
+                    {listing.eventType}
+                  </span>
+                  <UrgencyBadge deadline={listing.collectionDeadline} />
                 </div>
 
-                <div className="mt-5 pt-3.5 border-t border-stone-100 flex items-center justify-between">
-                  <StatusBadge status={listing.status} size="sm" />
+                {/* 1. What Food is available? */}
+                <div>
+                  <h3 className="font-bold text-base sm:text-lg text-[#18372D] font-serif line-clamp-1">
+                    {listing.foodTitle}
+                  </h3>
+                  <p className="text-xs text-[#66756B] truncate mt-0.5">
+                    {listing.eventName}
+                  </p>
+                </div>
 
-                  <Link
-                    to={`/listings/${listing._id}`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#174D3A] hover:text-[#237653] group"
-                  >
-                    View Details &amp; Request
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </Link>
+                {/* 2 & 3. Quantity & Approximate Location */}
+                <div className="space-y-2 pt-1 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#66756B]">Available Amount:</span>
+                    <span className="font-bold text-[#174C3C] text-sm">
+                      {listing.quantity} {listing.unit}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[#66756B]">
+                    <span>Pickup Area:</span>
+                    <span className="font-medium text-[#18372D] flex items-center gap-1 max-w-[180px] truncate">
+                      <MapPin className="w-3.5 h-3.5 text-[#2D8061] shrink-0" />
+                      {listing.areaOrAddress}
+                    </span>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+
+              {/* 4 & 5. Status Badge & Direct CTA */}
+              <div className="mt-5 pt-4 border-t border-[#E3E8E0] flex items-center justify-between">
+                <StatusBadge status={listing.status} size="sm" />
+
+                <Link
+                  to={`/listings/${listing._id}`}
+                  className="btn-primary-brand text-xs py-1.5 px-3.5"
+                >
+                  View details <ArrowRight className="w-3.5 h-3.5 text-[#DCEFE2]" />
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

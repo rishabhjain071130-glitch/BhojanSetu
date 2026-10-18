@@ -34,21 +34,21 @@ export const LoginPage: React.FC = () => {
     <div className="max-w-4xl mx-auto px-4 py-10 sm:py-14 space-y-8 animate-fade-in">
       {/* Demo Account Switcher Header */}
       <div className="space-y-2 text-center">
-        <div className="w-12 h-12 rounded-2xl bg-[#174D3A] text-white flex items-center justify-center mx-auto shadow-sm">
-          <UtensilsCrossed className="w-6 h-6 text-[#E7A85B]" />
+        <div className="w-12 h-12 rounded-2xl bg-[#174C3C] text-[#DCEFE2] flex items-center justify-center mx-auto shadow-xs">
+          <UtensilsCrossed className="w-6 h-6 text-[#DCEFE2]" />
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820]">
+        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#18372D]">
           Sign In to BhojanSetu
         </h1>
-        <p className="text-xs sm:text-sm text-[#68736A] max-w-md mx-auto">
+        <p className="text-xs sm:text-sm text-[#66756B] max-w-md mx-auto">
           For evaluation, switch between all 4 role perspectives with one click, or enter credentials below.
         </p>
       </div>
 
       <DemoAccountSelector />
 
-      <div className="max-w-md mx-auto card-editorial p-6 sm:p-8">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-[#174D3A] mb-4">
+      <div className="max-w-md mx-auto card-light p-6 sm:p-8">
+        <h2 className="text-xs font-bold uppercase tracking-wider text-[#174C3C] mb-4">
           Or Enter Account Credentials
         </h2>
 
@@ -56,7 +56,7 @@ export const LoginPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-[#18372D] uppercase tracking-wider mb-1.5">
               Email Address
             </label>
             <input
@@ -65,12 +65,12 @@ export const LoginPage: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. organizer@bhojansetu.demo"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-stone-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174D3A] transition-all"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#2D8061] transition-all"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-[#18372D] uppercase tracking-wider mb-1.5">
               Password
             </label>
             <input
@@ -79,29 +79,29 @@ export const LoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-stone-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#174D3A] transition-all"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-[#E3E8E0] text-xs sm:text-sm bg-[#F8F7F2] text-[#18372D] focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#2D8061] transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 px-4 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all hover:scale-[1.01] flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full btn-primary-brand text-xs sm:text-sm py-2.5 shadow-2xs disabled:opacity-50"
           >
             {loading ? (
               'Authenticating...'
             ) : (
               <>
-                <LogIn className="w-4 h-4 text-[#E7A85B]" /> Sign In
+                <LogIn className="w-4 h-4 text-[#DCEFE2]" /> Sign In
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-6 pt-4 border-t border-stone-100 text-center text-xs text-[#68736A]">
-          Don't have an account yet?{' '}
-          <Link to="/register" className="font-semibold text-[#174D3A] hover:underline">
-            Register as Organizer or Partner <ArrowRight className="w-3 h-3 inline" />
+        <div className="pt-4 text-center text-xs text-[#66756B] border-t border-[#E3E8E0] mt-5">
+          Don&apos;t have an account yet?{' '}
+          <Link to="/register" className="font-bold text-[#174C3C] hover:underline">
+            Register your organization
           </Link>
         </div>
       </div>
