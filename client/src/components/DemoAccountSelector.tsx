@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext.js';
-import { UserCheck, Sparkles, LogIn, ChevronRight } from 'lucide-react';
+import { UserCheck, Sparkles, ChevronRight, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface DemoAccountSelectorProps {
@@ -25,7 +25,7 @@ export const DemoAccountSelector: React.FC<DemoAccountSelectorProps> = ({
       email: 'organizer@bhojansetu.demo',
       icon: '👨‍🍳',
       badge: 'Listing Creator',
-      badgeColor: 'bg-emerald-100 text-emerald-800',
+      badgeColor: 'bg-[#DDE8D8] text-[#174D3A]',
     },
     {
       role: 'partner',
@@ -34,16 +34,16 @@ export const DemoAccountSelector: React.FC<DemoAccountSelectorProps> = ({
       email: 'partner.verified@bhojansetu.demo',
       icon: '🤝',
       badge: 'Verified Rescuer',
-      badgeColor: 'bg-blue-100 text-blue-800',
+      badgeColor: 'bg-blue-100 text-blue-900',
     },
     {
       role: 'partner',
       title: 'Pending Partner',
-      sub: 'Navjeevan Rescue (Unverified)',
+      sub: 'Navjeevan Rescue (Gated)',
       email: 'partner.pending@bhojansetu.demo',
       icon: '⏳',
-      badge: 'Gated Test',
-      badgeColor: 'bg-amber-100 text-amber-800',
+      badge: 'Pending Review',
+      badgeColor: 'bg-amber-100 text-amber-900',
     },
     {
       role: 'admin',
@@ -51,8 +51,8 @@ export const DemoAccountSelector: React.FC<DemoAccountSelectorProps> = ({
       sub: 'Central Coordination Desk',
       email: 'admin@bhojansetu.demo',
       icon: '🛡️',
-      badge: 'Reviewer',
-      badgeColor: 'bg-purple-100 text-purple-800',
+      badge: 'Admin Console',
+      badgeColor: 'bg-purple-100 text-purple-900',
     },
   ];
 
@@ -64,43 +64,44 @@ export const DemoAccountSelector: React.FC<DemoAccountSelectorProps> = ({
       if (onSelect) onSelect();
       navigate('/dashboard');
     } catch (err: any) {
-      setErrorMsg(err.message || 'Quick sign-in failed. Please ensure server is running.');
+      setErrorMsg(err.message || 'Quick sign-in failed. Please ensure the server is active.');
     } finally {
       setLoadingEmail(null);
     }
   };
 
   return (
-    <div className={`bg-white rounded-xl border border-emerald-900/10 shadow-xs ${compact ? 'p-3' : 'p-4 sm:p-5'}`}>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5" />
+    <div className={`card-editorial ${compact ? 'p-3' : 'p-4 sm:p-6'}`}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-[#174D3A] text-white flex items-center justify-center text-xs font-bold">
+            <Sparkles className="w-4 h-4 text-[#E7A85B]" />
           </div>
           <div>
-            <span className="text-xs uppercase tracking-wider font-bold text-emerald-900">
+            <h3 className="text-xs uppercase tracking-wider font-bold text-[#174D3A]">
               Hackathon Evaluation Fast-Track
-            </span>
-            <span className="hidden sm:inline text-xs text-gray-500 ml-2">
-              (One-click switch between all 4 role perspectives)
-            </span>
+            </h3>
+            <p className="text-xs text-[#68736A]">
+              Instant one-click role switching to test the full event recovery lifecycle
+            </p>
           </div>
         </div>
         {user && (
-          <span className="text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md flex items-center gap-1.5 self-start sm:self-auto">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            Active: <strong className="text-gray-900 capitalize">{user.role}</strong> ({user.name.split(' ')[0]})
+          <span className="text-xs text-[#202820] bg-[#DDE8D8]/60 border border-[#174D3A]/20 px-3 py-1 rounded-full flex items-center gap-1.5 self-start sm:self-auto font-medium">
+            <span className="w-2 h-2 rounded-full bg-[#237653]" />
+            Active: <strong className="capitalize">{user.role}</strong> ({user.name.split(' ')[0]})
           </span>
         )}
       </div>
 
       {errorMsg && (
-        <div className="mb-3 text-xs text-rose-700 bg-rose-50 border border-rose-200 rounded p-2">
-          {errorMsg}
+        <div className="mb-3 text-xs text-rose-800 bg-rose-50 border border-rose-200 rounded-xl p-2.5 flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 shrink-0" />
+          <span>{errorMsg}</span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {demoAccounts.map((acc) => {
           const isActive = user?.email === acc.email;
           const isLoading = loadingEmail === acc.email;
@@ -111,34 +112,34 @@ export const DemoAccountSelector: React.FC<DemoAccountSelectorProps> = ({
               type="button"
               onClick={() => handleQuickLogin(acc.email)}
               disabled={isLoading || isActive}
-              className={`text-left p-3 rounded-lg border transition-all flex flex-col justify-between ${
+              className={`text-left p-3.5 rounded-xl border transition-all flex flex-col justify-between ${
                 isActive
-                  ? 'border-emerald-700 bg-emerald-50/70 shadow-xs ring-1 ring-emerald-700/30'
-                  : 'border-gray-200 bg-gray-50/70 hover:bg-white hover:border-emerald-600 hover:shadow-xs'
+                  ? 'border-[#174D3A] bg-[#DDE8D8]/40 shadow-xs ring-1 ring-[#174D3A]/30'
+                  : 'border-stone-200 bg-stone-50/70 hover:bg-white hover:border-[#237653] hover:shadow-xs'
               }`}
             >
               <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xl" role="img" aria-label={acc.title}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-2xl" role="img" aria-label={acc.title}>
                     {acc.icon}
                   </span>
-                  <span className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${acc.badgeColor}`}>
+                  <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${acc.badgeColor}`}>
                     {acc.badge}
                   </span>
                 </div>
-                <div className="font-semibold text-gray-900 text-xs sm:text-sm">{acc.title}</div>
-                <div className="text-[11px] text-gray-500 truncate mt-0.5">{acc.sub}</div>
+                <div className="font-bold text-[#202820] text-sm">{acc.title}</div>
+                <div className="text-xs text-[#68736A] truncate mt-0.5">{acc.sub}</div>
               </div>
 
-              <div className="mt-3 pt-2 border-t border-gray-200/60 flex items-center justify-between text-xs font-medium">
+              <div className="mt-3.5 pt-2.5 border-t border-stone-200/80 flex items-center justify-between text-xs font-semibold">
                 {isActive ? (
-                  <span className="text-emerald-800 flex items-center gap-1">
+                  <span className="text-[#174D3A] flex items-center gap-1">
                     <UserCheck className="w-3.5 h-3.5" /> Currently signed in
                   </span>
                 ) : (
-                  <span className="text-emerald-700 flex items-center gap-1 group-hover:underline">
-                    {isLoading ? 'Switching...' : 'Switch to this role'}
-                    <ChevronRight className="w-3 h-3" />
+                  <span className="text-[#237653] flex items-center gap-1 group-hover:underline">
+                    {isLoading ? 'Switching...' : 'Switch to role'}
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </span>
                 )}
               </div>

@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import {
   UtensilsCrossed,
   Menu,
   X,
   LogOut,
-  User as UserIcon,
   PlusCircle,
   Search,
   BarChart3,
   ShieldCheck,
   ClipboardList,
   CheckCircle,
+  LayoutDashboard,
+  ArrowRight,
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
@@ -26,135 +28,128 @@ export const Navbar: React.FC = () => {
   };
 
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-    `text-xs sm:text-sm font-medium transition-colors px-3 py-1.5 rounded-lg ${
+    `text-xs sm:text-sm font-medium tracking-tight transition-all px-3 py-1.5 rounded-lg ${
       isActive
-        ? 'text-emerald-950 bg-emerald-50 font-semibold'
-        : 'text-gray-600 hover:text-emerald-900 hover:bg-emerald-50/50'
+        ? 'text-[#174D3A] bg-[#DDE8D8]/60 font-semibold'
+        : 'text-[#68736A] hover:text-[#174D3A] hover:bg-[#DDE8D8]/30'
     }`;
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200">
+    <header className="sticky top-0 z-40 bg-[#F7F4EC]/90 backdrop-blur-md border-b border-[#174D3A]/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo & Tagline */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-emerald-800 text-white flex items-center justify-center shadow-xs group-hover:bg-emerald-900 transition-colors">
-              <UtensilsCrossed className="w-5 h-5 text-emerald-200" />
+        <div className="flex items-center justify-between h-18">
+          {/* Brand Mark & Wordmark */}
+          <Link to="/" className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#174D3A] rounded-xl p-1">
+            <div className="w-10 h-10 rounded-xl bg-[#174D3A] text-white flex items-center justify-center shadow-sm group-hover:bg-[#237653] transition-colors">
+              <UtensilsCrossed className="w-5 h-5 text-[#E7A85B]" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-bold tracking-tight text-gray-950 font-serif leading-none">
-                Bhojan<span className="text-emerald-800">Setu</span>
+              <span className="text-xl font-bold font-serif text-[#174D3A] tracking-tight leading-none">
+                Bhojan<span className="text-[#E7A85B]">Setu</span>
               </span>
-              <span className="text-[10px] text-gray-500 font-medium tracking-wide">
+              <span className="text-[11px] text-[#68736A] font-medium tracking-wide">
                 Surplus Food Recovery Platform
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1.5" aria-label="Main Navigation">
             <NavLink to="/listings" className={navLinkClasses}>
               <span className="flex items-center gap-1.5">
-                <Search className="w-4 h-4" /> Browse Surplus
+                <Search className="w-3.5 h-3.5" /> Discover Food
               </span>
             </NavLink>
+            <a
+              href="/#how-it-works"
+              onClick={(e) => {
+                if (location.pathname === '/') {
+                  e.preventDefault();
+                  document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="text-xs sm:text-sm font-medium tracking-tight text-[#68736A] hover:text-[#174D3A] hover:bg-[#DDE8D8]/30 px-3 py-1.5 rounded-lg transition-all"
+            >
+              How It Works
+            </a>
             <NavLink to="/impact" className={navLinkClasses}>
               <span className="flex items-center gap-1.5">
-                <BarChart3 className="w-4 h-4" /> Verified Impact
+                <BarChart3 className="w-3.5 h-3.5" /> Our Impact
               </span>
             </NavLink>
             <NavLink to="/food-safety" className={navLinkClasses}>
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4" /> Food Safety Rules
+                <ShieldCheck className="w-3.5 h-3.5" /> Food Safety
               </span>
             </NavLink>
 
             {user && (
-              <>
-                <NavLink to="/dashboard" className={navLinkClasses}>
-                  Dashboard
-                </NavLink>
-
-                {user.role === 'organizer' && (
-                  <NavLink to="/listings/create" className={navLinkClasses}>
-                    <span className="flex items-center gap-1 text-emerald-800 font-semibold">
-                      <PlusCircle className="w-4 h-4" /> List Food
-                    </span>
-                  </NavLink>
-                )}
-
-                {user.role === 'partner' && (
-                  <>
-                    <NavLink to="/requests" className={navLinkClasses}>
-                      <span className="flex items-center gap-1.5">
-                        <ClipboardList className="w-4 h-4" /> My Pickups
-                      </span>
-                    </NavLink>
-                    <NavLink to="/partner/profile" className={navLinkClasses}>
-                      Verification
-                    </NavLink>
-                  </>
-                )}
-
-                {user.role === 'admin' && (
-                  <NavLink to="/admin/partners" className={navLinkClasses}>
-                    <span className="flex items-center gap-1.5 text-purple-800 font-semibold">
-                      <CheckCircle className="w-4 h-4" /> Admin Verifications
-                    </span>
-                  </NavLink>
-                )}
-              </>
+              <NavLink to="/dashboard" className={navLinkClasses}>
+                <span className="flex items-center gap-1.5">
+                  <LayoutDashboard className="w-3.5 h-3.5" /> Dashboard
+                </span>
+              </NavLink>
             )}
           </nav>
 
-          {/* User Status / Action Buttons */}
+          {/* Right Action Area */}
           <div className="hidden md:flex items-center gap-3">
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="flex flex-col text-right">
-                  <span className="text-xs font-bold text-gray-900 leading-tight">
+                  <span className="text-xs font-bold text-[#202820] leading-tight">
                     {user.name}
                   </span>
-                  <span className="text-[10px] text-gray-500 capitalize flex items-center justify-end gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+                  <span className="text-[10px] text-[#68736A] capitalize flex items-center justify-end gap-1 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#237653]" />
                     {user.role} {user.role === 'partner' && `(${user.verificationStatus})`}
                   </span>
                 </div>
 
+                <Link
+                  to="/listings/create"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl text-white bg-[#174D3A] hover:bg-[#237653] shadow-xs transition-all hover:scale-[1.02]"
+                >
+                  <PlusCircle className="w-3.5 h-3.5 text-[#E7A85B]" />
+                  Donate Surplus Food
+                </Link>
+
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="p-2 text-gray-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors"
+                  className="p-2 text-[#68736A] hover:text-rose-700 hover:bg-rose-50 rounded-xl transition-colors"
                   title="Sign Out"
+                  aria-label="Sign Out"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <Link
                   to="/login"
-                  className="px-3.5 py-1.5 text-xs font-medium text-gray-700 hover:text-emerald-900 transition-colors"
+                  className="px-3.5 py-2 text-xs font-semibold text-[#174D3A] hover:bg-[#DDE8D8]/50 rounded-xl transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
-                  to="/register"
-                  className="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-white bg-emerald-800 hover:bg-emerald-900 shadow-xs transition-colors"
+                  to="/listings/create"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl text-white bg-[#174D3A] hover:bg-[#237653] shadow-sm hover:shadow-md transition-all hover:scale-[1.02]"
                 >
-                  Join as Partner / Organizer
+                  Donate Surplus Food
+                  <ArrowRight className="w-3.5 h-3.5 text-[#E7A85B]" />
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              aria-label="Toggle menu"
+              className="p-2 rounded-xl text-[#174D3A] hover:bg-[#DDE8D8]/50 transition-colors"
+              aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -164,21 +159,21 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-6 space-y-2">
+        <div className="md:hidden border-t border-[#174D3A]/10 bg-[#F7F4EC] px-4 pt-4 pb-6 space-y-3 animate-slide-up">
           {user && (
-            <div className="p-3 bg-emerald-50/70 rounded-xl mb-3 flex items-center justify-between">
+            <div className="p-3 bg-white rounded-xl border border-[#174D3A]/10 flex items-center justify-between">
               <div>
-                <div className="font-semibold text-sm text-emerald-950">{user.name}</div>
-                <div className="text-xs text-emerald-800 capitalize">
+                <div className="font-semibold text-sm text-[#202820]">{user.name}</div>
+                <div className="text-xs text-[#237653] capitalize font-medium">
                   {user.role} • Status: {user.verificationStatus}
                 </div>
               </div>
               <button
                 type="button"
                 onClick={handleLogout}
-                className="text-xs text-rose-700 font-semibold flex items-center gap-1"
+                className="text-xs text-rose-700 font-semibold flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-rose-50"
               >
-                <LogOut className="w-3.5 h-3.5" /> Log out
+                <LogOut className="w-3.5 h-3.5" /> Sign out
               </button>
             </div>
           )}
@@ -187,34 +182,44 @@ export const Navbar: React.FC = () => {
             <Link
               to="/listings"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-emerald-50"
+              className="block px-3 py-2 rounded-xl text-sm font-medium text-[#202820] hover:bg-[#DDE8D8]/50"
             >
-              Browse Surplus Listings
+              Discover Food
             </Link>
+            <a
+              href="/#how-it-works"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="block px-3 py-2 rounded-xl text-sm font-medium text-[#202820] hover:bg-[#DDE8D8]/50"
+            >
+              How It Works
+            </a>
             <Link
               to="/impact"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-emerald-50"
+              className="block px-3 py-2 rounded-xl text-sm font-medium text-[#202820] hover:bg-[#DDE8D8]/50"
             >
-              Verified Impact Dashboard
+              Our Impact
             </Link>
             <Link
               to="/food-safety"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-emerald-50"
+              className="block px-3 py-2 rounded-xl text-sm font-medium text-[#202820] hover:bg-[#DDE8D8]/50"
             >
-              Food Safety & Handling Rules
+              Food Safety Guidelines
             </Link>
 
             {user && (
               <>
-                <div className="pt-2 border-t border-gray-100 font-semibold text-xs text-gray-400 px-3 uppercase tracking-wider">
-                  My Workflow
+                <div className="pt-2 border-t border-[#174D3A]/10 font-bold text-[10px] text-[#68736A] px-3 uppercase tracking-wider">
+                  Workspace
                 </div>
                 <Link
                   to="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-emerald-50"
+                  className="block px-3 py-2 rounded-xl text-sm font-medium text-[#202820] hover:bg-[#DDE8D8]/50"
                 >
                   Dashboard
                 </Link>
@@ -223,9 +228,9 @@ export const Navbar: React.FC = () => {
                   <Link
                     to="/listings/create"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 rounded-lg text-sm font-semibold text-emerald-800 hover:bg-emerald-50"
+                    className="block px-3 py-2 rounded-xl text-sm font-semibold text-[#174D3A] bg-[#DDE8D8]/60"
                   >
-                    + List Surplus Food
+                    + Donate Surplus Food
                   </Link>
                 )}
 
@@ -234,16 +239,16 @@ export const Navbar: React.FC = () => {
                     <Link
                       to="/requests"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-emerald-50"
+                      className="block px-3 py-2 rounded-xl text-sm font-medium text-[#202820] hover:bg-[#DDE8D8]/50"
                     >
-                      My Requests & Pickups
+                      My Pickups & Requests
                     </Link>
                     <Link
                       to="/partner/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-emerald-50"
+                      className="block px-3 py-2 rounded-xl text-sm font-medium text-[#202820] hover:bg-[#DDE8D8]/50"
                     >
-                      Partner Profile & Verification
+                      Partner Verification Status
                     </Link>
                   </>
                 )}
@@ -252,33 +257,43 @@ export const Navbar: React.FC = () => {
                   <Link
                     to="/admin/partners"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 rounded-lg text-sm font-semibold text-purple-800 hover:bg-purple-50"
+                    className="block px-3 py-2 rounded-xl text-sm font-semibold text-purple-900 bg-purple-50"
                   >
-                    Admin Verification Console
+                    Admin Partner Review
                   </Link>
                 )}
               </>
             )}
           </div>
 
-          {!user && (
-            <div className="pt-4 border-t border-gray-100 flex flex-col gap-2">
+          <div className="pt-3 border-t border-[#174D3A]/10 flex flex-col gap-2">
+            {!user ? (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2.5 text-sm font-semibold text-[#174D3A] bg-white border border-[#174D3A]/20 rounded-xl"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/listings/create"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2.5 text-sm font-semibold text-white bg-[#174D3A] rounded-xl shadow-xs"
+                >
+                  Donate Surplus Food
+                </Link>
+              </>
+            ) : (
               <Link
-                to="/login"
+                to="/listings/create"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg"
+                className="w-full text-center py-2.5 text-sm font-semibold text-white bg-[#174D3A] rounded-xl shadow-xs"
               >
-                Sign In
+                Donate Surplus Food
               </Link>
-              <Link
-                to="/register"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2 text-sm font-semibold text-white bg-emerald-800 rounded-lg shadow-xs"
-              >
-                Join as Partner / Organizer
-              </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </header>

@@ -9,14 +9,14 @@ interface FoodSafetyBannerProps {
 export const FoodSafetyBanner: React.FC<FoodSafetyBannerProps> = ({ compact = false }) => {
   if (compact) {
     return (
-      <div className="bg-amber-50/90 border border-amber-200/80 rounded-lg p-3 text-xs text-amber-900 flex items-start gap-2.5">
+      <div className="bg-amber-50/80 border border-amber-300/80 rounded-2xl p-3.5 text-xs text-amber-950 flex items-start gap-2.5 shadow-xs">
         <ShieldCheck className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
         <div>
-          <span className="font-semibold">Coordination Protocol Notice:</span> BhojanSetu facilitates
-          operational logistics. Physical inspection, safe holding temperatures, and food-safety suitability
+          <span className="font-bold">Coordination Protocol Notice:</span> BhojanSetu facilitates
+          operational logistics. Physical sensory inspection, safe holding temperatures, and food suitability
           must be confirmed by responsible personnel prior to hand-off.{' '}
-          <Link to="/food-safety" className="font-medium underline hover:text-amber-950">
-            View guidelines
+          <Link to="/food-safety" className="font-semibold underline hover:text-amber-800">
+            View guidelines →
           </Link>
         </div>
       </div>
@@ -24,31 +24,31 @@ export const FoodSafetyBanner: React.FC<FoodSafetyBannerProps> = ({ compact = fa
   }
 
   return (
-    <div className="bg-emerald-900/5 border border-emerald-900/15 rounded-xl p-4 sm:p-5 text-sm text-gray-800">
-      <div className="flex items-start gap-3">
-        <div className="p-2 rounded-lg bg-emerald-100/80 text-emerald-800 shrink-0">
+    <div className="card-editorial p-5 sm:p-6 text-sm text-[#202820]">
+      <div className="flex items-start gap-3.5">
+        <div className="p-2.5 rounded-xl bg-[#DDE8D8] text-[#174D3A] shrink-0">
           <ShieldCheck className="w-5 h-5" />
         </div>
-        <div className="space-y-1">
-          <h4 className="font-semibold text-emerald-950 flex items-center gap-2">
-            Food Safety & Platform Coordination Notice
-            <span className="text-xs font-normal px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">
+        <div className="space-y-1.5">
+          <h4 className="font-bold font-serif text-[#174D3A] flex items-center gap-2 text-base">
+            Food Safety &amp; Platform Coordination Boundary
+            <span className="text-[11px] font-sans font-semibold px-2 py-0.5 bg-[#DDE8D8] text-[#174D3A] rounded-full">
               Non-Certifier Scope
             </span>
           </h4>
-          <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
+          <p className="text-[#68736A] leading-relaxed text-xs sm:text-sm">
             BhojanSetu supports coordination and traceability only. Food suitability must be assessed
             by responsible people before collection and distribution. Always follow applicable food-safety
-            standards, proper thermal storage conditions, and physical sensory inspection. Software status
+            standards, proper thermal storage conditions (&gt;60°C hot, &lt;5°C cold), and physical sensory inspection. Software status
             never replaces human inspection.
           </p>
           <div className="pt-1">
             <Link
               to="/food-safety"
-              className="inline-flex items-center gap-1 text-xs font-medium text-emerald-800 hover:text-emerald-950 underline"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-[#174D3A] hover:underline"
             >
               <Info className="w-3.5 h-3.5" />
-              Read full surplus food safety & handling standards
+              Read full surplus food safety &amp; handling standards →
             </Link>
           </div>
         </div>

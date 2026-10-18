@@ -12,8 +12,8 @@ export const UrgencyBadge: React.FC<UrgencyBadgeProps> = ({ deadline }) => {
 
   if (diffHours <= 0) {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-gray-200 text-gray-700">
-        <AlertTriangle className="w-3 h-3 text-gray-500" />
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-stone-200 text-stone-700">
+        <AlertTriangle className="w-3 h-3 text-stone-500" />
         Expired
       </span>
     );
@@ -21,8 +21,8 @@ export const UrgencyBadge: React.FC<UrgencyBadgeProps> = ({ deadline }) => {
 
   if (diffHours <= 2) {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
-        <Flame className="w-3 h-3 text-red-600 animate-bounce" />
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-900 border border-rose-300">
+        <Flame className="w-3.5 h-3.5 text-rose-600" />
         Urgent: {diffHours < 1 ? `${Math.round(diffHours * 60)}m left` : `${diffHours.toFixed(1)}h left`}
       </span>
     );
@@ -30,16 +30,16 @@ export const UrgencyBadge: React.FC<UrgencyBadgeProps> = ({ deadline }) => {
 
   if (diffHours <= 4) {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200">
-        <Clock className="w-3 h-3 text-amber-600" />
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+        <Clock className="w-3.5 h-3.5 text-amber-700" />
         {diffHours.toFixed(1)}h remaining
       </span>
     );
   }
 
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
-      <Clock className="w-3 h-3 text-emerald-600" />
+    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#DDE8D8]/80 text-[#174D3A] border border-[#174D3A]/15">
+      <Clock className="w-3.5 h-3.5 text-[#237653]" />
       {Math.round(diffHours)}h window
     </span>
   );

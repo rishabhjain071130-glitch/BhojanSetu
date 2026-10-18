@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.js';
 import { Navbar } from './components/Navbar.js';
 import { Footer } from './components/Footer.js';
+import { DemoFloatingWidget } from './components/DemoFloatingWidget.js';
 import { ProtectedRoute } from './components/ProtectedRoute.js';
 
 // Pages
@@ -24,7 +25,7 @@ export function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-[#fbfaf6] text-[#202428] font-sans">
+        <div className="min-h-screen flex flex-col bg-[#F7F4EC] text-[#202820] font-sans antialiased selection:bg-[#DDE8D8] selection:text-[#174D3A]">
           <Navbar />
           <main className="flex-1">
             <Routes>
@@ -84,6 +85,7 @@ export function App() {
             </Routes>
           </main>
           <Footer />
+          <DemoFloatingWidget />
         </div>
       </BrowserRouter>
     </AuthProvider>

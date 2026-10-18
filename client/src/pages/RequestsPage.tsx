@@ -86,29 +86,30 @@ export const RequestsPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-              Recovery Operations
-            </span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#174D3A]/15">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#174D3A]">
+            <span className="w-2 h-2 rounded-full bg-[#237653]" />
+            Recovery Operations
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-serif text-gray-950 flex items-center gap-2.5">
-            <ClipboardList className="w-7 h-7 text-emerald-800" />
-            My Requests, Pickups & Hand-Off Timeline
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-[#202820] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#174D3A] text-white flex items-center justify-center shrink-0">
+              <ClipboardList className="w-5 h-5 text-[#E7A85B]" />
+            </div>
+            My Pickups &amp; Hand-Off Timeline
           </h1>
-          <p className="text-xs sm:text-sm text-gray-600">
-            Track status progression with full audit history from approval to final community delivery.
+          <p className="text-xs sm:text-sm text-[#68736A]">
+            Track status progression with an immutable audit history from organizer approval to final distribution.
           </p>
         </div>
 
         <Link
           to="/listings"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs sm:text-sm shadow-xs transition-colors self-start sm:self-auto"
+          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs sm:text-sm shadow-xs transition-all hover:scale-[1.01] self-start sm:self-auto"
         >
-          Browse More Surplus Food
+          Discover More Surplus Food
         </Link>
       </div>
 
@@ -135,31 +136,31 @@ export const RequestsPage: React.FC = () => {
             return (
               <div
                 key={req._id}
-                className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-7 shadow-xs space-y-5"
+                className="card-editorial p-6 sm:p-7 space-y-5"
               >
                 {/* Header row */}
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-stone-100">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <StatusBadge status={req.status} type="request" />
-                      <span className="text-xs text-gray-400 font-mono">
+                      <span className="text-xs text-[#68736A] font-mono">
                         Ref: {req._id.slice(-6)}
                       </span>
                     </div>
 
-                    <h2 className="text-lg font-bold text-gray-900">
+                    <h2 className="text-lg font-bold font-serif text-[#202820]">
                       {listing?.foodTitle || 'Surplus Food Batch'}
                     </h2>
 
-                    <div className="text-xs text-gray-600">
-                      Event: <strong className="text-gray-800">{listing?.eventName}</strong> • Area:{' '}
+                    <div className="text-xs text-[#68736A]">
+                      Event: <strong className="text-[#202820]">{listing?.eventName}</strong> • Area:{' '}
                       <strong>{listing?.areaOrAddress}</strong>
                     </div>
                   </div>
 
                   <div className="flex flex-col sm:items-end gap-1 text-right">
-                    <span className="text-xs text-gray-500 font-medium">Requested Surplus</span>
-                    <div className="text-xl font-bold text-emerald-900">
+                    <span className="text-xs text-[#68736A] font-medium">Requested Surplus</span>
+                    <div className="text-2xl font-bold font-serif text-[#174D3A]">
                       {req.requestedQuantity}{' '}
                       <span className="text-xs font-semibold">{listing?.unit || 'units'}</span>
                     </div>
@@ -167,32 +168,32 @@ export const RequestsPage: React.FC = () => {
                 </div>
 
                 {/* Private Pickup Hand-Off Details (Unlocked once approved) */}
-                <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/80 space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-800">
+                <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/80 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#202820]">
                     {req.status === 'approved' ||
                     req.status === 'collected' ||
                     req.status === 'delivered' ? (
                       <>
-                        <Unlock className="w-3.5 h-3.5 text-emerald-700" /> Private Pickup Instructions
+                        <Unlock className="w-3.5 h-3.5 text-[#237653]" /> Private Pickup Instructions
                         (Unlocked)
                       </>
                     ) : (
                       <>
-                        <Lock className="w-3.5 h-3.5 text-amber-700" /> Private Pickup Instructions
+                        <Lock className="w-3.5 h-3.5 text-[#E7A85B]" /> Private Pickup Instructions
                         (Locked until approval)
                       </>
                     )}
                   </div>
-                  <p className="text-xs text-gray-700 font-medium">
+                  <p className="text-xs text-[#202820] font-medium">
                     {listing?.pickupInstructions ||
                       '🔒 Pickup instructions will unlock upon verified organizer approval.'}
                   </p>
                 </div>
 
                 {/* Action Buttons for Hand-Off transitions */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-gray-100">
-                  <div className="text-xs text-gray-500">
-                    My collection note: <span className="text-gray-800 italic font-medium">"{req.collectionNote}"</span>
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-stone-100">
+                  <div className="text-xs text-[#68736A]">
+                    My collection note: <span className="text-[#202820] italic font-medium">"{req.collectionNote}"</span>
                   </div>
 
                   <div className="flex items-center gap-2.5">
@@ -200,9 +201,9 @@ export const RequestsPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => openStatusModal(req, 'collected')}
-                        className="px-4 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white font-semibold text-xs shadow-xs transition-colors flex items-center gap-1.5"
+                        className="px-4 py-2 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs shadow-xs transition-colors flex items-center gap-1.5"
                       >
-                        <Truck className="w-4 h-4" /> Record Collection (Loaded)
+                        <Truck className="w-4 h-4 text-[#E7A85B]" /> Record Collection (Loaded)
                       </button>
                     )}
 
@@ -210,16 +211,16 @@ export const RequestsPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => openStatusModal(req, 'delivered')}
-                        className="px-4 py-2 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs shadow-xs transition-colors flex items-center gap-1.5"
+                        className="px-4 py-2 rounded-xl bg-[#237653] hover:bg-[#174D3A] text-white font-semibold text-xs shadow-xs transition-colors flex items-center gap-1.5"
                       >
-                        <PackageCheck className="w-4 h-4" /> Record Delivery (Completed)
+                        <PackageCheck className="w-4 h-4 text-[#E7A85B]" /> Record Delivery (Completed)
                       </button>
                     )}
 
                     {listing?._id && (
                       <Link
                         to={`/listings/${listing._id}`}
-                        className="px-3 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-100 transition-colors"
+                        className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs font-semibold text-[#68736A] hover:bg-stone-100 transition-colors"
                       >
                         Listing Details
                       </Link>
@@ -229,27 +230,27 @@ export const RequestsPage: React.FC = () => {
 
                 {/* Chronological Status History Timeline */}
                 {req.statusHistory && req.statusHistory.length > 0 && (
-                  <div className="pt-3 border-t border-gray-100 space-y-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1">
-                      <History className="w-3.5 h-3.5" /> Chronological Traceability Audit History
+                  <div className="pt-3 border-t border-stone-100 space-y-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#68736A] flex items-center gap-1">
+                      <History className="w-3.5 h-3.5 text-[#174D3A]" /> Chronological Traceability Audit History
                     </span>
-                    <div className="space-y-1.5 pl-2 border-l-2 border-emerald-800/30">
+                    <div className="space-y-1.5 pl-3 border-l-2 border-[#174D3A]/30">
                       {req.statusHistory.map((item, idx) => (
-                        <div key={idx} className="text-xs text-gray-600 flex flex-wrap items-baseline gap-2">
-                          <span className="font-semibold text-gray-900 capitalize">
+                        <div key={idx} className="text-xs text-[#68736A] flex flex-wrap items-baseline gap-2">
+                          <span className="font-bold text-[#202820] capitalize">
                             [{item.newStatus}]
                           </span>
-                          <span className="text-gray-500 text-[11px]">
+                          <span className="text-[#68736A] text-[11px]">
                             {new Date(item.timestamp).toLocaleString([], {
                               dateStyle: 'short',
                               timeStyle: 'short',
                             })}
                           </span>
-                          <span className="text-gray-700">
+                          <span className="text-[#202820]">
                             by {item.actorName} ({item.actorRole})
                           </span>
                           {item.reason && (
-                            <span className="text-gray-500 italic">— "{item.reason}"</span>
+                            <span className="text-[#68736A] italic">— "{item.reason}"</span>
                           )}
                         </div>
                       ))}
@@ -264,28 +265,28 @@ export const RequestsPage: React.FC = () => {
 
       {/* Hand-Off Transition Modal */}
       {selectedReqForModal && targetStatus && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-gray-200">
-            <h3 className="text-lg font-bold text-gray-950 font-serif flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 space-y-4 shadow-2xl border border-[#174D3A]/20">
+            <h3 className="text-xl font-bold text-[#202820] font-serif flex items-center gap-2">
               {targetStatus === 'collected' ? (
                 <>
-                  <Truck className="w-5 h-5 text-indigo-700" /> Confirm Food Collection
+                  <Truck className="w-5 h-5 text-[#174D3A]" /> Confirm Food Collection
                 </>
               ) : (
                 <>
-                  <PackageCheck className="w-5 h-5 text-emerald-800" /> Confirm Final Distribution
+                  <PackageCheck className="w-5 h-5 text-[#237653]" /> Confirm Final Distribution
                 </>
               )}
             </h3>
 
-            <p className="text-xs text-gray-600 leading-relaxed">
+            <p className="text-xs text-[#68736A] leading-relaxed">
               {targetStatus === 'collected'
                 ? 'Recording collection signifies you have arrived on-site, verified temperature/handling conditions, and loaded the surplus into your recovery vehicle.'
                 : 'Recording delivery certifies the rescued food was safely distributed to community kitchen meal recipients or shelter beneficiaries.'}
             </p>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-[#202820] uppercase tracking-wider mb-1.5">
                 Hand-Off Verification Note *
               </label>
               <textarea
@@ -293,7 +294,7 @@ export const RequestsPage: React.FC = () => {
                 required
                 value={statusReason}
                 onChange={(e) => setStatusReason(e.target.value)}
-                className="w-full p-2.5 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-emerald-700 focus:outline-none"
+                className="w-full p-3 border border-stone-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-[#174D3A] focus:outline-none bg-stone-50/50"
               />
             </div>
 
@@ -304,7 +305,7 @@ export const RequestsPage: React.FC = () => {
                   setSelectedReqForModal(null);
                   setTargetStatus(null);
                 }}
-                className="px-4 py-2 rounded-lg border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-100"
+                className="px-4 py-2 rounded-xl border border-stone-200 text-xs font-semibold text-[#68736A] hover:bg-stone-50"
               >
                 Cancel
               </button>
@@ -313,7 +314,7 @@ export const RequestsPage: React.FC = () => {
                 type="button"
                 disabled={actionLoadingId !== null}
                 onClick={handleConfirmStatusUpdate}
-                className="px-5 py-2 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-semibold text-xs shadow-xs disabled:opacity-50"
+                className="px-5 py-2 rounded-xl bg-[#174D3A] hover:bg-[#237653] text-white font-semibold text-xs shadow-xs disabled:opacity-50 transition-colors"
               >
                 {actionLoadingId ? 'Saving...' : 'Confirm Hand-Off Status'}
               </button>
